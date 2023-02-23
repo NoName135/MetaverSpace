@@ -1,0 +1,10 @@
+{
+  "include": [
+    "./src/**/*"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ]
+}
