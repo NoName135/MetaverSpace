@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen bg-fixed bg-cover bg-right-20% relative" :style="{backgroundImage: `url(${titleImg})`}">
-    <div class="container px-2 lg:px-0 py-28 h-full flex flex-col justify-around">
-      <div class="mt-32 lg:mt-20">
+  <section class="h-screen bg-fixed bg-cover relative" :style="{backgroundImage: `url(${titleImg})`, backgroundPosition: 'top right 20%'}">
+    <div class="container px-2 lg:px-0 py-40 h-full flex flex-col justify-around">
+      <div class="mt-16 mb-4">
         <h1 class="text-4xl sm:text-6xl font-bold">MetaverSpace</h1>
         <div class="w-12 border border-b-8 mt-2"></div>
       </div>
@@ -19,7 +19,7 @@
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

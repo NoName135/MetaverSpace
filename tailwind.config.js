@@ -14,18 +14,15 @@ module.exports = {
       lg: "976px",
       xl: "1440px",
     },
-    backgroundPosition: {
-      "right-20%": "top right 20%",
-    },
-    animation: {
-      "bounce-0.5": "bounce 0.5s infinite",
-    },
     container: {
       center: true,
     },
     extend: {
       colors: {
+        primary0: "#88D9F2",
         primary: "#39B7DF",
+        primary2: "#319CBD",
+        primary3: "#3F6570",
         secondary: "#7755D8",
         gradient: {
           g1: "#0E3062",
@@ -44,6 +41,12 @@ module.exports = {
       },
       spacing: {
         auto: "auto",
+      },
+      backgroundPosition: {
+        "right-10%": "top right -10%",
+      },
+      animation: {
+        "bounce-0.5": "bounce 0.5s infinite",
       },
     },
   },

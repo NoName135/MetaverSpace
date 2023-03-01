@@ -13,16 +13,16 @@
             <h3 class="text-3xl font-bold">商品專區</h3>
             <div class="grid grid-cols-2 gap-2 mt-6">
               <div>
-                <a href="#">擴增實境 (AR)</a>
+                <a href="#" class="hover:underline">擴增實境 (AR)</a>
               </div>
               <div>
-                <a href="#">混合實境 (MR)</a>
+                <a href="#" class="hover:underline">混合實境 (MR)</a>
               </div>
               <div>
-                <a href="#">虛擬實境 (VR)</a>
+                <a href="#" class="hover:underline">虛擬實境 (VR)</a>
               </div>
               <div>
-                <a href="#">延展實境 (XR)</a>
+                <a href="#" class="hover:underline">延展實境 (XR)</a>
               </div>
             </div>
           </div>
@@ -30,37 +30,35 @@
             <h3 class="text-3xl font-bold">記錄查詢</h3>
             <div class="grid grid-cols-1 gap-2 mt-6">
               <div>
-                <a href="#">交易記錄</a>
+                <a href="#" class="hover:underline">交易記錄</a>
               </div>
               <div>
-                <a href="#">預約記錄</a>
+                <a href="#" class="hover:underline">預約記錄</a>
               </div>
             </div>
           </div>
           <div>
             <h3 class="text-3xl font-bold">聯絡我們</h3>
-            <div class="grid grid-cols-1 gap-2 mt-6">
-              <div>
-                <a href="#">留言板</a>
+            <div class="grid grid-cols-2 gap-2 mt-6">
+              <div class="col-span-2">
+                <a href="#" class="hover:underline">留言板</a>
               </div>
-              <div class="flex justify-between items-end">
-                <div>
-                  <font-awesome-icon
-                    :icon="['fas', 'phone']"
-                    class="mr-2"
-                  />
-                  <span>(01) 2345 6789</span>
-                </div>
-                <div class="flex items-center">
-                  <font-awesome-icon
-                    :icon="['fab', 'facebook']"
-                    class="cursor-pointer text-3xl mr-2"
-                  />
-                  <font-awesome-icon
-                    :icon="['fab', 'instagram']"
-                    class="cursor-pointer text-3xl"
-                  />
-                </div>
+              <div class="whitespace-nowrap">
+                <font-awesome-icon
+                  :icon="['fas', 'phone']"
+                  class="mr-2"
+                />
+                <span>(01) 2345 6789</span>
+              </div>
+              <div class="flex items-center justify-end mr-6 md:mr-0">
+                <font-awesome-icon
+                  :icon="['fab', 'facebook']"
+                  class="cursor-pointer text-3xl mr-2"
+                />
+                <font-awesome-icon
+                  :icon="['fab', 'instagram']"
+                  class="cursor-pointer text-3xl"
+                />
               </div>
             </div>
           </div>
@@ -69,19 +67,52 @@
       <p class="text-center bg-black py-6">Copyright © 2023 Ezekiel Lin. All Rights Reserved</p>
     </footer>
   </div>
+  <div :class="['bottom-24 right-8 md:right-12 lg:right-20 z-50 cursor-pointer', [windowTop > 500 ? 'fixed' : 'hidden']]">
+    <font-awesome-icon
+      :icon="['far', 'circle-up']"
+      class="text-white text-3xl md:text-4xl lg:text-5xl"
+    />
+  </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue'
 
 export default {
+  data() {
+    return {
+      windowTop: 0,
+    }
+  },
   methods: {
+    onScroll(e) {
+      this.windowTop = e.target.documentElement.scrollTop;
+    },
     hideNavCollapse(){
       this.$refs.navbar.hideCollapse();
     }
   },
+  mounted() {
+    window.addEventListener("scroll", this.onScroll);
+  },
   components: {
     Navbar
-  }
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
+  },
 }
 </script>
+
+<style>
+/* main min-height 100vh */
+.main-height-full {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-area {
+  flex: 1;
+}
+</style>

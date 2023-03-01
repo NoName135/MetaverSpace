@@ -1,6 +1,6 @@
 <template>
   <nav
-    :class="['w-full gap-2.5 fixed z-20 top-0 left-0 flex justify-center backdrop-opacity-[2px] border border-white/38', {'bg-dark': windowTop > 50 || navToggled}]"
+    :class="['w-full gap-2.5 fixed z-20 top-0 left-0 flex justify-center backdrop-opacity-[2px] border border-white/38', {'bg-dark': windowTop > 100 || navToggled}]"
   >
     <div class="w-full px-4 lg:px-24 py-4 bg-white/10">
       <div class="container flex flex-wrap items-center justify-between">
@@ -67,7 +67,7 @@
                 </ul>
                 <div class="flex justify-between items-center mt-4 mb-1 mx-1 text-white">
                   <p class="text-sm">共 20 種商品</p>
-                  <router-link to="cart" @click="hideCollapse" class="relative translateBtn">查看我的收藏</router-link>
+                  <router-link to="cart" @click="hideCollapse" class="relative primary-solid-button">查看我的收藏</router-link>
                 </div>
               </div>
             </div>
@@ -135,7 +135,7 @@
                 </ul>
                 <div class="flex justify-between items-center mt-4 mb-1 mx-1 text-white">
                   <p class="text-sm">共 20 種商品</p>
-                  <router-link to="cart" @click="hideCollapse" class="relative translateBtn">前往購物車</router-link>
+                  <router-link to="cart" @click="hideCollapse" class="relative primary-solid-button">前往購物車</router-link>
                 </div>
               </div>
             </div>
@@ -254,3 +254,16 @@ export default {
   },
 };
 </script>
+
+<style>
+/* navbar */
+.nav-shadow {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.65);
+}
+
+.nav-menu-shadow {
+  @media(max-width: 1023px){
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+</style>

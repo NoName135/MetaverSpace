@@ -15,11 +15,11 @@ import "vue-loading-overlay/dist/css/index.css";
 
 // fontawesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import {} from "@fortawesome/free-regular-svg-icons";
+import { faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faArrowDown, faChevronRight, faTruckFast, faDollarSign, faScrewdriverWrench, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faFacebook, faInstagram, faArrowDown);
+library.add(faCircleUp, faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faFacebook, faInstagram, faArrowDown, faChevronRight, faTruckFast, faDollarSign, faScrewdriverWrench, faEnvelope);
 
 // vee-validate
 import { Form, Field, ErrorMessage, defineRule, configure } from "vee-validate";
