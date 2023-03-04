@@ -4,10 +4,10 @@
       <h3 class="text-3xl font-bold mb-6">熱銷商品</h3>
       <router-link to="./products" class="second-solid-button">瀏覽所有商品</router-link>
     </div>
-    <div class="overflow-auto lg:overflow-x-hidden">
+    <div ref="products" class="overflow-auto lg:overflow-x-hidden">
       <div class="m-0 lg:-mx-[25%]">
         <swiper
-          ref="{indexProductSwiper}"
+          ref="indexProductSwiper"
           :slidesPerView="1.5"
           :centeredSlides="true"
           :breakpoints= "{
@@ -350,8 +350,8 @@
         </swiper>
       </div>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mx-2 lg:mx-0 mt-6">
-      <div class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1">
+    <div ref="service" class="grid grid-cols-2 md:grid-cols-3 gap-4 mx-2 lg:mx-0 mt-6">
+      <div ref="service1" class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1">
         <h5 class="text-xl lg:text-3xl font-bold">
           <font-awesome-icon
             :icon="['fas', 'truck-fast']"
@@ -360,7 +360,7 @@
         </h5>
         <p class="mb-4">現貨24小時出貨，最晚2天內出貨。</p>
       </div>
-      <div class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1">
+      <div ref="service2" class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1">
         <h5 class="text-xl lg:text-3xl font-bold">
           <font-awesome-icon
             :icon="['fas', 'dollar-sign']"
@@ -369,7 +369,7 @@
         </h5>
         <p class="mb-4">單筆訂單滿2000即享免運宅配服務。</p>
       </div>
-      <div class="border rounded p-3 lg:p-5 col-span-2 md:col-span-1">
+      <div ref="service3" class="border rounded p-3 lg:p-5 col-span-2 md:col-span-1">
         <h5 class="text-xl lg:text-3xl font-bold">
           <font-awesome-icon
             :icon="['fas', 'screwdriver-wrench']"
@@ -379,8 +379,8 @@
         <p class="mt-4">購買過程或收到商品遇到問題，聯繫我們會盡快回覆您。</p>
       </div>
     </div>
-    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 mx-2 lg:mx-0 gap-6 md:gap-0">
-      <div class="p-10 bg-cover bg-center border border-opacity-87" :style="{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${reserve})`}">
+    <div ref="other" class="mt-16 grid grid-cols-1 md:grid-cols-2 mx-2 lg:mx-0 gap-6 md:gap-0">
+      <div ref="other1" class="p-10 bg-cover bg-center border border-opacity-87" :style="{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${reserve})`}">
         <h5 class="text-xl lg:text-3xl font-bold">不清楚商品是否符合需求？</h5>
         <div class="w-12 border border-b-8 mt-2"></div>
         <p class="mt-4">我們提供預約體驗，每小時只要100元，即可體驗各類商品，找出適合您的設備。</p>
@@ -388,7 +388,7 @@
           <router-link to="./reserve" class="primary-button">前往預約</router-link>
         </div>
       </div>
-      <div class="p-10 bg-cover bg-center border border-opacity-87" :style="{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${subscribe})`}">
+      <div ref="other2" class="p-10 bg-cover bg-center border border-opacity-87" :style="{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${subscribe})`}">
         <h5 class="text-xl lg:text-3xl font-bold">訂閱電子報獲取優惠券</h5>
         <div class="w-12 border border-b-8 mt-2"></div>
         <div class="relative w-full">
@@ -414,14 +414,19 @@ import subscribe from '@/images/subscribe.jpg'
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
 // import required modules
 import { Navigation, Pagination, Autoplay } from "swiper";
+
+// import gsap
+import { gsap } from "gsap";
+// get other gsap plugins
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+// register gsap plugins
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   data() {
@@ -430,6 +435,74 @@ export default {
       reserve: reserve,
       subscribe: subscribe
     }
+  },
+  methods: {
+    gsapProducts() {
+      this.gsap.timeline({
+        scrollTrigger: {
+          trigger: this.$refs.products,
+          start: "top 75%",
+          toggleActions:"play none none none",
+          // markers: true,
+        }
+      })
+      .from(this.$refs.products, {y:100, opacity:0, scale: 0.5, ease:"back", duration: 0.8})
+    },
+    gsapService() {
+      this.gsap.timeline({
+        scrollTrigger: {
+          trigger: this.$refs.service,
+          start: "top 80%",
+          toggleActions:"play none none reverse",
+          // markers: true,
+        }
+      })
+      .from(this.$refs.service1, {y:100, opacity:0, ease:"back", duration: 0.8})
+      .from(this.$refs.service2, {y:100, opacity:0, ease:"back", duration: 0.8, delay: 0.3}, "<")
+      .from(this.$refs.service3, {y:100, opacity:0, ease:"back", duration: 0.8, delay: 0.3}, "<")
+    },
+    gsapOther() {
+      ScrollTrigger.matchMedia({
+        "(max-width: 767px)": () => {
+          this.gsap.timeline({
+            scrollTrigger: {
+              trigger: this.$refs.other,
+              start: "top 45%",
+              toggleActions:"play none none reverse",
+              // markers: true,
+            }
+          })
+          .from(this.$refs.other1, {y:100, opacity:0, ease:"expo", duration: 1})
+          .from(this.$refs.other2, {y:100, opacity:0, ease:"expo", duration: 1, delay: 0.3}, "<")
+        },
+        "(min-width: 768px)": () => {
+          this.gsap.timeline({
+            scrollTrigger: {
+              trigger: this.$refs.other,
+              start: "top 70%",
+              toggleActions:"play none none reverse",
+              // markers: true,
+            }
+          })
+          .from(this.$refs.other1, {x:-100, opacity:0, ease:"expo", duration: 1})
+          .from(this.$refs.other2, {x:100, opacity:0, ease:"expo", duration: 1}, "<")
+        }
+      })
+    }
+  },
+  mounted() {
+    this.gsap = gsap;
+    ScrollTrigger.refresh();
+    this.gsapProducts();
+    this.gsapService();
+    this.gsapOther();
+  },
+  unmounted() {
+    const triggers = ScrollTrigger.getAll();
+    triggers.forEach((trigger) => {
+      trigger.kill();
+    });
+    ScrollTrigger.clearMatchMedia();
   },
   components: {
     Swiper,

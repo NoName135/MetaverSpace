@@ -30,33 +30,50 @@
       </swiper-slide>
     </swiper>
   </section>
-  <section class="h-screen-nav container py-16 hidden md:grid auto-rows-fr grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-6 justify-center items-center text-center">
+  <section ref="indexCards" class="h-screen-nav container py-16 hidden md:grid auto-rows-fr grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-6 justify-center items-center text-center overflow-x-hidden">
     <div>
       <h2 class="font-bold text-2xl lg:text-3xl mb-4">打開元宇宙大門</h2>
       <p>進入元宇宙體驗新生活</p>
       <p>在虛擬世界中沒有距離</p>
     </div>
-    <div v-for="card in cards" :key="card.text" class="h-4/5 lg:h-3/4">
+    <div v-for="(card, index) in cards" :ref="`card${index}`" :key="card.text" class="h-4/5 lg:h-3/4 relative" @mouseenter="playCard(index)" @mouseleave="reverseCard(index)">
       <div
-        class="backdrop-blur-[2px] border rounded w-[calc(100%-80px)] lg:w-[calc(100%-32px)] mx-auto py-8 h-full flex flex-col justify-around"
+        :ref="`cardFront${index}`"
+        class="card-front backdrop-blur-[2px] border rounded w-[calc(100%-80px)] lg:w-[calc(100%-32px)] mx-auto py-8 h-full flex flex-col justify-around absolute backFaceHidden"
         style="background: linear-gradient(142.88deg, rgba(255, 255, 255, 0.16) 8.09%, rgba(255, 255, 255, 0.064) 27.24%, rgba(255, 255, 255, 0.064) 34.42%, rgba(255, 255, 255, 0.1088) 48.78%, rgba(255, 255, 255, 0) 100%)">
         <img class="h-2/5 mx-auto" :src="card.img">
         <p class="mt-2 font-bold text-2xl">{{card.text}}</p>
+      </div>
+      <div
+        :ref="`cardBack${index}`"
+        class="card-front backdrop-blur-[2px] border rounded w-[calc(100%-80px)] lg:w-[calc(100%-32px)] mx-auto p-8 h-full flex flex-col justify-around absolute backFaceHidden"
+        style="background: linear-gradient(142.88deg, rgba(255, 255, 255, 0.16) 8.09%, rgba(255, 255, 255, 0.064) 27.24%, rgba(255, 255, 255, 0.064) 34.42%, rgba(255, 255, 255, 0.1088) 48.78%, rgba(255, 255, 255, 0) 100%)">
+        <img class="h-2/5 mx-auto opacity-30" :src="card.img">
+        <div class="flex flex-col justify-around items-start w-full h-full p-4 absolute left-0">
+          <p class="text-left text-md leading-relaxed lg:text-lg xl:leading-loose">{{ card.description }}</p>
+          <p class="text-xl lg:text-2xl font-bold self-center">{{card.text}}</p>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-// Import Swiper Vue.js components
+// import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
-
-// Import Swiper styles
+// import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-
-// import required modules
+// import Swiper required modules
 import { Navigation } from "swiper";
+
+// import gsap
+import { gsap } from "gsap";
+// get other gsap plugins
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+// register gsap plugins
+gsap.registerPlugin(ScrollTrigger);
+
 
 import game from "@/images/cards/game.png"
 import sport from "@/images/cards/sport.png"
@@ -74,34 +91,117 @@ export default {
       cards: [
         {
           img: game,
-          text: "遊戲"
+          text: "遊戲",
+          description: "提供上百款多人和更多類型的遊戲，在前所未有的環境中享受無與倫比的自由。",
+          flipCard: ''
         },
         {
           img: sport,
-          text: "運動"
+          text: "運動",
+          description: "體驗各種室內或戶外運動，不再被距離、天氣或是其他意外狀況影響訓練。",
+          flipCard: ''
         },
         {
           img: movie,
-          text: "電影"
+          text: "電影",
+          description: "和朋友一起觀看電影、紀錄片、綜藝或各種節目，宛如與大家同處一室。",
+          flipCard: ''
         },
         {
           img: active,
-          text: "活動"
+          text: "活動",
+          description: "觀看各種表演、體育賽事、唱歌或是參加派對，朋友在世界各地也可同聚狂歡。",
+          flipCard: ''
         },
         {
           img: social,
-          text: "社交"
+          text: "社交",
+          description: "聯絡親友的方式變得更加有趣，社群應用或多人遊戲，隨時隨地與朋友同樂。",
+          flipCard: ''
         },
         {
           img: work,
-          text: "工作"
+          text: "工作",
+          description: "在世界各地相聚開會，或是使用可縮放畫面多工處理，讓工作變的方便有趣。",
+          flipCard: ''
         },
         {
           img: study,
-          text: "學習"
+          text: "學習",
+          description: "提供安全、符合成本的環境來學習真實情境，遇到任何失敗都可以重新來過。",
+          flipCard: ''
         },
       ]
     }
+  },
+  methods: {
+    gsapMoveCards() {
+      const moveCard = this.gsap.timeline({
+        scrollTrigger: {
+          trigger: this.$refs.indexCards,
+          scrub: true,
+          pin: true,
+          start: "top 64px",
+          invalidateOnResize: true,
+          // markers: true,
+        }
+      })
+
+      ScrollTrigger.matchMedia({
+        "(min-width: 768px) and (max-width: 975px)": () => {
+          moveCard.from(this.$refs.card0, { xPercent: "150", ease: "expo" });
+          moveCard.from(this.$refs.card1, { xPercent: "250", ease: "expo" });
+          moveCard.from(this.$refs.card2, { xPercent: "150", ease: "expo" });
+          moveCard.from(this.$refs.card3, { xPercent: "250", ease: "expo" });
+          moveCard.from(this.$refs.card4, { xPercent: "150", ease: "expo" });
+          moveCard.from(this.$refs.card5, { xPercent: "250", ease: "expo" });
+          moveCard.from(this.$refs.card6, { xPercent: "150", ease: "expo" });
+        },
+        "(min-width: 976px)": () => {
+          moveCard.from(this.$refs.card0, { xPercent: "350", ease: "expo" });
+          moveCard.from(this.$refs.card1, { xPercent: "250", ease: "expo" });
+          moveCard.from(this.$refs.card2, { xPercent: "150", ease: "expo" });
+          moveCard.from(this.$refs.card3, { xPercent: "450", ease: "expo" });
+          moveCard.from(this.$refs.card4, { xPercent: "350", ease: "expo" });
+          moveCard.from(this.$refs.card5, { xPercent: "250", ease: "expo" });
+          moveCard.from(this.$refs.card6, { xPercent: "150", ease: "expo" });
+        }
+      })
+    },
+    gsapFlipCards() {
+      this.cards.forEach((card, i) => {
+        gsap.set(this.$refs[`card${i}`], {
+          transformStyle: "preserve-3d",
+          transformPerspective: 800
+        });
+        const q = gsap.utils.selector(this.$refs[`card${i}`]);
+        gsap.set(q(this.$refs[`cardBack${i}`]), { rotationY:-180 });
+        this.cards[i].flipCard = gsap.timeline({ paused: true })
+          .to(q(this.$refs[`cardFront${i}`]), { duration: 1, rotationY: 180 })
+          .to(q(this.$refs[`cardBack${i}`]), { duration: 1, rotationY: 0 }, 0)
+          .to(this.$refs[`card${i}`], { z: 50 }, 0)
+          .to(this.$refs[`card${i}`], { z: 0 }, 0.5);
+      })
+    },
+    playCard(target) {
+      this.cards[target].flipCard.play()
+    },
+    reverseCard(target) {
+      this.cards[target].flipCard.reverse()
+    }
+  },
+  mounted() {
+    this.gsap = gsap;
+    ScrollTrigger.refresh();
+    this.gsapMoveCards();
+    this.gsapFlipCards();
+  },
+  unmounted() {
+    const triggers = ScrollTrigger.getAll();
+    triggers.forEach((trigger) => {
+      trigger.kill();
+    });
+    ScrollTrigger.clearMatchMedia();
   },
   components: {
     Swiper,
@@ -109,3 +209,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.backFaceHidden{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+}
+</style>
