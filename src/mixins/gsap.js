@@ -6,13 +6,13 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 export default {
   mounted() {
+    ScrollTrigger.refresh();
     // register gsap plugins
     gsap.registerPlugin(ScrollTrigger);
-    gsap.registerPlugin(ScrollToPlugin);
-    this.gsap = gsap;
     this.ScrollTrigger = ScrollTrigger;
+    gsap.registerPlugin(ScrollToPlugin);
     this.ScrollToPlugin = ScrollToPlugin;
-    this.ScrollTrigger.refresh();
+    this.gsap = gsap;
   },
   unmounted() {
     const triggers = this.ScrollTrigger.getAll();
