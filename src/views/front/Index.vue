@@ -34,7 +34,7 @@ export default {
           toggleActions:"play none none reverse",
           markers: true,
         },
-        y:-1000, ease:"expo", duration: 0.5
+        y:-1300, ease:"expo", duration: 0.5
       })
     },
     gsapScrollTop() {

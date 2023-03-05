@@ -379,7 +379,7 @@
         <p class="mt-4">購買過程或收到商品遇到問題，聯繫我們會盡快回覆您。</p>
       </div>
     </div>
-    <div ref="other" class="mt-16 grid grid-cols-1 md:grid-cols-2 mx-2 lg:mx-0 gap-6 md:gap-0">
+    <div ref="other" class="mt-16 grid grid-cols-1 md:grid-cols-2 mx-2 lg:mx-0 gap-6 md:gap-0 overflow-x-hidden">
       <div ref="other1" class="p-10 bg-cover bg-center border border-opacity-87" :style="{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${reserve})`}">
         <h5 class="text-xl lg:text-3xl font-bold">不清楚商品是否符合需求？</h5>
         <div class="w-12 border border-b-8 mt-2"></div>
