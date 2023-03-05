@@ -2,7 +2,9 @@
   <section ref="indexTitle" class="h-screen bg-fixed bg-cover relative" :style="{backgroundImage: `url(${titleImg})`, backgroundPosition: 'top right 20%'}">
     <div class="container px-2 lg:px-0 py-40 h-full flex flex-col justify-around">
       <div class="mt-16 mb-4">
-        <h1 ref="title" class="text-4xl sm:text-6xl font-bold">MetaverSpace</h1>
+        <div class="flex">
+          <h1 class="text-4xl sm:text-6xl font-bold" v-for="(splitTitle, i) in title" :key="splitTitle" :ref="`split${i}`">{{ splitTitle }}</h1>
+        </div>
         <div class="w-12 border border-b-8 mt-2"></div>
       </div>
       <div ref="text">
@@ -26,23 +28,20 @@
 import titleImg from '@/images/title.jpg';
 import titleIcon from '@/images/controller.png';
 
-// import gsap
-import { gsap } from "gsap";
-// get other gsap plugins
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-// register gsap plugins
-gsap.registerPlugin(ScrollTrigger);
+import gsapMixin from "@/mixins/gsap.js";
 
 export default {
+  mixins: [gsapMixin],
   data() {
     return {
+      title: 'MetaverSpace',
       titleImg: titleImg,
       titleIcon: titleIcon
     }
   },
   methods: {
     gsapTitle() {
-      this.gsap.timeline({
+      const indexTitle = this.gsap.timeline({
         scrollTrigger: {
           trigger: this.$refs.indexTitle,
           start: "top 50%",
@@ -50,22 +49,15 @@ export default {
           // markers: true,
         }
       })
-      .from(this.$refs.title, {xPercent:-100, ease:"expo", duration: 0.8, delay: 0.5})
-      .from(this.$refs.text, {y:100, opacity:0, ease:"back", duration: 1, delay: 0.5}, "<")
-      .from(this.$refs.scrollDown, {yPercent:-1000, ease:"bounce", duration: 1, delay: 0.5}, "<")
+      this.title.split('').forEach((split, i) => {
+        indexTitle.from(this.$refs[`split${i}`], {yPercent:-100, opacity:0, ease:"expo", duration: 0.8, delay: 0.08}, "<")
+      })
+      indexTitle.from(this.$refs.text, {xPercent:-100, ease:"back", duration: 0.8, delay: 0.3}, "<")
+      indexTitle.from(this.$refs.scrollDown, {yPercent:-1000, ease:"bounce", duration: 1, delay: 0.8}, "<")
     },
   },
   mounted() {
-    this.gsap = gsap;
-    ScrollTrigger.refresh();
     this.gsapTitle();
-  },
-  unmounted() {
-    const triggers = ScrollTrigger.getAll();
-    triggers.forEach((trigger) => {
-      trigger.kill();
-    });
-    ScrollTrigger.clearMatchMedia();
-  },
+  }
 }
 </script>

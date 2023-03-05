@@ -421,14 +421,10 @@ import "swiper/css/pagination";
 // import required modules
 import { Navigation, Pagination, Autoplay } from "swiper";
 
-// import gsap
-import { gsap } from "gsap";
-// get other gsap plugins
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-// register gsap plugins
-gsap.registerPlugin(ScrollTrigger);
+import gsapMixin from "@/mixins/gsap.js";
 
 export default {
+  mixins: [gsapMixin],
   data() {
     return {
       productModules: [Navigation, Pagination, Autoplay],
@@ -462,7 +458,7 @@ export default {
       .from(this.$refs.service3, {y:100, opacity:0, ease:"back", duration: 0.8, delay: 0.3}, "<")
     },
     gsapOther() {
-      ScrollTrigger.matchMedia({
+      this.ScrollTrigger.matchMedia({
         "(max-width: 767px)": () => {
           this.gsap.timeline({
             scrollTrigger: {
@@ -491,18 +487,9 @@ export default {
     }
   },
   mounted() {
-    this.gsap = gsap;
-    ScrollTrigger.refresh();
     this.gsapProducts();
     this.gsapService();
     this.gsapOther();
-  },
-  unmounted() {
-    const triggers = ScrollTrigger.getAll();
-    triggers.forEach((trigger) => {
-      trigger.kill();
-    });
-    ScrollTrigger.clearMatchMedia();
   },
   components: {
     Swiper,

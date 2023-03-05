@@ -67,13 +67,7 @@ import "swiper/css/navigation";
 // import Swiper required modules
 import { Navigation } from "swiper";
 
-// import gsap
-import { gsap } from "gsap";
-// get other gsap plugins
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-// register gsap plugins
-gsap.registerPlugin(ScrollTrigger);
-
+import gsapMixin from "@/mixins/gsap.js";
 
 import game from "@/images/cards/game.png"
 import sport from "@/images/cards/sport.png"
@@ -85,6 +79,7 @@ import study from "@/images/cards/study.png"
 
 
 export default {
+  mixins: [gsapMixin],
   data() {
     return {
       cardModules: [Navigation],
@@ -147,7 +142,7 @@ export default {
         }
       })
 
-      ScrollTrigger.matchMedia({
+      this.ScrollTrigger.matchMedia({
         "(min-width: 768px) and (max-width: 975px)": () => {
           moveCard.from(this.$refs.card0, { xPercent: "150", ease: "expo" });
           moveCard.from(this.$refs.card1, { xPercent: "250", ease: "expo" });
@@ -170,13 +165,13 @@ export default {
     },
     gsapFlipCards() {
       this.cards.forEach((card, i) => {
-        gsap.set(this.$refs[`card${i}`], {
+        this.gsap.set(this.$refs[`card${i}`], {
           transformStyle: "preserve-3d",
           transformPerspective: 800
         });
-        const q = gsap.utils.selector(this.$refs[`card${i}`]);
-        gsap.set(q(this.$refs[`cardBack${i}`]), { rotationY:-180 });
-        this.cards[i].flipCard = gsap.timeline({ paused: true })
+        const q = this.gsap.utils.selector(this.$refs[`card${i}`]);
+        this.gsap.set(q(this.$refs[`cardBack${i}`]), { rotationY:-180 });
+        this.cards[i].flipCard = this.gsap.timeline({ paused: true })
           .to(q(this.$refs[`cardFront${i}`]), { duration: 1, rotationY: 180 })
           .to(q(this.$refs[`cardBack${i}`]), { duration: 1, rotationY: 0 }, 0)
           .to(this.$refs[`card${i}`], { z: 50 }, 0)
@@ -191,17 +186,8 @@ export default {
     }
   },
   mounted() {
-    this.gsap = gsap;
-    ScrollTrigger.refresh();
     this.gsapMoveCards();
     this.gsapFlipCards();
-  },
-  unmounted() {
-    const triggers = ScrollTrigger.getAll();
-    triggers.forEach((trigger) => {
-      trigger.kill();
-    });
-    ScrollTrigger.clearMatchMedia();
   },
   components: {
     Swiper,

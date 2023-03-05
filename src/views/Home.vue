@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark text-white main-height-full" @click="hideNavCollapse">
+  <div ref="home" class="bg-dark text-white main-height-full" @click="hideNavCollapse">
     <div class="main-area">
       <Navbar ref="navbar" />
       <main>
@@ -67,7 +67,11 @@
       <p class="text-center bg-black py-6">Copyright © 2023 Ezekiel Lin. All Rights Reserved</p>
     </footer>
   </div>
-  <div :class="['bottom-24 right-8 md:right-12 lg:right-20 z-50 cursor-pointer', [windowTop > 500 ? 'fixed' : 'hidden']]">
+  <div
+    ref="scroll"
+    :class="['bottom-24 right-8 md:right-12 lg:right-20 z-50 cursor-pointer fixed']"
+    @click="gsapScrollTop()"
+  >
     <font-awesome-icon
       :icon="['far', 'circle-up']"
       class="text-white text-3xl md:text-4xl lg:text-5xl"
@@ -77,30 +81,47 @@
 
 <script>
 import Navbar from '../components/Navbar.vue'
+import gsapMixin from "@/mixins/gsap.js";
 
 export default {
+  mixins: [gsapMixin],
   data() {
     return {
       windowTop: 0,
     }
   },
   methods: {
+    hideNavCollapse(){
+      this.$refs.navbar.hideCollapse();
+    },
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
     },
-    hideNavCollapse(){
-      this.$refs.navbar.hideCollapse();
+    gsapScroll() {
+      this.gsap.timeline({
+        scrollTrigger: {
+          trigger: this.$refs.home,
+          start: "top -500px",
+          toggleActions:"play none none reverse",
+          // markers: true,
+        }
+      })
+      .from(this.$refs.scroll, {y:-1000, ease:"expo", duration: 0.5})
+    },
+    gsapScrollTop() {
+      this.gsap.to(window, {duration: 1, scrollTo: 0});
     }
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
-  },
-  components: {
-    Navbar
+    this.gsapScroll();
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.onScroll);
   },
+  components: {
+    Navbar
+  }
 }
 </script>
 

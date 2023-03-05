@@ -73,12 +73,7 @@
 </template>
 
 <script>
-// import gsap
-import { gsap } from "gsap";
-// get other gsap plugins
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-// register gsap plugins
-gsap.registerPlugin(ScrollTrigger);
+import gsapMixin from "@/mixins/gsap.js";
 
 import AR from '@/images/AR.jpg';
 import VR from '@/images/VR.jpg';
@@ -86,6 +81,7 @@ import MR from '@/images/MR.jpg';
 import XR from '@/images/XR.jpg';
 
 export default {
+  mixins: [gsapMixin],
   data() {
     return {
       categories: {
@@ -99,7 +95,7 @@ export default {
   methods: {
     gsapCategory() {
       Object.keys(this.categories).forEach((key, i) => {
-        ScrollTrigger.matchMedia({
+        this.ScrollTrigger.matchMedia({
           "(max-width: 975px)": () => {
             this.gsap.timeline({
               scrollTrigger: {
@@ -130,17 +126,8 @@ export default {
     }
   },
   mounted() {
-    this.gsap = gsap;
-    ScrollTrigger.refresh();
     this.gsapCategory();
-  },
-  unmounted() {
-    const triggers = ScrollTrigger.getAll();
-    triggers.forEach((trigger) => {
-      trigger.kill();
-    });
-    ScrollTrigger.clearMatchMedia();
-  },
+  }
 }
 </script>
 
