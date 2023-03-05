@@ -85,11 +85,6 @@ import gsapMixin from "@/mixins/gsap.js";
 
 export default {
   mixins: [gsapMixin],
-  data() {
-    return {
-      windowTop: 0,
-    }
-  },
   methods: {
     hideNavCollapse(){
       this.$refs.navbar.hideCollapse();
@@ -113,11 +108,7 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener("scroll", this.onScroll);
     this.gsapScroll();
-  },
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.onScroll);
   },
   components: {
     Navbar
