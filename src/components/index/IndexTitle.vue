@@ -50,7 +50,7 @@ export default {
         }
       })
       this.title.split('').forEach((split, i) => {
-        indexTitle.from(this.$refs[`split${i}`], {yPercent:-100, opacity:0, ease:"expo", duration: 0.8, delay: 0.08}, "<")
+        indexTitle.from(this.$refs[`split${i}`], {yPercent:-100, opacity:0, ease:"expo", duration: 0.8, delay: 0.1}, "<")
       })
       indexTitle.from(this.$refs.text, {xPercent:-100, ease:"back", duration: 0.8, delay: 0.3}, "<")
       indexTitle.from(this.$refs.scrollDown, {yPercent:-1000, ease:"bounce", duration: 1, delay: 0.8}, "<")

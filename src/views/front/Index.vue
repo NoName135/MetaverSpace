@@ -6,7 +6,7 @@
 
   <div
     ref="scroll"
-    :class="['bottom-24 right-8 md:right-12 lg:right-20 z-50 cursor-pointer fixed']"
+    class="bottom-24 right-8 md:right-12 lg:right-20 z-50 cursor-pointer fixed"
     @click="gsapScrollTop()"
   >
     <font-awesome-icon
