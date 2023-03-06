@@ -4,7 +4,7 @@
       <h2 class="text-3xl font-bold text-center mb-4">四大類型</h2>
       <p class="text-center">擺脫物理上的束縛</p>
       <p class="text-center mb-10">體驗自由自在的虛擬世界</p>
-      <div ref="timeline1" class="timeline overflow-x-hidden">
+      <div ref="timeline1" class="timeline overflow-hidden">
         <div class="number-bg hidden lg:block">
           <div class="number num1"></div>
         </div>
@@ -20,7 +20,7 @@
         </div>
         <p ref="timeline1Title" class="text-8xl xl:text-9xl font-bold text-center text-white/20 -mt-32 hidden lg:block">Augmented Reality</p>
       </div>
-      <div ref="timeline2" class="timeline overflow-x-hidden">
+      <div ref="timeline2" class="timeline overflow-hidden">
         <div class="number-bg hidden lg:block">
           <div class="number num2"></div>
         </div>
@@ -36,7 +36,7 @@
           <p ref="timeline2Title" class="text-8xl xl:text-9xl font-bold text-center text-white/20 -mt-32 hidden lg:block">Virtual Reality</p>
         </div>
       </div>
-      <div ref="timeline3" class="timeline overflow-x-hidden">
+      <div ref="timeline3" class="timeline overflow-hidden">
         <div class="number-bg hidden lg:block">
           <div class="number num3"></div>
         </div>
@@ -52,7 +52,7 @@
           <p ref="timeline3Title" class="text-8xl xl:text-9xl font-bold text-center text-white/20 -mt-32 hidden lg:block">Mixed Reality</p>
         </div>
       </div>
-      <div ref="timeline4" class="timeline overflow-x-hidden">
+      <div ref="timeline4" class="timeline overflow-hidden">
         <div class="number-bg hidden lg:block">
           <div class="number num4"></div>
         </div>
