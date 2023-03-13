@@ -1,0 +1,1 @@
+import{P as o}from"./Pagination-4933bf91.js";import{_ as t,c as n,a,b as s,r as c,o as r}from"./index-b3274c9e.js";const i={components:{Pagination:o}},_={class:"mt-8 flex justify-center"};function p(d,l,m,f,u,x){const e=c("Pagination");return r(),n("div",null,[a("div",_,[s(e)])])}const g=t(i,[["render",p]]);export{g as default};
