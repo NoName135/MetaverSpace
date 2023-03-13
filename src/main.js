@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 import "./index.css";
 
 import App from "./App.vue";
 import router from "./router";
+import ScrollTop from "@/components/ScrollTop.vue";
 
 // axios
 import axios from "axios";
@@ -15,11 +16,50 @@ import "vue-loading-overlay/dist/css/index.css";
 
 // fontawesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faArrowDown, faChevronRight, faTruckFast, faDollarSign, faScrewdriverWrench, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSpinner,
+  faShoppingCart,
+  faCartPlus,
+  faHeart,
+  faXmark,
+  faPhone,
+  faArrowLeft,
+  faArrowDown,
+  faChevronLeft,
+  faChevronRight,
+  faTruckFast,
+  faDollarSign,
+  faScrewdriverWrench,
+  faEnvelope,
+  faFilter,
+  faMinus,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faCircleUp, faSpinner, faShoppingCart, faHeart, faXmark, faPhone, faFacebook, faInstagram, faArrowDown, faChevronRight, faTruckFast, faDollarSign, faScrewdriverWrench, faEnvelope);
+library.add(
+  faCircleUp,
+  faSpinner,
+  faShoppingCart,
+  faCartPlus,
+  faHeart,
+  faXmark,
+  faPhone,
+  faFacebook,
+  faInstagram,
+  faArrowLeft,
+  faArrowDown,
+  faChevronLeft,
+  faChevronRight,
+  faTruckFast,
+  faDollarSign,
+  faScrewdriverWrench,
+  faEnvelope,
+  faFilter,
+  faMinus,
+  faTrashCan
+);
 
 // vee-validate
 import { Form, Field, ErrorMessage, defineRule, configure } from "vee-validate";
@@ -49,10 +89,10 @@ createApp(App)
   .use(createPinia())
   .use(router)
   .use(VueAxios, axios)
+  .component("ScrollTop", ScrollTop)
   .component("VueLoading", Loading)
   .component("FontAwesomeIcon", FontAwesomeIcon)
   .component("VForm", Form)
   .component("VField", Field)
   .component("ErrorMessage", ErrorMessage)
   .mount("#app");
-

@@ -16,6 +16,25 @@
   }
 }
 
+@mixin xl{
+  @media(min-width: 1440px){
+    @content;
+  }
+}
+
+// 隱藏數字輸入框 (Input Number) 的上下箭頭 (Arrows) 控制項
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  appearance: textfield;
+}
+
 // animated button
 .primary-solid-button {
   display: inline-block;
@@ -74,6 +93,19 @@
   padding-bottom: 48px !important;
 }
 
+.productSwiper {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  @include sm{
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+  }
+  @include xl{
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
 .swiper-slide {
   display: flex;
   justify-content: center;
@@ -96,7 +128,7 @@
 .swiper-button-prev,
 .swiper-button-next {
   z-index: 10;
-  top: 20px !important;
+  top: 22px !important;
   width: calc(100vw / 10) !important;
   @include sm{
     width: calc(100vw / 8) !important;
@@ -111,6 +143,19 @@
 .indexProductSwiper>.swiper-button-prev,
 .indexProductSwiper>.swiper-button-next {
   height:435px !important;
+}
+
+.productsArticleSwiper>.swiper-button-prev,
+.productsArticleSwiper>.swiper-button-next,
+.productModalSwiper>.swiper-button-prev,
+.productModalSwiper>.swiper-button-next,
+.productSwiper>.swiper-button-prev,
+.productSwiper>.swiper-button-next {
+  width: 10vw !important;
+  @include md{
+    width: calc(100vw / 20) !important;
+  }
+  height:100% !important;
 }
 
 .swiper-button-prev {

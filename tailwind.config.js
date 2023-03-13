@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
   content: [
     "./index.html",
@@ -19,17 +20,21 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary0: "#88D9F2",
+        primary0: "#7FCCE3",
         primary: "#39B7DF",
-        primary2: "#319CBD",
-        primary3: "#3F6570",
+        primary2: "#29839E",
+        primary3: "#194E5E",
         secondary: "#7755D8",
+        secondary2: "#553C99",
+        secondary3: "#312359",
         gradient: {
           g1: "#0E3062",
           g2: "#121D3A",
         },
         dark: "#2B282F",
         warm: "#FE5F50",
+        warm2: "#BF463B",
+        warm3: "#802F28",
       },
       opacity: {
         38: "0.38",
@@ -53,5 +58,6 @@ module.exports = {
   variants: {
     extend: false,
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("@tailwindcss/forms"), require("flowbite/plugin")],
 };

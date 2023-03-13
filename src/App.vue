@@ -2,12 +2,10 @@
   <router-view />
 </template>
 
-<script >
+<script>
 // import { RouterLink, RouterView } from 'vue-router'
-import { mapState } from 'pinia';
-export default {
-  
-}
+import { mapState } from "pinia";
+export default {};
 </script>
 
 <style lang="scss">

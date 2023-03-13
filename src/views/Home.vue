@@ -6,7 +6,7 @@
         <router-view></router-view>
       </main>
     </div>
-    <footer class="bg-black/50">
+    <footer class="bg-black/50 mt-8">
       <section class="py-24 px-2 lg:px-40">
         <div class="container grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div>
@@ -70,18 +70,18 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
+import Navbar from "../components/Navbar.vue";
 
 export default {
   methods: {
-    hideNavCollapse(){
+    hideNavCollapse() {
       this.$refs.navbar.hideCollapse();
     },
   },
   components: {
-    Navbar
-  }
-}
+    Navbar,
+  },
+};
 </script>
 
 <style>

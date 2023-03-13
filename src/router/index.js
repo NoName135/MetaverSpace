@@ -11,13 +11,13 @@ const routes = [
         component: () => import("../views/front/Index.vue"),
       },
       {
-        path: "article",
+        path: "article/:id",
         name: "最新消息",
         component: () => import("../views/front/Article.vue"),
       },
       {
         path: "products",
-        name: "產品列表",
+        name: "商品列表",
         component: () => import("../views/front/Products.vue"),
       },
       {
@@ -38,6 +38,13 @@ const routes = [
         path: "order",
         name: "交易紀錄",
         component: () => import("../views/front/Order.vue"),
+        children: [
+          {
+            path: "",
+            name: "交易明細",
+            component: () => import("../views/front/OrderDetail.vue"),
+          },
+        ],
       },
       {
         path: "checkout",
@@ -114,11 +121,20 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   linkActiveClass: "active",
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     return {
-      top: 0
+      top: 0,
     };
   },
+});
+
+// 判斷切換頁面時 scrollTop 按鈕是否存在，有就移除此 HTML 區塊避免複製
+router.beforeEach((to, from, next) => {
+  const scrollTopBtn = document.querySelector("#scrollTop");
+  if (scrollTopBtn) {
+    scrollTopBtn.remove(scrollTopBtn);
+  }
+  next();
 });
 
 export default router;

@@ -6,10 +6,13 @@
   .h-screen-nav {
     @apply h-[calc(100vh-128px)] sm:h-[calc(100vh-80px)] lg:h-[calc(100vh-92px)]
   }
+  .mt-nav {
+    @apply mt-36 sm:mt-24 lg:mt-28
+  }
   .primary-button {
     @apply text-white bg-gradient-to-r from-primary via-primary2 to-primary3 hover:bg-gradient-to-br focus:ring focus:outline-none focus:ring-primary0 font-medium rounded text-sm px-5 py-2.5 text-center
   }
-  .second-solid-button {
-    @apply bg-transparent border border-gray-300 focus:outline-none hover:text-dark hover:bg-gray-100 focus:ring focus:ring-gray-200 font-medium rounded text-sm px-5 py-2.5
+  .dark-solid-button {
+    @apply bg-transparent border-2 border-gray-300 focus:outline-none hover:text-dark hover:bg-gray-100 focus:ring focus:ring-gray-500 font-medium rounded text-sm px-5 py-2.5
   }
 }
