@@ -21,11 +21,17 @@
             768: {
               slidesPerView: 5,
             },
+            976: {
+              slidesPerView: 4,
+            },
+            1440: {
+              slidesPerView: 5,
+            },
           }"
           :spaceBetween="30"
           :navigation="true"
           :modules="productModules"
-          class="productSwiper mt-6 px-12"
+          class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24"
         >
           <swiper-slide v-for="image in images" :key="image.id">
             <div class="cursor-pointer" @click="changeImg(image.img)">
@@ -162,17 +168,19 @@
                     id="accessorySpec1"
                     class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled>選擇規格</option>
-                    <option value="黑色">黑色</option>
-                    <option value="白色">白色</option>
+                    <option selected disabled class="bg-white/20">
+                      選擇規格
+                    </option>
+                    <option value="黑色" class="bg-white/20">黑色</option>
+                    <option value="白色" class="bg-white/20">白色</option>
                   </select>
                   <select
                     id="accessoryNum1"
                     class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="1" class="bg-white/20">1</option>
+                    <option value="2" class="bg-white/20">2</option>
+                    <option value="3" class="bg-white/20">3</option>
                   </select>
                 </div>
                 <div class="flex justify-between items-end mt-4">
@@ -214,17 +222,19 @@
                     id="accessorySpec2"
                     class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled>選擇規格</option>
-                    <option value="黑色">黑色</option>
-                    <option value="白色">白色</option>
+                    <option selected disabled class="bg-white/20">
+                      選擇規格
+                    </option>
+                    <option value="黑色" class="bg-white/20">黑色</option>
+                    <option value="白色" class="bg-white/20">白色</option>
                   </select>
                   <select
                     id="accessoryNum2"
                     class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="1" class="bg-white/20">1</option>
+                    <option value="2" class="bg-white/20">2</option>
+                    <option value="3" class="bg-white/20">3</option>
                   </select>
                 </div>
                 <div class="flex justify-between items-end mt-4">
@@ -266,17 +276,19 @@
                     id="accessorySpec3"
                     class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled>選擇規格</option>
-                    <option value="黑色">黑色</option>
-                    <option value="白色">白色</option>
+                    <option selected disabled class="bg-white/20">
+                      選擇規格
+                    </option>
+                    <option value="黑色" class="bg-white/20">黑色</option>
+                    <option value="白色" class="bg-white/20">白色</option>
                   </select>
                   <select
                     id="accessoryNum3"
                     class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="1" class="bg-white/20">1</option>
+                    <option value="2" class="bg-white/20">2</option>
+                    <option value="3" class="bg-white/20">3</option>
                   </select>
                 </div>
                 <div class="flex justify-between items-end mt-4">
@@ -323,6 +335,7 @@
       </div>
     </div>
   </div>
+  <ScrollTop />
 </template>
 
 <script>

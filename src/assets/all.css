@@ -7,50 +7,9 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.primary-solid-button {
-  display: inline-block;
-  padding: 8px 12px;
-  color: white;
-  border: 3px solid #39B7DF;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  position: relative;
-  background-color: transparent;
-  text-decoration: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.primary-solid-button::before,
-.primary-solid-button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 55%;
-  height: 100%;
-  background-color: #39B7DF;
-  transition: all 0.3s;
-  z-index: -1;
-}
-
-.primary-solid-button::before {
-  transform: translateX(-100%);
-}
-
-.primary-solid-button::after {
-  transform: translateX(180%);
-}
-
-.primary-solid-button:hover::before {
-  transform: translateX(-5%);
-}
-
-.primary-solid-button:hover::after {
-  transform: translateX(90%);
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
 }
 
 :root {
@@ -60,27 +19,6 @@ input[type=number] {
 .swiper {
   width: 100%;
   margin: 20px auto;
-}
-
-.indexProductSwiper {
-  padding-bottom: 48px !important;
-}
-
-.productSwiper {
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-}
-@media (min-width: 480px) {
-  .productSwiper {
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
-  }
-}
-@media (min-width: 1440px) {
-  .productSwiper {
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
-  }
 }
 
 .swiper-slide {
@@ -142,6 +80,13 @@ input[type=number] {
   .productSwiper > .swiper-button-prev,
   .productSwiper > .swiper-button-next {
     width: 5vw !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .productModalSwiper > .swiper-button-prev,
+  .productModalSwiper > .swiper-button-next {
+    width: 4vw !important;
   }
 }
 

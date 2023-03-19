@@ -2,7 +2,7 @@
   <div class="mt-nav">
     <div class="container px-2 md:px-0 pt-8">
       <div class="border-2 rounded-lg overflow-hidden">
-        <h1 class="p-4 bg-black/50 text-2xl font-bold border-b-2">交易記錄</h1>
+        <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">交易記錄</h1>
         <div class="px-8">
           <div class="py-8 flex justify-center">
             <form class="w-96">
@@ -34,19 +34,18 @@
                   required
                 />
               </div>
-              <button
-                type="submit"
-                class="mt-12 text-white focus:ring-4 focus:outline-none font-medium rounded text-sm w-full py-2 text-center bg-primary hover:bg-primary2 focus:ring-primary3"
-              >
-                送出查詢
+              <button type="submit" class="mt-12 primary-button w-full">
+                訂單查詢
               </button>
             </form>
           </div>
         </div>
       </div>
+      <div class="my-20 border-b border-2"></div>
       <router-view></router-view>
     </div>
   </div>
+  <ScrollTop />
 </template>
 
 <script>

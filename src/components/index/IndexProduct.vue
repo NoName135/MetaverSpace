@@ -27,7 +27,7 @@
           :navigation="true"
           :pagination="true"
           :modules="productModules"
-          class="indexProductSwiper text-dark h-[480px]"
+          class="indexProductSwiper text-dark h-[480px] !pb-12"
         >
           <swiper-slide class="rounded border overflow-hidden">
             <div class="h-full">

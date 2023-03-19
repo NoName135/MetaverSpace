@@ -2,7 +2,7 @@
   <div class="mt-nav">
     <div class="container px-2 md:px-0 pt-8">
       <div class="border-2 rounded-lg overflow-hidden">
-        <h1 class="p-4 bg-black/50 text-2xl font-bold border-b-2">收藏清單</h1>
+        <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">收藏清單</h1>
         <div class="px-8">
           <div class="py-8 grid grid-cols-5 gap-6">
             <img
@@ -35,11 +35,13 @@
                   >
                     <select
                       id="spec1"
-                      class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                      class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary"
                     >
-                      <option selected disabled>選擇規格</option>
-                      <option value="黑色">黑色</option>
-                      <option value="白色">白色</option>
+                      <option selected disabled class="bg-white/20">
+                        選擇規格
+                      </option>
+                      <option value="黑色" class="bg-white/20">黑色</option>
+                      <option value="白色" class="bg-white/20">白色</option>
                     </select>
                     <button
                       type="button"
@@ -81,11 +83,13 @@
                   >
                     <select
                       id="spec1"
-                      class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                      class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary"
                     >
-                      <option selected disabled>選擇規格</option>
-                      <option value="黑色">黑色</option>
-                      <option value="白色">白色</option>
+                      <option selected disabled class="bg-white/20">
+                        選擇規格
+                      </option>
+                      <option value="黑色" class="bg-white/20">黑色</option>
+                      <option value="白色" class="bg-white/20">白色</option>
                     </select>
                     <button
                       type="button"

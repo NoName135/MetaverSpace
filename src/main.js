@@ -34,6 +34,7 @@ import {
   faFilter,
   faMinus,
   faTrashCan,
+  faArrowUpRightFromSquare
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -58,7 +59,8 @@ library.add(
   faEnvelope,
   faFilter,
   faMinus,
-  faTrashCan
+  faTrashCan,
+  faArrowUpRightFromSquare
 );
 
 // vee-validate

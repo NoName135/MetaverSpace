@@ -21,15 +21,17 @@
         <div class="flex items-center lg:order-2 ml-auto lg:ml-0 relative">
           <!-- favorite button -->
           <div ref="navFavBtn" class="relative" @click.stop="toggleFav">
-            <font-awesome-icon
-              :icon="['fas', 'heart']"
-              class="text-white text-2xl text-center cursor-pointer hover:text-primary"
-            />
-            <!-- badge -->
-            <div
-              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
-            >
-              20
+            <div class="group">
+              <font-awesome-icon
+                :icon="['fas', 'heart']"
+                class="text-white text-2xl text-center cursor-pointer group-hover:text-primary"
+              />
+              <!-- badge -->
+              <div
+                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
+              >
+                20
+              </div>
             </div>
             <!-- favorite menu -->
             <div
@@ -118,15 +120,17 @@
           </div>
           <!-- cart button -->
           <div ref="navCartBtn" class="ml-8 relative" @click.stop="toggleCart">
-            <font-awesome-icon
-              :icon="['fas', 'shopping-cart']"
-              class="text-white text-2xl text-center cursor-pointer hover:text-primary"
-            />
-            <!-- badge -->
-            <div
-              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
-            >
-              20
+            <div class="group">
+              <font-awesome-icon
+                :icon="['fas', 'shopping-cart']"
+                class="text-white text-2xl text-center cursor-pointer group-hover:text-primary"
+              />
+              <!-- badge -->
+              <div
+                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
+              >
+                20
+              </div>
             </div>
             <!-- cart menu -->
             <div
@@ -163,9 +167,8 @@
                             <input
                               type="number"
                               min="1"
-                              max="99"
                               value="1"
-                              class="rounded text-sm text-dark text-right h-6 w-14 mr-1"
+                              class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-14 mr-1"
                             />
                           </div>
                         </div>
@@ -210,7 +213,7 @@
                               min="1"
                               max="99"
                               value="1"
-                              class="rounded text-sm text-dark text-right h-6 w-14 mr-1"
+                              class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-14 mr-1"
                             />
                           </div>
                         </div>

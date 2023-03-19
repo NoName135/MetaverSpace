@@ -35,49 +35,6 @@ input[type=number] {
   appearance: textfield;
 }
 
-// animated button
-.primary-solid-button {
-  display: inline-block;
-  padding: 8px 12px;
-  color: white;
-  border: 3px solid #39B7DF;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  position: relative;
-  background-color: transparent;
-  text-decoration: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.primary-solid-button::before,
-.primary-solid-button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 55%;
-  height: 100%;
-  background-color: #39B7DF;
-  transition: all .3s;
-  z-index: -1;
-}
-
-.primary-solid-button::before {
-  transform: translateX(-100%);
-}
-
-.primary-solid-button::after {
-  transform: translateX(180%);
-}
-
-.primary-solid-button:hover::before {
-  transform: translateX(-5%);
-}
-
-.primary-solid-button:hover::after {
-  transform: translateX(90%);
-}
 
 // swiper
 :root {
@@ -87,23 +44,6 @@ input[type=number] {
 .swiper {
   width: 100%;
   margin: 20px auto;
-}
-
-.indexProductSwiper {
-  padding-bottom: 48px !important;
-}
-
-.productSwiper {
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-  @include sm{
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
-  }
-  @include xl{
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
-  }
 }
 
 .swiper-slide {
@@ -158,12 +98,19 @@ input[type=number] {
   height:100% !important;
 }
 
+.productModalSwiper>.swiper-button-prev,
+.productModalSwiper>.swiper-button-next {
+  @include xl{
+    width: calc(100vw / 25) !important;
+  }
+}
+
 .swiper-button-prev {
   left: 0 !important;
   background: linear-gradient(to left, transparent,#2b282fa9 30% , #2B282F);
 }
 
-.indexProductSwiper>.swiper-button-prev{
+.indexProductSwiper>.swiper-button-prev {
   @include lg {
     left: 15% !important;
   }

@@ -2,9 +2,7 @@
   <div class="mt-nav">
     <div class="container px-2 md:px-0 pt-8">
       <div class="border-2 rounded-lg overflow-hidden">
-        <h1 class="p-4 bg-black/50 text-2xl font-bold border-b-2">
-          我的購物車
-        </h1>
+        <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">我的購物車</h1>
         <div class="px-8">
           <div class="py-6 flex justify-between">
             <button
@@ -55,17 +53,19 @@
                     id="spec1"
                     class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled>選擇規格</option>
-                    <option value="黑色">黑色</option>
-                    <option value="白色">白色</option>
+                    <option selected disabled class="bg-white/20">
+                      選擇規格
+                    </option>
+                    <option value="黑色" class="bg-white/20">黑色</option>
+                    <option value="白色" class="bg-white/20">白色</option>
                   </select>
                   <select
                     id="accessoryNum3"
                     class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="1" class="bg-white/20">1</option>
+                    <option value="2" class="bg-white/20">2</option>
+                    <option value="3" class="bg-white/20">3</option>
                   </select>
                 </div>
                 <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
@@ -105,17 +105,19 @@
                     id="spec1"
                     class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled>選擇規格</option>
-                    <option value="黑色">黑色</option>
-                    <option value="白色">白色</option>
+                    <option selected disabled class="bg-white/20">
+                      選擇規格
+                    </option>
+                    <option value="黑色" class="bg-white/20">黑色</option>
+                    <option value="白色" class="bg-white/20">白色</option>
                   </select>
                   <select
                     id="accessoryNum3"
                     class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="1" class="bg-white/20">1</option>
+                    <option value="2" class="bg-white/20">2</option>
+                    <option value="3" class="bg-white/20">3</option>
                   </select>
                 </div>
                 <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
@@ -149,7 +151,7 @@
             </h5>
             <h3 class="mt-4 text-primary0 text-xl lg:text-2xl text-end">
               總金額：<span class="font-bold whitespace-nowrap"
-                >NT$ 51,800</span
+                >NT$ 50,800</span
               >
             </h3>
             <router-link :to="{ name: '結帳' }" class="mt-8 primary-button"
@@ -212,7 +214,7 @@
                       <h2 class="text-lg lg:text-xl">Meta</h2>
                       <select
                         id="spec1"
-                        class="border text-xs rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                        class="border text-xs sm:text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                       >
                         <option selected disabled>選擇規格</option>
                         <option value="黑色">黑色</option>
@@ -230,7 +232,7 @@
                       </h5>
                       <button
                         type="button"
-                        class="mt-4 xs:mt-1 primary-button md:ml-3"
+                        class="mt-5 xs:mt-1 primary-button md:ml-3"
                       >
                         加入購物車
                       </button>
@@ -252,7 +254,7 @@
                       <h2 class="text-lg lg:text-xl">VIVE</h2>
                       <select
                         id="spec1"
-                        class="border text-xs rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                        class="border text-xs sm:text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                       >
                         <option selected disabled>選擇規格</option>
                         <option value="黑色">黑色</option>
@@ -268,7 +270,7 @@
                       </h5>
                       <button
                         type="button"
-                        class="mt-4 xs:mt-1 primary-button md:ml-3"
+                        class="mt-5 xs:mt-1 primary-button md:ml-3"
                       >
                         加入購物車
                       </button>

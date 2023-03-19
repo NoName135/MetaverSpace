@@ -216,22 +216,22 @@ export default {
           });
         },
         "(min-width: 768px) and (max-width: 975px)": () => {
-          moveCard.from(this.$refs.card0, { xPercent: "150", ease: "circ" });
-          moveCard.from(this.$refs.card1, { xPercent: "250", ease: "circ" });
-          moveCard.from(this.$refs.card2, { xPercent: "150", ease: "circ" });
-          moveCard.from(this.$refs.card3, { xPercent: "250", ease: "circ" });
-          moveCard.from(this.$refs.card4, { xPercent: "150", ease: "circ" });
-          moveCard.from(this.$refs.card5, { xPercent: "250", ease: "circ" });
-          moveCard.from(this.$refs.card6, { xPercent: "150", ease: "circ" });
+          moveCard.from(this.$refs.card0, { xPercent: "150" });
+          moveCard.from(this.$refs.card1, { xPercent: "250" });
+          moveCard.from(this.$refs.card2, { xPercent: "150" });
+          moveCard.from(this.$refs.card3, { xPercent: "250" });
+          moveCard.from(this.$refs.card4, { xPercent: "150" });
+          moveCard.from(this.$refs.card5, { xPercent: "250" });
+          moveCard.from(this.$refs.card6, { xPercent: "150" });
         },
         "(min-width: 976px)": () => {
-          moveCard.from(this.$refs.card0, { xPercent: "350", ease: "circ" });
-          moveCard.from(this.$refs.card1, { xPercent: "250", ease: "circ" });
-          moveCard.from(this.$refs.card2, { xPercent: "150", ease: "circ" });
-          moveCard.from(this.$refs.card3, { xPercent: "450", ease: "circ" });
-          moveCard.from(this.$refs.card4, { xPercent: "350", ease: "circ" });
-          moveCard.from(this.$refs.card5, { xPercent: "250", ease: "circ" });
-          moveCard.from(this.$refs.card6, { xPercent: "150", ease: "circ" });
+          moveCard.from(this.$refs.card0, { xPercent: "350" });
+          moveCard.from(this.$refs.card1, { xPercent: "250" });
+          moveCard.from(this.$refs.card2, { xPercent: "150" });
+          moveCard.from(this.$refs.card3, { xPercent: "450" });
+          moveCard.from(this.$refs.card4, { xPercent: "350" });
+          moveCard.from(this.$refs.card5, { xPercent: "250" });
+          moveCard.from(this.$refs.card6, { xPercent: "150" });
         },
       });
     },

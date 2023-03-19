@@ -38,7 +38,7 @@
         </div>
       </swiper-slide>
     </swiper>
-    <div class="my-8 grid grid-cols-4 gap-2 mx-2 lg:mx-0">
+    <div class="grid grid-cols-4 gap-2 mx-2 lg:mx-0">
       <!-- 篩選區塊 - mobile -->
       <div
         ref="filterDrawer"
@@ -171,7 +171,7 @@
           </div>
           <button
             type="button"
-            class="mt-4 w-48 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
+            class="mt-4 w-48 focus:outline-none focus:ring-4 dark-solid-button"
           >
             套用範圍
           </button>
@@ -193,128 +193,130 @@
       </div>
       <!-- 篩選區塊 - PC -->
       <div v-else class="col-span-1">
-        <h3 class="text-xl font-bold">
-          <font-awesome-icon :icon="['fas', 'filter']" />
-          條件篩選
-        </h3>
-        <p class="text-lg mt-6">類別</p>
-        <div class="flex items-center mt-4">
-          <input
-            id="ar"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="ar" class="ml-2 text-sm font-medium text-gray-300"
-            >AR (擴增實境)</label
-          >
-        </div>
-        <div class="flex items-center mt-4">
-          <input
-            id="vr"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="vr" class="ml-2 text-sm font-medium text-gray-300"
-            >VR (虛擬實境)</label
-          >
-        </div>
-        <div class="flex items-center mt-4">
-          <input
-            id="mr"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="mr" class="ml-2 text-sm font-medium text-gray-300"
-            >MR (混合實境)</label
-          >
-        </div>
-        <div class="flex items-center mt-4">
-          <input
-            id="xr"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="xr" class="ml-2 text-sm font-medium text-gray-300"
-            >XR (延展實境)</label
-          >
-        </div>
-        <p class="text-lg mt-6">品牌</p>
-        <div class="flex items-center mt-4">
-          <input
-            id="meta"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="meta" class="ml-2 text-sm font-medium text-gray-300"
-            >Meta</label
-          >
-        </div>
-        <div class="flex items-center mt-4">
-          <input
-            id="vive"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="vive" class="ml-2 text-sm font-medium text-gray-300"
-            >VIVE</label
-          >
-        </div>
-        <div class="flex items-center mt-4">
-          <input
-            id="other"
-            type="checkbox"
-            value=""
-            class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
-          />
-          <label for="other" class="ml-2 text-sm font-medium text-gray-300"
-            >其他</label
-          >
-        </div>
-        <p class="text-lg mt-6">價格區間</p>
-        <div class="flex items-center mt-4">
-          <input
-            type="number"
-            placeholder="$最小值"
-            class="border text-sm text-end rounded block w-[68px] p-2 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary0 focus:border-primary0"
-          />
-          <font-awesome-icon :icon="['fas', 'minus']" class="text-3xl mx-3" />
-          <input
-            type="number"
-            placeholder="$最大值"
-            class="border text-sm text-end rounded block w-[68px] p-2 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary0 focus:border-primary0"
-          />
-        </div>
-        <button
-          type="button"
-          class="mt-4 w-48 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
-        >
-          套用範圍
-        </button>
-        <div class="flex mt-6">
+        <div class="py-8 sticky top-nav">
+          <h3 class="text-xl font-bold">
+            <font-awesome-icon :icon="['fas', 'filter']" />
+            條件篩選
+          </h3>
+          <p class="text-lg mt-6">類別</p>
+          <div class="flex items-center mt-4">
+            <input
+              id="ar"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="ar" class="ml-2 text-sm font-medium text-gray-300"
+              >AR (擴增實境)</label
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              id="vr"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="vr" class="ml-2 text-sm font-medium text-gray-300"
+              >VR (虛擬實境)</label
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              id="mr"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="mr" class="ml-2 text-sm font-medium text-gray-300"
+              >MR (混合實境)</label
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              id="xr"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="xr" class="ml-2 text-sm font-medium text-gray-300"
+              >XR (延展實境)</label
+            >
+          </div>
+          <p class="text-lg mt-6">品牌</p>
+          <div class="flex items-center mt-4">
+            <input
+              id="meta"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="meta" class="ml-2 text-sm font-medium text-gray-300"
+              >Meta</label
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              id="vive"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="vive" class="ml-2 text-sm font-medium text-gray-300"
+              >VIVE</label
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              id="other"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
+            />
+            <label for="other" class="ml-2 text-sm font-medium text-gray-300"
+              >其他</label
+            >
+          </div>
+          <p class="text-lg mt-6">價格區間</p>
+          <div class="flex items-center mt-4">
+            <input
+              type="number"
+              placeholder="$最小值"
+              class="border text-sm text-end rounded block w-[68px] p-2 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary0 focus:border-primary0"
+            />
+            <font-awesome-icon :icon="['fas', 'minus']" class="text-3xl mx-3" />
+            <input
+              type="number"
+              placeholder="$最大值"
+              class="border text-sm text-end rounded block w-[68px] p-2 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary0 focus:border-primary0"
+            />
+          </div>
           <button
             type="button"
-            class="w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-warm hover:bg-warm2 focus:ring-warm3"
+            class="mt-4 w-48 focus:outline-none focus:ring-4 dark-solid-button"
           >
-            清除
+            套用範圍
           </button>
-          <button
-            type="button"
-            class="ml-8 w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3"
-          >
-            搜尋
-          </button>
+          <div class="flex mt-6">
+            <button
+              type="button"
+              class="w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-warm hover:bg-warm2 focus:ring-warm3"
+            >
+              清除
+            </button>
+            <button
+              type="button"
+              class="ml-8 w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3"
+            >
+              搜尋
+            </button>
+          </div>
         </div>
       </div>
       <!-- 產品區塊 -->
       <div class="col-span-full lg:col-span-3">
         <!-- 篩選按鈕及搜尋 -->
-        <div class="flex items-center">
+        <div class="my-8 flex items-center">
           <button
             type="button"
             class="block lg:hidden whitespace-nowrap font-medium rounded-l-lg text-sm px-4 py-3 border border-secondary2 bg-secondary"
@@ -352,12 +354,12 @@
               <input
                 type="search"
                 id="search"
-                class="block w-full p-3 lg:pl-10 text-sm rounded-r-lg lg:rounded-l-lg bg-gray-700 border border-gray-600 placeholder-gray-400 text-white focus:ring-primary-0 focus:border-primary0"
+                class="block w-full p-3 lg:pl-10 text-sm rounded-r-lg lg:rounded-l-lg bg-gray-700 border border-gray-600 placeholder-gray-400 text-white focus:ring-primary-0 focus:border-primary"
                 placeholder="請輸入關鍵字"
               />
               <button
                 type="button"
-                class="absolute lg:hidden top-0 right-0 p-3 text-sm font-medium text-white rounded-r-lg border border-primary2 focus:ring-4 focus:outline-none bg-primary hover:bg-primary2 focus:ring-primary3"
+                class="absolute lg:hidden top-0 right-0 p-3 text-sm font-medium text-white rounded-r-lg border border-primary2 focus:ring focus:outline-none bg-primary hover:bg-primary2 focus:ring-primary3"
               >
                 <svg
                   aria-hidden="true"
@@ -378,7 +380,7 @@
               </button>
               <button
                 type="button"
-                class="hidden lg:block text-white absolute right-1.5 bottom-1.5 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-primary1 focus:ring-primary2"
+                class="hidden lg:block text-white absolute right-1.5 bottom-1.5 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-primary2 focus:ring-primary2"
               >
                 搜尋
               </button>
@@ -387,17 +389,38 @@
         </div>
         <!-- 產品卡片區塊 -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
-          <router-link to="./product/id" @click.prevent="click('card')">
+          <router-link
+            to="./product/id"
+            class="group"
+            @mouseover="productImages[0] = viveXrElite"
+            @mouseleave="productImages[0] = metaOculusQuest2"
+            @click.prevent="click('card')"
+          >
             <div
               class="h-[300px] md:h-[420px] rounded-lg border overflow-hidden relative"
             >
               <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
+                class="h-1/2 md:h-3/5 w-full object-cover group-hover:opacity-30 ease-in-out duration-300"
+                :src="productImages[0]"
                 alt=""
               />
               <div class="absolute top-2 left-3 sm:top-3 sm:left-4">
                 <div class="bg-dark px-3 py-2 rounded text-xs mr-1">VR</div>
+              </div>
+              <div
+                class="hidden lg:group-hover:flex absolute top-[45%] justify-center w-full"
+              >
+                <button
+                  type="button"
+                  class="focus:outline-none focus:ring-4 font-medium rounded text-md px-5 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3"
+                  @click.prevent.stop="productModal.show()"
+                >
+                  <font-awesome-icon
+                    :icon="['fas', 'cart-plus']"
+                    class="cursor-pointer text-lg mr-2"
+                  />
+                  加入購物車
+                </button>
               </div>
               <div
                 class="p-4 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
@@ -414,10 +437,10 @@
               >
                 <div class="grid grid-cols-3">
                   <h4 class="col-span-2 text-xl">Meta</h4>
-                  <div class="flex justify-between text-2xl">
+                  <div class="flex justify-between lg:justify-end text-2xl">
                     <font-awesome-icon
                       :icon="['fas', 'cart-plus']"
-                      class="cursor-pointer hover:text-primary2"
+                      class="cursor-pointer block lg:hidden"
                       @click.prevent.stop="productModal.show()"
                     />
                     <font-awesome-icon
@@ -435,17 +458,38 @@
               </div>
             </div>
           </router-link>
-          <router-link to="./product/id" @click.prevent="click('card')">
+          <router-link
+            to="./product/id"
+            class="group"
+            @mouseover="productImages[1] = viveXrElite"
+            @mouseleave="productImages[1] = metaOculusQuest2"
+            @click.prevent="click('card')"
+          >
             <div
               class="h-[300px] md:h-[420px] rounded-lg border overflow-hidden relative"
             >
               <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
+                class="h-1/2 md:h-3/5 w-full object-cover group-hover:opacity-30 ease-in-out duration-300"
+                :src="productImages[1]"
                 alt=""
               />
               <div class="absolute top-2 left-3 sm:top-3 sm:left-4">
                 <div class="bg-dark px-3 py-2 rounded text-xs mr-1">VR</div>
+              </div>
+              <div
+                class="hidden lg:group-hover:flex absolute top-[45%] justify-center w-full"
+              >
+                <button
+                  type="button"
+                  class="focus:outline-none focus:ring-4 font-medium rounded text-md px-5 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3"
+                  @click.prevent.stop="productModal.show()"
+                >
+                  <font-awesome-icon
+                    :icon="['fas', 'cart-plus']"
+                    class="cursor-pointer text-lg mr-2"
+                  />
+                  加入購物車
+                </button>
               </div>
               <div
                 class="p-4 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
@@ -462,10 +506,10 @@
               >
                 <div class="grid grid-cols-3">
                   <h4 class="col-span-2 text-xl">Meta</h4>
-                  <div class="flex justify-between text-2xl">
+                  <div class="flex justify-between lg:justify-end text-2xl">
                     <font-awesome-icon
                       :icon="['fas', 'cart-plus']"
-                      class="cursor-pointer hover:text-primary2"
+                      class="cursor-pointer block lg:hidden"
                       @click.prevent.stop="productModal.show()"
                     />
                     <font-awesome-icon
@@ -483,17 +527,38 @@
               </div>
             </div>
           </router-link>
-          <router-link to="./product/id" @click.prevent="click('card')">
+          <router-link
+            to="./product/id"
+            class="group"
+            @mouseover="productImages[2] = viveXrElite"
+            @mouseleave="productImages[2] = metaOculusQuest2"
+            @click.prevent="click('card')"
+          >
             <div
               class="h-[300px] md:h-[420px] rounded-lg border overflow-hidden relative"
             >
               <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
+                class="h-1/2 md:h-3/5 w-full object-cover group-hover:opacity-30 ease-in-out duration-300"
+                :src="productImages[2]"
                 alt=""
               />
               <div class="absolute top-2 left-3 sm:top-3 sm:left-4">
                 <div class="bg-dark px-3 py-2 rounded text-xs mr-1">VR</div>
+              </div>
+              <div
+                class="hidden lg:group-hover:flex absolute top-[45%] justify-center w-full"
+              >
+                <button
+                  type="button"
+                  class="focus:outline-none focus:ring-4 font-medium rounded text-md px-5 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3"
+                  @click.prevent.stop="productModal.show()"
+                >
+                  <font-awesome-icon
+                    :icon="['fas', 'cart-plus']"
+                    class="cursor-pointer text-lg mr-2"
+                  />
+                  加入購物車
+                </button>
               </div>
               <div
                 class="p-4 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
@@ -510,58 +575,10 @@
               >
                 <div class="grid grid-cols-3">
                   <h4 class="col-span-2 text-xl">Meta</h4>
-                  <div class="flex justify-between text-2xl">
+                  <div class="flex justify-between lg:justify-end text-2xl">
                     <font-awesome-icon
                       :icon="['fas', 'cart-plus']"
-                      class="cursor-pointer hover:text-primary2"
-                      @click.prevent.stop="productModal.show()"
-                    />
-                    <font-awesome-icon
-                      :icon="['fas', 'heart']"
-                      class="cursor-pointer hover:text-primary2"
-                      @click.prevent.stop="click('favorite')"
-                    />
-                  </div>
-                </div>
-                <h3 class="mt-2 text-xl font-bold">Oculus Quest 2 256G</h3>
-                <div class="mt-2 flex justify-between items-end">
-                  <p class="text-gray-400 line-through">NT$ 17,980</p>
-                  <p class="text-primary text-lg font-bold">NT$ 17,500</p>
-                </div>
-              </div>
-            </div>
-          </router-link>
-          <router-link to="./product/id" @click.prevent="click('card')">
-            <div
-              class="h-[300px] md:h-[420px] rounded-lg border overflow-hidden relative"
-            >
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-3 sm:left-4">
-                <div class="bg-dark px-3 py-2 rounded text-xs mr-1">VR</div>
-              </div>
-              <div
-                class="p-4 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="grid grid-cols-3">
-                  <h4 class="col-span-2 text-xl">Meta</h4>
-                  <div class="flex justify-between text-2xl">
-                    <font-awesome-icon
-                      :icon="['fas', 'cart-plus']"
-                      class="cursor-pointer hover:text-primary2"
+                      class="cursor-pointer block lg:hidden"
                       @click.prevent.stop="productModal.show()"
                     />
                     <font-awesome-icon
@@ -744,6 +761,8 @@
 
 <script>
 import ProductsPagination from "@/components/Pagination.vue";
+import metaOculusQuest2 from "@/images/products/Meta_Oculus_Quest2.jpg";
+import viveXrElite from "@/images/products/VIVE_XR_ELITE.jpg";
 
 // import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -763,6 +782,9 @@ export default {
       windowWidth: 0,
       articleModules: [Navigation, Pagination, Autoplay],
       productModules: [Navigation, Pagination],
+      metaOculusQuest2,
+      viveXrElite,
+      productImages: [metaOculusQuest2, metaOculusQuest2, metaOculusQuest2],
       articles: [
         {
           id: 1,
