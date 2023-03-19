@@ -186,7 +186,7 @@
       <button
         type="button"
         ref="detailAccordionBtn1"
-        class="flex justify-around items-center mt-1 w-32 focus:outline-none font-medium rounded-sm text-sm text-gray-400 p-1.5 bg-secondary hover:bg-primary2"
+        class="flex justify-around items-center mt-1 w-32 focus:outline-none font-medium rounded-sm text-sm text-gray-400 p-1.5 bg-secondary2 hover:bg-secondary2/70"
       >
         <p>查看明細</p>
         <svg
@@ -284,7 +284,7 @@
       <button
         type="button"
         ref="detailAccordionBtn2"
-        class="flex justify-around items-center mt-1 w-32 focus:outline-none font-medium rounded-sm text-sm text-gray-400 p-1.5 bg-secondary hover:bg-primary2"
+        class="flex justify-around items-center mt-1 w-32 focus:outline-none font-medium rounded-sm text-sm text-gray-400 p-1.5 bg-secondary2 hover:bg-secondary2/70"
       >
         <p>查看明細</p>
         <svg
@@ -392,8 +392,8 @@ export default {
       },
     ];
     const detailAccordionOptions = {
-      activeClasses: "bg-primary text-white",
-      inactiveClasses: "bg-secondary text-gray-400",
+      activeClasses: "bg-secondary text-white",
+      inactiveClasses: "bg-secondary2 text-gray-400",
       onToggle: (item) => {
         item._items.forEach((data) => {
           if (data.active) {
