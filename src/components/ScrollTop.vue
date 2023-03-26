@@ -2,7 +2,7 @@
   <div
     ref="scrollTop"
     id="scrollTop"
-    class="bottom-24 right-8 md:right-12 lg:right-20 z-30 cursor-pointer fixed"
+    class="bottom-24 right-8 md:right-12 lg:right-20 z-20 cursor-pointer fixed"
     @click="gsapScrollTop()"
   >
     <font-awesome-icon

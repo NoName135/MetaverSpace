@@ -94,7 +94,7 @@
                 <label
                   for="filter-radio-example-4"
                   class="w-full ml-2 text-sm font-medium rounded text-gray-300"
-                  >最近 1 個月</label
+                  >最近 6 個月</label
                 >
               </div>
             </li>

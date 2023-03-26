@@ -73,8 +73,18 @@ const routes = [
         component: () => import("../views/front/Reserve.vue"),
       },
       {
-        path: "search/:id",
-        component: () => import("../views/front/Search.vue"),
+        path: "ReserveHistory",
+        name: "預約紀錄",
+        /* Explicitly tell the router to redirect to default children */
+        redirect: "/ReserveHistory",
+        component: () => import("../views/front/ReserveHistory.vue"),
+        children: [
+          {
+            path: "",
+            name: "預約明細",
+            component: () => import("../views/front/ReserveDetail.vue"),
+          },
+        ],
       },
       {
         path: "contact",
@@ -100,16 +110,16 @@ const routes = [
         component: () => import("../views/admin/Order.vue"),
       },
       {
-        path: "coupon",
-        component: () => import("../views/admin/Coupon.vue"),
-      },
-      {
         path: "article",
         component: () => import("../views/admin/Article.vue"),
       },
       {
         path: "reserve",
         component: () => import("../views/admin/Reserve.vue"),
+      },
+      {
+        path: "coupon",
+        component: () => import("../views/admin/Coupon.vue"),
       },
     ],
   },

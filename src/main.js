@@ -14,6 +14,16 @@ import VueAxios from "vue-axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 
+// vue-multiselect
+import Multiselect from "vue-multiselect";
+
+// CKeditor
+import CKEditor from "@ckeditor/ckeditor5-vue";
+
+// vue-datepicker
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+
 // fontawesome
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -34,7 +44,10 @@ import {
   faFilter,
   faMinus,
   faTrashCan,
-  faArrowUpRightFromSquare
+  faArrowUpRightFromSquare,
+  faCheck,
+  faLocationDot,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -60,7 +73,10 @@ library.add(
   faFilter,
   faMinus,
   faTrashCan,
-  faArrowUpRightFromSquare
+  faArrowUpRightFromSquare,
+  faCheck,
+  faLocationDot,
+  faClock
 );
 
 // vee-validate
@@ -91,10 +107,13 @@ createApp(App)
   .use(createPinia())
   .use(router)
   .use(VueAxios, axios)
+  .use(CKEditor)
   .component("ScrollTop", ScrollTop)
   .component("VueLoading", Loading)
   .component("FontAwesomeIcon", FontAwesomeIcon)
   .component("VForm", Form)
   .component("VField", Field)
   .component("ErrorMessage", ErrorMessage)
+  .component("multiselect", Multiselect)
+  .component("VueDatePicker", VueDatePicker)
   .mount("#app");

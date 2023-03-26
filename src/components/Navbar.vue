@@ -1,7 +1,7 @@
 <template>
   <nav
     :class="[
-      'w-full gap-2.5 fixed z-40 top-0 left-0 flex justify-center backdrop-opacity-[2px] border border-white/38',
+      'w-full gap-2.5 fixed z-30 top-0 left-0 flex justify-center backdrop-opacity-[2px] border border-white/38',
       { 'bg-dark': windowTop > 100 || navToggled || $route.fullPath != '/' },
     ]"
   >

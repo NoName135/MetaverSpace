@@ -53,19 +53,19 @@
                     id="spec1"
                     class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled class="bg-white/20">
+                    <option selected disabled class="bg-dark/10">
                       選擇規格
                     </option>
-                    <option value="黑色" class="bg-white/20">黑色</option>
-                    <option value="白色" class="bg-white/20">白色</option>
+                    <option value="黑色" class="bg-dark/10">黑色</option>
+                    <option value="白色" class="bg-dark/10">白色</option>
                   </select>
                   <select
                     id="accessoryNum3"
                     class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1" class="bg-white/20">1</option>
-                    <option value="2" class="bg-white/20">2</option>
-                    <option value="3" class="bg-white/20">3</option>
+                    <option selected value="1" class="bg-dark/10">1</option>
+                    <option value="2" class="bg-dark/10">2</option>
+                    <option value="3" class="bg-dark/10">3</option>
                   </select>
                 </div>
                 <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
@@ -105,19 +105,19 @@
                     id="spec1"
                     class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected disabled class="bg-white/20">
+                    <option selected disabled class="bg-dark/10">
                       選擇規格
                     </option>
-                    <option value="黑色" class="bg-white/20">黑色</option>
-                    <option value="白色" class="bg-white/20">白色</option>
+                    <option value="黑色" class="bg-dark/10">黑色</option>
+                    <option value="白色" class="bg-dark/10">白色</option>
                   </select>
                   <select
                     id="accessoryNum3"
                     class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
                   >
-                    <option selected value="1" class="bg-white/20">1</option>
-                    <option value="2" class="bg-white/20">2</option>
-                    <option value="3" class="bg-white/20">3</option>
+                    <option selected value="1" class="bg-dark/10">1</option>
+                    <option value="2" class="bg-dark/10">2</option>
+                    <option value="3" class="bg-dark/10">3</option>
                   </select>
                 </div>
                 <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
@@ -164,17 +164,16 @@
       <div
         ref="favoriteModal"
         id="favoriteModal"
-        data-modal-backdrop="static"
         tabindex="-1"
         aria-hidden="true"
-        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full"
+        class="fixed top-8 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] md:h-full max-h-[calc(100vh-3rem)]"
       >
-        <div class="relative w-full h-full max-w-2xl">
+        <div class="w-full h-full max-w-2xl">
           <!-- Modal content -->
-          <div class="relative rounded-lg shadow bg-dark">
+          <div class="rounded-lg overflow-hidden shadow bg-dark">
             <!-- Modal header -->
             <div
-              class="flex items-start justify-between p-4 border-b rounded-t border-gray-600 bg-white/10"
+              class="flex items-start justify-between p-4 border rounded-t-lg border-gray-600 bg-black fixed top-5 w-[calc(100%-2rem)] md:w-full max-w-2xl z-50"
             >
               <h3 class="text-lg md:text-xl font-semibold text-white">
                 請選擇商品加入購物車
@@ -199,7 +198,7 @@
               </button>
             </div>
             <!-- Modal body -->
-            <div class="px-4">
+            <div class="px-4 pt-6">
               <div class="py-8 grid grid-cols-4 gap-6">
                 <img
                   src="@/images/products/Meta_Oculus_Quest2.jpg"
@@ -295,7 +294,7 @@ export default {
     // modal options
     const modalOptions = {
       placement: "top-center",
-      backdrop: "static",
+      backdrop: "dynamic",
       backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-40",
       closable: true,
     };

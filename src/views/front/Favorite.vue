@@ -37,11 +37,11 @@
                       id="spec1"
                       class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary"
                     >
-                      <option selected disabled class="bg-white/20">
+                      <option selected disabled class="bg-dark/10">
                         選擇規格
                       </option>
-                      <option value="黑色" class="bg-white/20">黑色</option>
-                      <option value="白色" class="bg-white/20">白色</option>
+                      <option value="黑色" class="bg-dark/10">黑色</option>
+                      <option value="白色" class="bg-dark/10">白色</option>
                     </select>
                     <button
                       type="button"
@@ -85,11 +85,11 @@
                       id="spec1"
                       class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary"
                     >
-                      <option selected disabled class="bg-white/20">
+                      <option selected disabled class="bg-dark/10">
                         選擇規格
                       </option>
-                      <option value="黑色" class="bg-white/20">黑色</option>
-                      <option value="白色" class="bg-white/20">白色</option>
+                      <option value="黑色" class="bg-dark/10">黑色</option>
+                      <option value="白色" class="bg-dark/10">白色</option>
                     </select>
                     <button
                       type="button"

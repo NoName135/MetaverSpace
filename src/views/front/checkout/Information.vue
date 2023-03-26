@@ -152,16 +152,16 @@
                     id="paySelect"
                     class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-primary peer"
                   >
-                    <option selected disabled class="text-white bg-black/50">
+                    <option selected disabled class="text-white bg-dark/50">
                       -- 請選擇支付方式 --
                     </option>
-                    <option class="text-white bg-black/50" value="credit">
+                    <option class="text-white bg-dark/50" value="credit">
                       信用卡
                     </option>
-                    <option class="text-white bg-black/50" value="transfer">
+                    <option class="text-white bg-dark/50" value="transfer">
                       銀行轉帳
                     </option>
-                    <option class="text-white bg-black/50" value="mobile">
+                    <option class="text-white bg-dark/50" value="mobile">
                       行動支付
                     </option>
                   </select>

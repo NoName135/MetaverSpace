@@ -1,5 +1,87 @@
 <template>
-  <div>
-    
+  <div class="container mt-nav">
+    <div class="pt-6 px-2 w-full max-w-2xl mx-auto">
+      <h1
+        class="bg-white/20 border text-gray-300 py-6 text-xl md:text-2xl text-center rounded-t"
+      >
+        聯絡客服團隊
+      </h1>
+      <div class="border px-4 py-8 rounded-b">
+        <div class="pb-6 border-b">
+          <label for="name" class="block mb-2 text-sm font-medium text-white"
+            >您的姓名</label
+          >
+          <input
+            type="text"
+            id="name"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
+            placeholder="請輸入姓名"
+            required
+          />
+          <label
+            for="phone"
+            class="block mt-6 mb-2 text-sm font-medium text-white"
+            >您的電話</label
+          >
+          <input
+            type="tel"
+            id="phone"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
+            placeholder="請輸入電話"
+            required
+          />
+          <label
+            for="email"
+            class="block mt-6 mb-2 text-sm font-medium text-white"
+            >您的Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
+            placeholder="請輸入Email"
+            required
+          />
+          <label
+            for="message"
+            class="block mt-6 mb-2 text-sm font-medium text-white"
+            >您遇到的問題</label
+          >
+          <textarea
+            id="message"
+            rows="4"
+            class="block p-2.5 w-full text-sm bg-gray-600 border-gray-500 placeholder-gray-400 rounded-lg border focus:ring-primary focus:border-primary text-white"
+            placeholder="請詳述您的問題"
+            required
+          ></textarea>
+          <div class="mt-6 mb-4 md:mb-6 flex flex-col md:flex-row">
+            <div>
+              <label
+                for="file"
+                class="whitespace-nowrap w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3 cursor-pointer"
+                >上傳圖片</label
+              >
+              <input type="file" id="file" class="absolute top-0 w-0" />
+            </div>
+            <p class="mt-6 md:mt-0 md:ml-4 text-sm md:text-md">
+              (最多 5 張圖，圖片需小於 4.5MB)
+            </p>
+          </div>
+          <div class="ml-4 flex items-center">
+            <p>123.jpg</p>
+            <font-awesome-icon
+              :icon="['fas', 'xmark']"
+              class="ml-4 cursor-pointer text-warm hover:text-warm2 text-lg"
+            />
+          </div>
+        </div>
+        <p class="mt-4 text-sm md:text-md">
+          您提供之姓名、電子信箱等個人資料僅供本服務相關目的及範圍內處理或使利用，絕對不向任何人提供您的個人資訊。
+        </p>
+        <div class="mt-6 w-full flex justify-end">
+          <button type="submit" class="primary-button">提交問題</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

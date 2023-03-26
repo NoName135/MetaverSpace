@@ -41,13 +41,15 @@
             <h3 class="text-3xl font-bold">聯絡我們</h3>
             <div class="grid grid-cols-2 gap-2 mt-6">
               <div class="col-span-2">
-                <a href="#" class="hover:underline">留言板</a>
+                <router-link
+                  to="/contact"
+                  target="_blank"
+                  class="hover:underline"
+                  >留言板</router-link
+                >
               </div>
               <div class="whitespace-nowrap">
-                <font-awesome-icon
-                  :icon="['fas', 'phone']"
-                  class="mr-2"
-                />
+                <font-awesome-icon :icon="['fas', 'phone']" class="mr-2" />
                 <span>(01) 2345 6789</span>
               </div>
               <div class="flex items-center justify-end mr-6 md:mr-0">
@@ -64,7 +66,15 @@
           </div>
         </div>
       </section>
-      <p class="text-center bg-black py-6">Copyright © 2023 Ezekiel Lin. All Rights Reserved</p>
+      <div class="flex justify-center items-center bg-black py-6">
+        <p class="mx-6">Copyright © 2023 Ezekiel Lin. All Rights Reserved</p>
+        <router-link
+          to="/admin/products"
+          class="dark-solid-button"
+          target="_blank"
+          >開啟後台</router-link
+        >
+      </div>
     </footer>
   </div>
 </template>

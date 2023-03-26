@@ -39,12 +39,11 @@
       </swiper-slide>
     </swiper>
     <div class="grid grid-cols-4 gap-2 mx-2 lg:mx-0">
-      <!-- 篩選區塊 - mobile -->
+      <!-- 篩選區塊 - mobile，checkbox id 跟 PC 分開 -->
       <div
         ref="filterDrawer"
         id="filterDrawer"
-        v-if="windowWidth < 976"
-        class="fixed top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full w-60 bg-dark"
+        class="fixed lg:hidden top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full w-60 bg-dark"
         tabindex="-1"
         aria-labelledby="drawer-label"
       >
@@ -79,79 +78,79 @@
           <p class="text-lg mt-1">類別</p>
           <div class="flex items-center mt-4">
             <input
-              id="ar"
+              id="m-ar"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="ar" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-ar" class="ml-2 text-sm font-medium text-gray-300"
               >AR (擴增實境)</label
             >
           </div>
           <div class="flex items-center mt-4">
             <input
-              id="vr"
+              id="m-vr"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="vr" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-vr" class="ml-2 text-sm font-medium text-gray-300"
               >VR (虛擬實境)</label
             >
           </div>
           <div class="flex items-center mt-4">
             <input
-              id="mr"
+              id="m-mr"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="mr" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-mr" class="ml-2 text-sm font-medium text-gray-300"
               >MR (混合實境)</label
             >
           </div>
           <div class="flex items-center mt-4">
             <input
-              id="xr"
+              id="m-xr"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="xr" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-xr" class="ml-2 text-sm font-medium text-gray-300"
               >XR (延展實境)</label
             >
           </div>
           <p class="text-lg mt-6">品牌</p>
           <div class="flex items-center mt-4">
             <input
-              id="meta"
+              id="m-meta"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="meta" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-meta" class="ml-2 text-sm font-medium text-gray-300"
               >Meta</label
             >
           </div>
           <div class="flex items-center mt-4">
             <input
-              id="vive"
+              id="m-vive"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="vive" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-vive" class="ml-2 text-sm font-medium text-gray-300"
               >VIVE</label
             >
           </div>
           <div class="flex items-center mt-4">
             <input
-              id="other"
+              id="m-other"
               type="checkbox"
               value=""
               class="w-4 h-4 text-primary rounded bg-gray-700 border-gray-600 focus:ring-primary0"
             />
-            <label for="other" class="ml-2 text-sm font-medium text-gray-300"
+            <label for="m-other" class="ml-2 text-sm font-medium text-gray-300"
               >其他</label
             >
           </div>
@@ -191,8 +190,8 @@
           </div>
         </div>
       </div>
-      <!-- 篩選區塊 - PC -->
-      <div v-else class="col-span-1">
+      <!-- 篩選區塊 - checkbox id 跟 mobile 分開 -->
+      <div class="hidden lg:block col-span-1">
         <div class="py-8 sticky top-nav">
           <h3 class="text-xl font-bold">
             <font-awesome-icon :icon="['fas', 'filter']" />
@@ -609,16 +608,18 @@
         data-modal-backdrop="static"
         tabindex="-1"
         aria-hidden="true"
-        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full"
+        class="fixed top-8 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] md:h-full max-h-[calc(100vh-3rem)]"
       >
         <div class="relative w-full h-full max-w-2xl xl:h-auto">
           <!-- Modal content -->
-          <div class="relative rounded-lg shadow bg-dark">
+          <div class="rounded-lg overflow-hidden shadow bg-dark">
             <!-- Modal header -->
             <div
-              class="flex items-start justify-between p-4 border-b rounded-t border-gray-600 bg-white/10"
+              class="flex items-start justify-between p-4 border rounded-t-lg border-gray-600 bg-black fixed xl:static top-5 w-[calc(100%-2rem)] md:w-full max-w-2xl z-50"
             >
-              <h3 class="text-xl font-semibold text-white">請選擇商品及數量</h3>
+              <h3 class="text-lg md:text-xl font-semibold text-white">
+                請選擇商品及數量
+              </h3>
               <button
                 type="button"
                 class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-600 hover:text-white"
@@ -823,7 +824,7 @@ export default {
     // modal options
     const modalOptions = {
       placement: "center",
-      backdrop: "static",
+      backdrop: "dynamic",
       backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-40",
       closable: true,
     };
