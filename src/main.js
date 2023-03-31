@@ -14,6 +14,11 @@ import VueAxios from "vue-axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 
+// sweetAlert2
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+const swalOptions = {};
+
 // vue-multiselect
 import Multiselect from "vue-multiselect";
 
@@ -53,8 +58,8 @@ import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(
-  faCircleUp,
   faSpinner,
+  faCircleUp,
   faShoppingCart,
   faCartPlus,
   faHeart,
@@ -103,17 +108,30 @@ configure({
 });
 setLocale("zh_TW"); // 設定預設語系
 
-createApp(App)
-  .use(createPinia())
-  .use(router)
-  .use(VueAxios, axios)
-  .use(CKEditor)
-  .component("ScrollTop", ScrollTop)
-  .component("VueLoading", Loading)
-  .component("FontAwesomeIcon", FontAwesomeIcon)
-  .component("VForm", Form)
-  .component("VField", Field)
-  .component("ErrorMessage", ErrorMessage)
-  .component("multiselect", Multiselect)
-  .component("VueDatePicker", VueDatePicker)
-  .mount("#app");
+// Global functions
+import { date, currency } from "./methods/filters";
+
+const app = createApp(App);
+// 全域方法 globalProperties
+// https://cn.vuejs.org/api/application.html#app-config-globalproperties
+app.config.globalProperties.$filters = {
+  date,
+  currency,
+};
+
+app.use(createPinia());
+app.use(router);
+app.use(VueAxios, axios);
+app.use(VueSweetalert2, swalOptions);
+app.use(CKEditor);
+
+app.component("ScrollTop", ScrollTop);
+app.component("VueLoading", Loading);
+app.component("FontAwesomeIcon", FontAwesomeIcon);
+app.component("VForm", Form);
+app.component("VField", Field);
+app.component("ErrorMessage", ErrorMessage);
+app.component("multiselect", Multiselect);
+app.component("VueDatePicker", VueDatePicker);
+
+app.mount("#app");

@@ -32,13 +32,13 @@
   }
   /* admin button */
   .admin-primary-button {
-    @apply text-gray-900 bg-teal-300 hover:bg-teal-400 focus:ring focus:outline-none focus:ring-teal-500 font-medium rounded text-sm px-5 py-2.5 text-center
+    @apply text-gray-900 bg-teal-300 hover:bg-teal-400 focus:ring focus:outline-none focus:ring-teal-500 font-medium rounded text-sm px-5 py-2.5 text-center disabled:hover:bg-teal-300 disabled:text-gray-500 disabled:cursor-not-allowed
   }
   .admin-secondary-button {
-    @apply text-gray-900 bg-violet-300 hover:bg-violet-400 focus:ring focus:outline-none focus:ring-violet-500 font-medium rounded text-sm px-5 py-2.5 text-center
+    @apply text-gray-900 bg-violet-300 hover:bg-violet-400 focus:ring focus:outline-none focus:ring-violet-500 font-medium rounded text-sm px-5 py-2.5 text-center disabled:hover:bg-violet-300 disabled:text-gray-500 disabled:cursor-not-allowed
   }
   .admin-delete-button {
-    @apply text-gray-900 bg-rose-300 hover:bg-rose-400 focus:ring focus:outline-none focus:ring-rose-500 font-medium rounded text-sm px-5 py-2.5 text-center
+    @apply text-gray-900 bg-rose-300 hover:bg-rose-400 focus:ring focus:outline-none focus:ring-rose-500 font-medium rounded text-sm px-5 py-2.5 text-center disabled:hover:bg-rose-300 disabled:text-gray-500 disabled:cursor-not-allowed
   }
   .admin-secondary-solid-button {
     @apply text-violet-700 hover:text-white border border-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center

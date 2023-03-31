@@ -3,7 +3,13 @@
     <li>
       <a
         href="#"
-        class="block px-2 py-2 leading-tight border rounded-l-lg bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
+        class="block px-1.5 py-2 leading-tight border rounded-l-lg border-gray-300"
+        :class="[
+          !pageObj.has_pre
+            ? 'pointer-events-none bg-gray-50 text-gray-300'
+            : 'bg-white text-gray-600 hover:bg-teal-400 hover:text-white',
+        ]"
+        @click.prevent="changePage(pageObj.current_page - 1)"
       >
         <span class="sr-only">Previous</span>
         <svg
@@ -21,46 +27,30 @@
         </svg>
       </a>
     </li>
-    <li>
+    <li v-for="page in pageObj.total_pages" :key="page">
       <a
         href="#"
-        class="px-3 py-1.5 leading-tight border bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
-        >1</a
+        class="px-3 py-1.5 leading-tight border border-gray-300"
+        :class="[
+          page === pageObj.current_page
+            ? 'pointer-events-none bg-teal-500 text-white'
+            : 'bg-white text-gray-600 hover:bg-teal-400 hover:text-white',
+        ]"
+        @click.prevent="changePage(page)"
+      >
+        {{ page }}</a
       >
     </li>
     <li>
       <a
         href="#"
-        class="px-3 py-1.5 leading-tight border bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
-        >2</a
-      >
-    </li>
-    <li>
-      <a
-        href="#"
-        aria-current="page"
-        class="z-10 px-3 py-1.5 leading-tight border border-gray-300 bg-teal-500 text-white"
-        >3</a
-      >
-    </li>
-    <li>
-      <a
-        href="#"
-        class="px-3 py-1.5 leading-tight border bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
-        >4</a
-      >
-    </li>
-    <li>
-      <a
-        href="#"
-        class="px-3 py-1.5 leading-tight border bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
-        >5</a
-      >
-    </li>
-    <li>
-      <a
-        href="#"
-        class="block px-2 py-2 leading-tight border rounded-r-lg bg-white border-gray-300 text-gray-600 hover:bg-teal-400 hover:text-white"
+        class="block px-1.5 py-2 leading-tight border rounded-r-lg border-gray-300"
+        :class="[
+          !pageObj.has_next
+            ? 'pointer-events-none bg-gray-50 text-gray-300'
+            : 'bg-white text-gray-600 hover:bg-teal-400 hover:text-white',
+        ]"
+        @click.prevent="changePage(pageObj.current_page + 1)"
       >
         <span class="sr-only">Next</span>
         <svg
@@ -80,3 +70,15 @@
     </li>
   </ul>
 </template>
+
+<script>
+export default {
+  props: { pageObj: Object },
+  emits: ["emitPage"],
+  methods: {
+    changePage(page) {
+      this.$emit("emitPage", page);
+    },
+  },
+};
+</script>

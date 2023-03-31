@@ -171,10 +171,10 @@
       </div>
       <div class="lg:col-span-2 bg-black/50 rounded p-4">
         <iframe
-          class="w-full h-[240px] sm:h-[360px] md:h-[480px] mx-auto"
-          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d12781.362958121095!2d121.55527179320265!3d25.114071240296052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDA2JzUzLjUiTiAxMjHCsDMzJzQxLjAiRQ!5e0!3m2!1szh-TW!2stw!4v1679837435002!5m2!1szh-TW!2stw"
-          style="border: 0"
+          class="w-full h-[240px] sm:h-[360px] md:h-[480px] mx-auto border-0 rounded"
+          src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d28901.113822705764!2d121.555272!3d25.114071!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDA2JzUzLjUiTiAxMjHCsDMzJzQxLjAiRQ!5e0!3m2!1szh-TW!2stw!4v1679878275927!5m2!1szh-TW!2stw"
           loading="lazy"
+          allowfullscreen=""
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

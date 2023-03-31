@@ -6,7 +6,7 @@
     >
     <select
       id="district"
-      class="w-40 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block p-2.5"
+      class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block p-2.5"
     >
       <option selected>全部門市</option>
       <option value="臺北">臺北館</option>
@@ -50,7 +50,6 @@
         </tbody>
       </table>
     </div>
-    <Pagination class="mt-8" />
   </div>
   <!-- article modal -->
   <div
@@ -97,7 +96,7 @@
               >
               <select
                 id="modalDistrict"
-                class="w-40 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block p-2.5"
+                class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block p-2.5"
               >
                 <option value="臺北">臺北館</option>
                 <option value="臺中">臺中館</option>
@@ -112,7 +111,7 @@
                 <input
                   type="datetime-local"
                   id="time"
-                  class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                   required
                   onkeypress="return false"
                 />
@@ -122,7 +121,7 @@
                 <input
                   type="number"
                   id="num"
-                  class="text-end bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                  class="text-end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                   required
                 />
               </div>
@@ -134,7 +133,7 @@
               <input
                 type="text"
                 id="name"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -145,7 +144,7 @@
               <input
                 type="tel"
                 id="phone"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -156,7 +155,7 @@
               <input
                 type="email"
                 id="email"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -165,7 +164,7 @@
               <textarea
                 id="message"
                 rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500"
               ></textarea>
             </div>
             <div class="flex justify-between items-center">
@@ -195,7 +194,6 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
 import { Modal } from "flowbite";
 
 export default {
@@ -211,9 +209,6 @@ export default {
       closable: true,
     };
     this.reverseModal = new Modal(this.$refs.reverseModal, modalOptions);
-  },
-  components: {
-    Pagination,
   },
 };
 </script>

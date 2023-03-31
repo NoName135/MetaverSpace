@@ -53,7 +53,7 @@
         </tbody>
       </table>
     </div>
-    <Pagination class="mt-8" />
+    <!-- <Pagination class="mt-8" :page-obj="pagination" @emit-page="getArticle" /> -->
   </div>
   <!-- article modal -->
   <div
@@ -62,14 +62,14 @@
     tabindex="-1"
     class="hidden fixed z-40 w-full px-4 overflow-x-hidden overflow-y-auto top-28 left-0 right-0 h-auto"
   >
-    <div class="w-full max-w-4xl h-full max-h-[calc(100vh-8.5rem)]">
+    <div class="w-full max-w-7xl h-full max-h-[calc(100vh-8.5rem)]">
       <!-- Modal content -->
       <div class="bg-white shadow rounded-lg overflow-hidden">
         <!-- Modal header -->
         <div
-          class="flex items-start justify-between p-4 border-b bg-black top-[6rem] w-[calc(100%-2rem)] max-w-4xl z-50 rounded-t-lg fixed"
+          class="flex items-start justify-between p-4 border-b bg-black top-[6rem] w-[calc(100%-2rem)] lg:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-t-lg fixed"
         >
-          <h3 class="text-xl font-semibold text-gray-300">編輯文章</h3>
+          <h3 class="text-xl font-semibold text-gray-300">編輯貼文</h3>
           <button
             type="button"
             class="text-gray-400 bg-transparent hover:bg-gray-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -90,24 +90,68 @@
           </button>
         </div>
         <!-- Modal body -->
-        <div class="p-6 mt-12">
-          <div class="w-full max-w-2xl mx-auto space-y-6">
-            <h3 class="font-medium">
-              發文人<span class="ml-8 text-lg font-semibold text-gray-900"
-                >無名</span
-              >
+        <div class="p-6 grid grid-cols-3 gap-6 mt-12">
+          <div class="col-span-1">
+            <label for="name" class="block mb-2 font-medium">發文人</label>
+            <input
+              type="text"
+              id="name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+              required
+            />
+            <h3 class="mt-6 font-medium">
+              發文日期<span class="ml-4 text-lg font-semibold text-gray-900">{{
+                `${new Date().getFullYear()}/${(
+                  "0" +
+                  (new Date().getMonth() + 1)
+                ).slice(-2)}/${("0" + new Date().getDate()).slice(-2)}`
+              }}</span>
             </h3>
-            <h3 class="font-medium">
-              發文日期<span class="ml-4 text-lg font-semibold text-gray-900"
-                >2023/01/29</span
+            <h3 class="font-medium mt-6">主要圖片 (輸入網址或上傳圖片)</h3>
+            <div class="relative mt-4">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
               >
-            </h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-gray-500"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="mainImgLink"
+                class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500"
+                placeholder="請輸入圖片網址"
+              />
+            </div>
+            <button
+              type="button"
+              class="mt-4 admin-secondary-solid-button w-full"
+            >
+              上傳圖片
+            </button>
+            <img
+              src="@/images/products/Meta_Oculus_Quest2.jpg"
+              class="mt-4 w-full h-80 object-cover object-center"
+            />
+          </div>
+          <div class="col-span-2 space-y-6">
             <div>
               <label for="name" class="block mb-2 font-medium">文章標題</label>
               <input
                 type="text"
                 id="name"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -197,7 +241,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
   data() {
     return {
-      // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v3.html#editor
       editor: ClassicEditor,
       editorConfig: {
         toolbar: [
@@ -238,5 +281,9 @@ export default {
 <style>
 .ck-editor__editable_inline {
   min-height: 300px;
+}
+.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+  --tw-border-opacity: 1;
+  border-color: rgb(6 148 162 / var(--tw-border-opacity));
 }
 </style>

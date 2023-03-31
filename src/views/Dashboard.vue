@@ -16,7 +16,7 @@
             >開啟前台</router-link
           >
         </div>
-        <button class="primary-button">登出</button>
+        <button class="primary-button" @click="logout()">登出</button>
       </div>
     </div>
   </nav>
@@ -24,7 +24,7 @@
     <!-- sidebar -->
     <aside
       id="logo-sidebar"
-      class="fixed top-0 left-0 z-40 w-52 h-screen pt-28 transition-all border-r bg-gray-800 border-gray-700"
+      class="fixed top-0 left-0 z-30 w-52 h-screen pt-28 transition-all border-r bg-gray-800 border-gray-700"
       :class="[sidebarHide ? '-translate-x-52' : ' translate-x-0']"
       aria-label="Sidebar"
     >
@@ -190,18 +190,73 @@
           />
         </button>
       </div>
-      <router-view />
+      <router-view v-if="checkLogin" />
     </main>
   </div>
 </template>
 
 <script>
+import swalMixin from "@/mixins/swal.js";
+
+import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from "pinia";
+
+const { VITE_API } = import.meta.env;
+
 export default {
+  mixins: [swalMixin],
   data() {
     return {
+      checkLogin: false,
       sidebarHide: false,
       target: "products",
     };
+  },
+  methods: {
+    logout() {
+      const api = `${VITE_API}/logout`;
+      this.loadings.fullLoading = true;
+      this.$http
+        .post(api)
+        .then(() => {
+          this.loadings.fullLoading = false;
+          this.$router.push("/login");
+          // Swal
+          this.adminToast("success", "已登出");
+        })
+        .catch((err) => {
+          this.loadings.fullLoading = false;
+          // SWal
+          this.adminToast("error", err.response.data.message);
+        });
+    },
+  },
+  mounted() {
+    const token = document.cookie.replace(
+      /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/,
+      "$1"
+    );
+    this.$http.defaults.headers.common.Authorization = `${token}`;
+    const api = `${VITE_API}/api/user/check`;
+
+    this.loadings.fullLoading = true;
+    this.$http
+      .post(api)
+      .then(() => {
+        this.loadings.fullLoading = false;
+        this.checkLogin = true;
+        //Swal
+        this.adminToast("success", "登入成功");
+      })
+      .catch((err) => {
+        this.loadings.fullLoading = false;
+        this.$router.push("/login");
+        //Swal
+        this.adminToast("error", err.response.data.message);
+      });
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
   },
 };
 </script>

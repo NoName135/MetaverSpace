@@ -55,7 +55,7 @@
         </tbody>
       </table>
     </div>
-    <Pagination class="mt-8" />
+    <!-- <Pagination class="mt-8" :page-obj="pagination" @emit-page="getCoupon" /> -->
   </div>
   <!-- article modal -->
   <div
@@ -101,7 +101,7 @@
               <input
                 type="text"
                 id="name"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -110,7 +110,7 @@
               <input
                 type="text"
                 id="coupon"
-                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                 required
               />
             </div>
@@ -120,7 +120,7 @@
                 <input
                   type="date"
                   id="date"
-                  class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                   required
                   onkeypress="return false"
                 />
@@ -133,7 +133,7 @@
                   <input
                     type="number"
                     id="num"
-                    class="text-end bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
+                    class="text-end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
                     required
                   />
                   <span class="ml-2">%</span>

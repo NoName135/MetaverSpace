@@ -192,7 +192,7 @@
       </div>
       <!-- 篩選區塊 - checkbox id 跟 mobile 分開 -->
       <div class="hidden lg:block col-span-1">
-        <div class="py-8 sticky top-nav">
+        <div class="py-8 top-nav">
           <h3 class="text-xl font-bold">
             <font-awesome-icon :icon="['fas', 'filter']" />
             條件篩選
