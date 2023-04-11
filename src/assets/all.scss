@@ -149,6 +149,10 @@ input[type=number] {
 }
 
 // sweetAlert2
+.swal2-top {
+  top: calc(105px + env(safe-area-inset-top));
+}
+
 .progress-bar.swal2-timer-progress-bar{
   --tw-bg-opacity: 1;
   background-color: rgb(57 183 223 / var(--tw-bg-opacity));

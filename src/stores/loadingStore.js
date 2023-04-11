@@ -4,7 +4,9 @@ export default defineStore("loading", {
   state: () => {
     return {
       loadings: {
-        fullLoading: false,
+        fullLoading: true,
+        opacity: 0.8,
+        progress: 0,
       },
     };
   },

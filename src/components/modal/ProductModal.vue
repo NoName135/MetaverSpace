@@ -6,7 +6,7 @@
     class="hidden fixed z-40 w-full px-4 overflow-x-hidden overflow-y-auto top-28 left-0 right-0 h-auto"
   >
     <div class="w-full max-w-7xl h-full max-h-[calc(100vh-8.5rem)]">
-      <!-- Modal content -->
+      <!-- Modal description -->
       <div class="bg-white shadow rounded-lg overflow-hidden">
         <!-- Modal header -->
         <div
@@ -16,7 +16,12 @@
           <button
             type="button"
             class="text-gray-400 bg-transparent hover:bg-gray-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-            @click="productModal.hide()"
+            @click="
+              () => {
+                productModal.hide();
+                tempProduct.brand = ''; // 重置 watch tempProduct.brand
+              }
+            "
           >
             <svg
               class="w-5 h-5"
@@ -36,7 +41,10 @@
         <div class="p-6 grid grid-cols-3 gap-6 mt-12">
           <div class="col-span-1">
             <label for="mainImgLink" class="font-medium"
-              >主要圖片 (輸入網址或上傳圖片)</label
+              >主要圖片 (輸入網址或上傳圖片)<span
+                class="font-bold text-rose-500"
+                >*</span
+              ></label
             >
             <div class="relative mt-4">
               <div
@@ -62,6 +70,7 @@
                 id="mainImgLink"
                 class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500"
                 placeholder="請輸入圖片網址"
+                required
                 v-model.lazy="tempProduct.imageUrl"
               />
             </div>
@@ -141,7 +150,9 @@
           </div>
           <div class="col-span-2 space-y-6">
             <div>
-              <label for="name" class="block mb-2 font-medium">商品名稱</label>
+              <label for="name" class="block mb-2 font-medium"
+                >商品名稱<span class="font-bold text-rose-500">*</span></label
+              >
               <input
                 type="text"
                 id="name"
@@ -152,21 +163,10 @@
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label for="brand" class="block mb-2 font-medium">品牌</label>
-                <input
-                  type="text"
-                  id="brand"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
-                  required
-                  v-model.lazy="tempProduct.brand"
-                  @change="changeAccessory()"
-                />
-              </div>
-              <div>
                 <label
                   for="modalDistrict"
                   class="block mb-2 text-md font-medium text-gray-900"
-                  >類別</label
+                  >類別<span class="font-bold text-rose-500">*</span></label
                 >
                 <select
                   id="modalDistrict"
@@ -181,28 +181,47 @@
                   <option value="配件">商品配件</option>
                 </select>
               </div>
+              <div>
+                <label for="brand" class="block mb-2 font-medium"
+                  >品牌<span class="font-bold text-rose-500">*</span></label
+                >
+                <input
+                  type="text"
+                  id="brand"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
+                  required
+                  v-model.lazy="tempProduct.brand"
+                  @change="changeAccessory()"
+                />
+              </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label for="origin_price" class="block mb-2 font-medium"
-                  >原價</label
+                  >原價<span class="font-bold text-rose-500">*</span></label
                 >
                 <input
                   type="number"
                   id="origin_price"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
+                  min="1"
                   required
-                  v-model="tempProduct.origin_price"
+                  v-model.lazy="tempProduct.origin_price"
                 />
               </div>
               <div>
-                <label for="price" class="block mb-2 font-medium">售價</label>
+                <label for="price" class="block mb-2 font-medium"
+                  >售價 (請先輸入原價)<span class="font-bold text-rose-500"
+                    >*</span
+                  ></label
+                >
                 <input
                   type="number"
                   id="price"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
+                  min="1"
                   required
-                  v-model="tempProduct.price"
+                  v-model.lazy="tempProduct.price"
                 />
               </div>
             </div>
@@ -211,7 +230,7 @@
               <div class="grid grid-cols-6 gap-1 mt-2">
                 <div
                   class="relative"
-                  v-for="(label, i) in tempProduct.spec"
+                  v-for="(item, i) in tempProduct.spec"
                   :key="i"
                 >
                   <div class="border rounded">
@@ -267,7 +286,7 @@
               <ckeditor
                 :editor="editor"
                 :config="editorConfig"
-                v-model="tempProduct.content"
+                v-model="tempProduct.description"
               ></ckeditor>
             </div>
             <div>
@@ -277,16 +296,13 @@
               <ckeditor
                 :editor="editor"
                 :config="detailConfig"
-                v-model="tempProduct.description"
+                v-model="tempProduct.content"
               ></ckeditor>
             </div>
             <div class="mt-8 space-y-4">
-              <h3 class="font-medium">商品詳細圖庫</h3>
+              <h3 class="font-medium">商品詳細內容圖庫</h3>
               <div class="grid grid-cols-4 gap-3">
-                <div
-                  v-for="(images, i) in tempProduct.detailImagesUrl"
-                  :key="i"
-                >
+                <div v-for="(images, i) in tempProduct.contentImages" :key="i">
                   <div class="relative">
                     <div
                       class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -311,7 +327,7 @@
                       id="mainImgLink"
                       class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500"
                       placeholder="請輸入圖片網址"
-                      v-model.lazy="tempProduct.detailImagesUrl[i]"
+                      v-model.lazy="tempProduct.contentImages[i]"
                     />
                   </div>
                   <UploadImg :index="i" @change-img="changeImage">
@@ -321,15 +337,15 @@
                     <template #multi><span /></template>
                   </UploadImg>
                   <img
-                    :src="tempProduct.detailImagesUrl[i]"
+                    :src="tempProduct.contentImages[i]"
                     class="mt-4 w-full h-36 object-cover object-center rounded"
-                    v-if="tempProduct.detailImagesUrl[i]"
+                    v-if="tempProduct.contentImages[i]"
                   />
                   <button
                     type="button"
                     class="mt-4 admin-delete-button w-full"
-                    @click="tempProduct.detailImagesUrl.splice(i, 1)"
-                    v-if="!tempProduct.detailImagesUrl[i]"
+                    @click="tempProduct.contentImages.splice(i, 1)"
+                    v-if="!tempProduct.contentImages[i]"
                   >
                     刪除區塊
                   </button>
@@ -337,11 +353,11 @@
                 <button
                   type="button"
                   class="admin-secondary-button w-full h-11"
-                  @click="tempProduct.detailImagesUrl.push('')"
+                  @click="tempProduct.contentImages.push('')"
                   v-if="
-                    !tempProduct.detailImagesUrl?.length ||
-                    tempProduct.detailImagesUrl[
-                      tempProduct.detailImagesUrl.length - 1
+                    !tempProduct.contentImages?.length ||
+                    tempProduct.contentImages[
+                      tempProduct.contentImages.length - 1
                     ]
                   "
                 >
@@ -374,7 +390,12 @@
                 <button
                   type="button"
                   class="admin-delete-button"
-                  @click="productModal.hide()"
+                  @click="
+                    () => {
+                      productModal.hide();
+                      tempProduct.brand = ''; // 重置 watch tempProduct.brand
+                    }
+                  "
                 >
                   取消
                 </button>
@@ -382,12 +403,23 @@
                   type="button"
                   class="ml-6 admin-primary-button"
                   :disabled="
+                    !tempProduct.imageUrl ||
                     !tempProduct.title ||
                     !tempProduct.brand ||
                     !tempProduct.category ||
                     !tempProduct.origin_price ||
                     !tempProduct.price
                   "
+                  :title="[
+                    !tempProduct.imageUrl ||
+                    !tempProduct.title ||
+                    !tempProduct.brand ||
+                    !tempProduct.category ||
+                    !tempProduct.origin_price ||
+                    !tempProduct.price
+                      ? '&quot;*&quot;號為必填欄位'
+                      : '',
+                  ]"
                   @click="updateProduct()"
                 >
                   確認
@@ -400,7 +432,6 @@
     </div>
   </div>
 </template>
-<!-- https://storage.googleapis.com/vue-course-api.apps…qkjWghnRenUew%2BuXfFXF46gtG64srtblR8SydDb3g%3D%3D -->
 <script>
 import UploadImg from "@/components/UploadImg.vue";
 
@@ -416,13 +447,13 @@ import swalMixin from "@/mixins/swal.js";
 const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
-  props: ["page"],
+  props: ["page", "accessories"],
   mixins: [swalMixin],
   data() {
     return {
       isNew: true,
       tempProduct: {},
-      accessories: [],
+      isNewAccessory: false,
       accessoryPlaceholder: "",
       accessoryDisable: false,
       accessoryOptions: [],
@@ -464,7 +495,7 @@ export default {
     };
   },
   methods: {
-    openModal(type, item, accessories) {
+    openModal(type, item) {
       if (type === "new") {
         this.isNew = true;
         this.tempProduct = {
@@ -473,30 +504,32 @@ export default {
           unit: "件",
           spec: [],
           accessory: [],
-          detailImagesUrl: [],
+          contentImages: [],
           is_enabled: 0,
         };
         this.productModal.show();
       } else {
+        this.isNewAccessory = true; // 避免 watch tempProduct.brand 清空
         this.isNew = false;
-        const tempProduct = { ...item };
-        tempProduct.imagesUrl
-          ? (this.tempProduct = { ...item })
-          : (this.tempProduct = { ...item, imagesUrl: [] });
-        tempProduct.spec
-          ? (this.tempProduct = { ...item })
-          : (this.tempProduct = { ...item, spec: [] });
-        tempProduct.accessory
-          ? (this.tempProduct = { ...item })
-          : (this.tempProduct = { ...item, accessory: [] });
-        tempProduct.detailImagesUrl
-          ? (this.tempProduct = { ...item })
-          : (this.tempProduct = { ...item, detailImagesUrl: [] });
+        this.tempProduct = { ...item };
+        if (!this.tempProduct.imagesUrl) {
+          this.tempProduct.imagesUrl = [];
+        }
+        if (!this.tempProduct.spec) {
+          this.tempProduct.spec = [];
+        }
+        if (!this.tempProduct.accessory) {
+          this.tempProduct.accessory = [];
+        }
+        if (!this.tempProduct.contentImages) {
+          this.tempProduct.contentImages = [];
+        }
+
         this.productModal.show();
       }
-
-      this.accessories = accessories;
-      this.changeAccessory("openModal");
+      // modal 移到最上方
+      this.$refs.productModal.scrollTop = 0;
+      this.changeAccessory();
     },
     // 更新產品資料
     updateProduct() {
@@ -514,10 +547,9 @@ export default {
       })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateProducts", this.page);
+          this.$emit("updateProducts", this.page, "update");
           this.productModal.hide();
-          // Swal
-          this.adminToast("success", "已更新產品資料");
+          this.tempProduct.brand = ""; // 重置 watch tempProduct.brand
         })
         .catch((err) => {
           // console.log(err);
@@ -525,8 +557,9 @@ export default {
           this.adminToast("error", err.response.data.message);
         });
     },
-    // 判斷上傳到主要圖片或多圖區塊
+    // 判斷上傳到主要圖片、多圖區塊或詳細內容圖庫
     changeImage(index, target, imgUrl) {
+      // console.log(index, target, imgUrl);
       if (target === "imageUrl") {
         this.tempProduct[target] = imgUrl;
       } else if (target === "imagesUrl") {
@@ -534,15 +567,20 @@ export default {
       } else {
         this.tempProduct[target][index] = imgUrl;
       }
-    },
-    changeAccessory(type) {
-      if (type !== "openModal") {
-        this.tempProduct.accessory = [];
+      // 主要圖片變更之外 modal 移到最下方
+      if (target !== "imageUrl") {
+        this.$refs.productModal.scrollTo({
+          top: this.$refs.productModal.scrollHeight,
+          // behavior: "smooth",
+        });
       }
-
+    },
+    changeAccessory() {
       this.accessoryOptions = [];
       this.accessories.forEach((item) => {
-        if (item.brand === this.tempProduct.brand) {
+        if (
+          item.brand.toLowerCase() === this.tempProduct.brand?.toLowerCase()
+        ) {
           this.accessoryOptions.push({ id: item.id, name: item.title });
         }
       });
@@ -552,6 +590,27 @@ export default {
     ...mapState(loadingStore, ["loadings"]),
   },
   watch: {
+    "tempProduct.brand"() {
+      // 確認配件是否存在
+      this.tempProduct.accessory.forEach((item, i) => {
+        if (!this.accessories.some((data) => data.id === item.id)) {
+          this.tempProduct.accessory.splice(i, 1);
+          // 判斷 modal 是否為開啟狀態 (開啟 modal 才會傳入 accessories)
+          if (this.accessories.length > 0) {
+            this.adminAlert(
+              "warning",
+              "請更新商品",
+              "已刪除不存在的配件，請記得點擊確認更新商品資訊！"
+            );
+          }
+        }
+      });
+      // 如果有在 modal 變更 brand，將清空 accessory
+      if (!this.isNewAccessory) {
+        this.tempProduct.accessory = [];
+      }
+      this.isNewAccessory = false;
+    },
     tempProduct: {
       handler() {
         if (!this.tempProduct.brand || !this.tempProduct.category) {
@@ -561,8 +620,16 @@ export default {
           this.accessoryPlaceholder = "關鍵字搜尋";
           this.accessoryDisable = false;
         }
+
+        if (this.tempProduct.origin_price < 1) {
+          this.tempProduct.origin_price = null;
+        }
+        if (this.tempProduct.price > this.tempProduct.origin_price) {
+          this.tempProduct.price = this.tempProduct.origin_price;
+        }
       },
       deep: true,
+      // immediate: true,
     },
   },
   mounted() {

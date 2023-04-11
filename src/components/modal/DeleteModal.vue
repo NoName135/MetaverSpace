@@ -38,7 +38,7 @@
         <!-- Modal body -->
         <div class="p-6">
           <p class="text-lg leading-relaxed text-gray-900">
-            是否刪除 {{ tempItem.title }} (刪除後無法恢復)
+            是否刪除 {{ tempItem.title || tempItem.id }} (刪除後無法恢復)
           </p>
         </div>
         <!-- Modal footer -->
@@ -110,17 +110,15 @@ export default {
         .then(() => {
           // console.log(res.data);
           if (this.target == "商品") {
-            this.$emit("updateProducts", this.page);
+            this.$emit("updateProducts", this.page, "delete");
           } else if (this.target == "訂單") {
-            this.$emit("updateOrder", this.page);
+            this.$emit("updateOrders", this.page, "delete");
           } else if (this.target == "優惠券") {
-            this.$emit("updateCoupon", this.page);
+            this.$emit("updateCoupons", this.page, "delete");
           } else if (this.target == "文章") {
-            this.$emit("updateArticle", this.page);
+            this.$emit("updateArticles", this.page, "delete");
           }
           this.deleteModal.hide();
-          // SWal
-          this.adminToast("success", `已刪除${this.target}`);
         })
         .catch((err) => {
           // console.log(err);

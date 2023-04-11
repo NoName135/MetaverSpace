@@ -51,6 +51,7 @@ import titleIcon from "@/images/controller.png";
 import gsapMixin from "@/mixins/gsap.js";
 
 export default {
+  props: ["loading"],
   mixins: [gsapMixin],
   data() {
     return {
@@ -94,8 +95,10 @@ export default {
       );
     },
   },
-  mounted() {
-    this.gsapTitle();
+  watch: {
+    loading() {
+      this.gsapTitle();
+    },
   },
 };
 </script>

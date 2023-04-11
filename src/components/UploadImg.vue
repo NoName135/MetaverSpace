@@ -43,7 +43,7 @@
         type="file"
         accept="image/png, image/jpeg"
         class="absolute top-0 w-0"
-        @change="(e) => handleFile(e, 'detailImagesUrl', index)"
+        @change="(e) => handleFile(e, 'contentImages', index)"
       />
     </div>
   </slot>

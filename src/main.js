@@ -53,6 +53,10 @@ import {
   faCheck,
   faLocationDot,
   faClock,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faDeleteLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -81,7 +85,11 @@ library.add(
   faArrowUpRightFromSquare,
   faCheck,
   faLocationDot,
-  faClock
+  faClock,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faDeleteLeft
 );
 
 // vee-validate

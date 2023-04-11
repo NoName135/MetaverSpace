@@ -209,7 +209,7 @@ export default {
     return {
       checkLogin: false,
       sidebarHide: false,
-      target: "products",
+      target: "",
     };
   },
   methods: {
@@ -243,6 +243,18 @@ export default {
     this.$http
       .post(api)
       .then(() => {
+        if (this.$route.fullPath === "/admin/products") {
+          this.target = "products";
+        } else if (this.$route.fullPath === "/admin/order") {
+          this.target = "order";
+        } else if (this.$route.fullPath === "/admin/article") {
+          this.target = "article";
+        } else if (this.$route.fullPath === "/admin/reserve") {
+          this.target = "reserve";
+        } else if (this.$route.fullPath === "/admin/coupon") {
+          this.target = "coupon";
+        }
+
         this.loadings.fullLoading = false;
         this.checkLogin = true;
         //Swal

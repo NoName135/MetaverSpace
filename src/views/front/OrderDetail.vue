@@ -348,7 +348,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination.vue";
+import Pagination from "@/components/UserPagination.vue";
 
 import { Dropdown } from "flowbite";
 import { Accordion } from "flowbite";

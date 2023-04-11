@@ -6,7 +6,10 @@
         <router-view></router-view>
       </main>
     </div>
-    <footer class="bg-black/50 mt-8">
+    <footer
+      class="bg-black/50 mt-8"
+      v-if="!loadings.fullLoading && loadings.opacity !== 1"
+    >
       <section class="py-24 px-2 lg:px-40">
         <div class="container grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div>
@@ -82,11 +85,17 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 
+import { mapState } from "pinia";
+import loadingStore from "@/stores/loadingStore.js";
+
 export default {
   methods: {
     hideNavCollapse() {
       this.$refs.navbar.hideCollapse();
     },
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
   },
   components: {
     Navbar,

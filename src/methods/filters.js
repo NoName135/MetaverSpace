@@ -12,7 +12,5 @@ export function currency(number) {
 // 日期 YYYY/MM/DD
 export function date(time) {
   const timeStamp = new Date(time * 1000);
-  return `${timeStamp.getFullYear()}/${(timeStamp.getMonth() + 1)
-    .toString()
-    .padStart(2, 0)}/${timeStamp.getDate().toString().padStart(2, 0)}`;
+  return `${timeStamp.getFullYear()}/${("0" + (timeStamp.getMonth() + 1)).slice(-2)}/${("0" + timeStamp.getDate()).slice(-2)}`;
 }

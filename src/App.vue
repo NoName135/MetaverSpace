@@ -2,9 +2,24 @@
   <VueLoading
     :active="loadings.fullLoading"
     :background-color="'#000'"
-    :opacity="0.8"
+    :opacity="loadings.opacity"
     :blur="'5px'"
   >
+    <!-- 首頁 loading 才顯示漸層效果 -->
+    <div
+      v-if="loadings.opacity === 1"
+      class="fixed top-0 left-0 w-full h-screen"
+      style="
+        background: linear-gradient(
+          142.88deg,
+          rgba(255, 255, 255, 0.16) 8.09%,
+          rgba(255, 255, 255, 0.064) 27.24%,
+          rgba(255, 255, 255, 0.064) 34.42%,
+          rgba(255, 255, 255, 0.1088) 48.78%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      "
+    ></div>
     <div class="loadingio-spinner-double-ring-zjbfq8k35x relative">
       <div class="ldio-aanj0da69dw">
         <div></div>
@@ -16,6 +31,18 @@
         src="@/images/Logo.png"
         class="absolute top-[68px] left-[68px] w-36 h-36"
       />
+    </div>
+    <!-- progress bar -->
+    <div
+      class="mt-4 w-full bg-gray-200 rounded-full dark:bg-gray-700"
+      v-if="loadings.opacity === 1"
+    >
+      <div
+        class="bar bg-primary2 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full transition-all"
+        :style="`width: ${loadings.progress}%`"
+      >
+        {{ loadings.progress }}%
+      </div>
     </div>
   </VueLoading>
   <router-view />
@@ -58,7 +85,7 @@ export default {
   left: 9.799999999999999px;
   border-radius: 50%;
   border: 14px solid #000;
-  border-color: #553C99 transparent #553C99 transparent;
+  border-color: #553c99 transparent #553c99 transparent;
   animation: ldio-aanj0da69dw 1s linear infinite;
 }
 
@@ -91,14 +118,14 @@ export default {
   height: 14px;
   top: -14px;
   left: 109.19999999999999px;
-  background: #553C99;
+  background: #553c99;
   border-radius: 50%;
-  box-shadow: 0 246.39999999999998px 0 0 #553C99;
+  box-shadow: 0 246.39999999999998px 0 0 #553c99;
 }
 .ldio-aanj0da69dw > div:nth-child(3) div:after {
   left: -14px;
   top: 109.19999999999999px;
-  box-shadow: 246.39999999999998px 0 0 0 #553C99;
+  box-shadow: 246.39999999999998px 0 0 0 #553c99;
 }
 
 .ldio-aanj0da69dw > div:nth-child(4) {

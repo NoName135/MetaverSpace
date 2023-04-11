@@ -1,8 +1,10 @@
 <template>
-  <IndexTitle />
-  <IndexCard />
-  <IndexCategory />
-  <IndexProduct />
+  <div :class="[loading ? 'w-full h-screen overflow-hidden' : '']">
+    <IndexTitle :loading="loading" />
+    <IndexCard />
+    <IndexCategory />
+    <IndexProduct @loading="changeLoading" />
+  </div>
 </template>
 
 <script>
@@ -12,6 +14,16 @@ import IndexCategory from "@/components/index/IndexCategory.vue";
 import IndexProduct from "@/components/index/IndexProduct.vue";
 
 export default {
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  methods: {
+    changeLoading(status) {
+      this.loading = status;
+    },
+  },
   components: {
     IndexTitle,
     IndexCard,

@@ -26,557 +26,84 @@
           :spaceBetween="30"
           :navigation="true"
           :pagination="true"
+          :observer="true"
           :modules="productModules"
           class="indexProductSwiper text-dark h-[480px] !pb-12"
         >
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    Meta
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">VR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">
-                        Oculus Quest 2 256G
-                      </h5>
-                      <p class="text-sm ellipse2 mb-2 md:mb-0">
-                        硬體全面升級，易於設定且能安心使用。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
+          <template v-for="product in hotProducts" :key="product.id">
+            <swiper-slide class="rounded border overflow-hidden">
+              <div class="h-full">
+                <img
+                  class="h-1/2 md:h-3/5 w-full object-cover relative"
+                  :src="product.imageUrl"
+                  alt=""
+                />
+                <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
+                  <div class="flex items-center">
                     <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
+                      class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
                     >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 17,980
-                      </p>
-                      <p class="text-lg font-bold">NT$ 17,500</p>
+                      {{ product.brand }}
+                    </div>
+                    <div class="bg-dark p-[1px] rounded-sm text-xs">
+                      <div class="bg-white px-1.5 py-0.5 rounded-sm">
+                        {{ product.category }}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/VIVE_XR_Elite.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    VIVE
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">XR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">XR Elite</h5>
-                      <p class="hidden xs:block text-sm ellipse2 mb-2 md:mb-0">
-                        舒適配戴，享受一體機的無線自由。更能透過無線串流，釋放
-                        PC VR 的強大潛能。
-                      </p>
+                <div
+                  class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
+                  style="
+                    background: linear-gradient(
+                      142.88deg,
+                      rgba(255, 255, 255, 0.16) 8.09%,
+                      rgba(255, 255, 255, 0.064) 27.24%,
+                      rgba(255, 255, 255, 0.064) 34.42%,
+                      rgba(255, 255, 255, 0.1088) 48.78%,
+                      rgba(255, 255, 255, 0) 100%
+                    );
+                  "
+                >
+                  <div class="md:flex justify-between text-white">
+                    <div>
+                      <div class="text-left">
+                        <h5 class="text-lg font-bold mb-2">
+                          {{ product.title }}
+                        </h5>
+                        <p
+                          class="text-sm ellipse2 mb-2 md:mb-0"
+                          v-html="product.description"
+                        ></p>
+                      </div>
+                    </div>
+                    <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
+                      <div
+                        class="block text-left xs:flex justify-between items-center md:block md:text-right"
+                      >
+                        <p class="text-gray-400 line-through md:mb-2">
+                          NT$ {{ product.origin_price }}
+                        </p>
+                        <p class="text-lg font-bold">NT$ {{ product.price }}</p>
+                      </div>
                     </div>
                   </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
+                  <div class="md:flex justify-between items-center">
+                    <button
+                      type="button"
+                      class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
                     >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 34,500
-                      </p>
-                      <p class="text-lg font-bold">NT$ 34,900</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    Meta
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">VR</div>
+                      加入購物車
+                    </button>
+                    <a href="#" class="text-primary hover:underline">
+                      了解詳情
+                      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                    </a>
                   </div>
                 </div>
               </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">
-                        Oculus Quest 2 256G
-                      </h5>
-                      <p class="text-sm ellipse2 mb-2 md:mb-0">
-                        硬體全面升級，易於設定且能安心使用。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 17,980
-                      </p>
-                      <p class="text-lg font-bold">NT$ 17,500</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/VIVE_XR_Elite.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    VIVE
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">XR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">XR Elite</h5>
-                      <p class="hidden xs:block text-sm ellipse2 mb-2 md:mb-0">
-                        舒適配戴，享受一體機的無線自由。更能透過無線串流，釋放
-                        PC VR 的強大潛能。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 34,500
-                      </p>
-                      <p class="text-lg font-bold">NT$ 34,900</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    Meta
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">VR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">
-                        Oculus Quest 2 256G
-                      </h5>
-                      <p class="text-sm ellipse2 mb-2 md:mb-0">
-                        硬體全面升級，易於設定且能安心使用。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 17,980
-                      </p>
-                      <p class="text-lg font-bold">NT$ 17,500</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/VIVE_XR_Elite.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    VIVE
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">XR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">XR Elite</h5>
-                      <p class="hidden xs:block text-sm ellipse2 mb-2 md:mb-0">
-                        舒適配戴，享受一體機的無線自由。更能透過無線串流，釋放
-                        PC VR 的強大潛能。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 34,500
-                      </p>
-                      <p class="text-lg font-bold">NT$ 34,900</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/Meta_Oculus_Quest2.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    Meta
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">VR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">
-                        Oculus Quest 2 256G
-                      </h5>
-                      <p class="text-sm ellipse2 mb-2 md:mb-0">
-                        硬體全面升級，易於設定且能安心使用。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 17,980
-                      </p>
-                      <p class="text-lg font-bold">NT$ 17,500</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide class="rounded border overflow-hidden">
-            <div class="h-full">
-              <img
-                class="h-1/2 md:h-3/5 w-full object-cover relative"
-                src="../../images/products/VIVE_XR_Elite.jpg"
-                alt=""
-              />
-              <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
-                <div class="flex items-center">
-                  <div
-                    class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1"
-                  >
-                    VIVE
-                  </div>
-                  <div class="bg-dark p-[1px] rounded-sm text-xs">
-                    <div class="bg-white px-1.5 py-0.5 rounded-sm">XR</div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 md:p-5 h-1/2 md:h-2/5 flex flex-col justify-between"
-                style="
-                  background: linear-gradient(
-                    142.88deg,
-                    rgba(255, 255, 255, 0.16) 8.09%,
-                    rgba(255, 255, 255, 0.064) 27.24%,
-                    rgba(255, 255, 255, 0.064) 34.42%,
-                    rgba(255, 255, 255, 0.1088) 48.78%,
-                    rgba(255, 255, 255, 0) 100%
-                  );
-                "
-              >
-                <div class="md:flex justify-between text-white">
-                  <div>
-                    <div class="text-left">
-                      <h5 class="text-lg font-bold mb-2">XR Elite</h5>
-                      <p class="hidden xs:block text-sm ellipse2 mb-2 md:mb-0">
-                        舒適配戴，享受一體機的無線自由。更能透過無線串流，釋放
-                        PC VR 的強大潛能。
-                      </p>
-                    </div>
-                  </div>
-                  <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
-                    <div
-                      class="block text-left xs:flex justify-between items-center md:block md:text-right"
-                    >
-                      <p class="text-gray-400 line-through md:mb-2">
-                        NT$ 34,500
-                      </p>
-                      <p class="text-lg font-bold">NT$ 34,900</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="md:flex justify-between items-center">
-                  <button
-                    type="button"
-                    class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
-                  >
-                    加入購物車
-                  </button>
-                  <a href="#" class="text-primary hover:underline">
-                    了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
+            </swiper-slide>
+          </template>
         </swiper>
       </div>
     </div>
@@ -682,18 +209,94 @@ import "swiper/css/pagination";
 // import required modules
 import { Navigation, Pagination, Autoplay } from "swiper";
 
+import { mapState } from "pinia";
+import loadingStore from "@/stores/loadingStore.js";
+
 import gsapMixin from "@/mixins/gsap.js";
+import swalMixin from "@/mixins/swal.js";
+
+const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
-  mixins: [gsapMixin],
+  emits: ["loading"],
+  mixins: [gsapMixin, swalMixin],
   data() {
     return {
+      allOrders: [],
+      hotProducts: [],
       productModules: [Navigation, Pagination, Autoplay],
       reserve: reserve,
       subscribe: subscribe,
     };
   },
   methods: {
+    async getProducts() {
+      // 首頁 loading 樣式
+      this.loadings.opacity = 1;
+      this.loadings.fullLoading = true;
+      this.loadings.progress = 0;
+
+      await this.$http
+        .get(`${VITE_API}/api/${VITE_PATH}/orders`)
+        .then((res) => {
+          this.allOrders = res.data.orders;
+        })
+        .catch((err) => {
+          // Swal
+          this.userToast("error", err.response.data.message);
+        });
+
+      const soldProducts = [];
+      // 將訂單所有類別數量匯入 soldProducts
+      for (let i = 0; i < this.allOrders.length; i++) {
+        const productObj = this.allOrders[i].products;
+        // 取出訂單全部 products 資料
+        Object.values(productObj).forEach((item) => {
+          // 圖表計算 (不含配件)
+          if (item.product.category !== "配件") {
+            let newProduct = true;
+            // 尋找 Columns 是否有重複出現
+            for (let j = 0; j < soldProducts.length; j++) {
+              if (soldProducts[j].id === item.product.id) {
+                soldProducts[j].qty += item.qty;
+                newProduct = false;
+              }
+            }
+            if (newProduct) {
+              soldProducts.push({ id: item.product.id, qty: item.qty });
+            }
+          }
+        });
+      }
+      // 已售出商品由多到少排序
+      soldProducts.sort((a, b) => b.qty - a.qty);
+      // 依序匯入 soldProducts
+      try {
+        const productsArray = [];
+        for (let i = 0; i < 8; i++) {
+          const { data } = await this.$http.get(
+            `${VITE_API}/api/${VITE_PATH}/product/${soldProducts[i].id}`
+          );
+
+          productsArray.push(data.product);
+          this.loadings.progress = Math.ceil((100 / 8) * (i + 1));
+        }
+        this.hotProducts = productsArray;
+        await setTimeout(() => {
+          this.loadings.fullLoading = false;
+          this.$emit("loading", false);
+          // 變回其他 loading 樣式
+          this.loadings.opacity = 0.8;
+        }, 300);
+      } catch (err) {
+        this.loadings.fullLoading = false;
+        this.$emit("loading", false);
+        // 變回其他 loading 樣式
+        this.loadings.opacity = 0.8;
+        // Swal
+        this.userToast("error", err);
+      }
+    },
     // 熱銷產品 GSAP
     gsapProducts() {
       this.gsap.from(this.$refs.products, {
@@ -788,7 +391,11 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
+  },
   mounted() {
+    this.getProducts();
     this.gsapProducts();
     this.gsapService();
     this.gsapOther();

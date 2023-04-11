@@ -4,7 +4,7 @@
     <button
       type="button"
       class="admin-primary-button"
-      @click="couponModal.show()"
+      @click="couponModal.openModal('new')"
     >
       新增優惠券
     </button>
@@ -12,6 +12,7 @@
       <table class="w-full text-md text-left text-gray-700">
         <thead class="text-sm text-dark uppercase bg-gray-300">
           <tr>
+            <th scope="col" class="sr-only">Loading</th>
             <th scope="col" class="px-6 py-3 whitespace-nowrap">啟用</th>
             <th scope="col" class="px-6 py-3 whitespace-nowrap">優惠券名稱</th>
             <th scope="col" class="px-6 py-3 whitespace-nowrap">折扣碼</th>
@@ -23,31 +24,85 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b hover:bg-teal-100">
+          <tr
+            class="bg-white border-b hover:bg-teal-100"
+            v-for="coupon in coupons"
+            :key="coupon.id"
+          >
+            <td class="px-3 w-6 max-w-[1.5rem]">
+              <svg
+                v-if="couponLoading.indexOf(coupon.id) > -1"
+                class="animate-spin h-5 w-5 mr-3 text-dark"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </td>
             <td class="px-6 font-medium whitespace-nowrap">
               <div class="w-9">
-                <label class="relative cursor-pointer">
-                  <input type="checkbox" value="" class="sr-only peer" />
+                <label
+                  :class="[
+                    'relative',
+                    couponLoading.indexOf(coupon.id) > -1
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
+                  ]"
+                >
+                  <input
+                    type="checkbox"
+                    class="sr-only peer disabled:ring-4"
+                    :true-value="1"
+                    :false-value="0"
+                    :disabled="couponLoading.indexOf(coupon.id) > -1"
+                    :checked="coupon.is_enabled"
+                    v-model="coupon.is_enabled"
+                    @change="updateEnable(coupon)"
+                  />
                   <div
                     class="w-full h-5 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all border-gray-300 peer-checked:bg-teal-600"
                   ></div>
                 </label>
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">歡慶開幕</td>
-            <td class="px-6 py-4 whitespace-nowrap">testCoupon</td>
-            <td class="px-6 py-4 whitespace-nowrap">2023/02/15</td>
-            <th scope="col" class="px-6 py-3 whitespace-nowrap">10%</th>
+            <td class="px-6 py-4 whitespace-nowrap">{{ coupon.title }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ coupon.code }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ $filters.date(coupon.due_date) }}
+            </td>
+            <td scope="col" class="px-6 py-3 whitespace-nowrap">
+              {{ coupon.percent }}%
+            </td>
             <td
               class="px-6 py-4 whitespace-nowrap flex justify-center space-x-6"
             >
               <button
                 type="button"
+                :disabled="couponLoading.indexOf(coupon.id) > -1"
                 class="admin-secondary-button px-3.5 py-1.5"
+                @click="couponModal.openModal('edit', coupon)"
               >
                 編輯
               </button>
-              <button type="button" class="admin-delete-button px-3.5 py-1.5">
+              <button
+                type="button"
+                :disabled="couponLoading.indexOf(coupon.id) > -1"
+                class="admin-delete-button px-3.5 py-1.5"
+                @click="deleteModal.openModal('優惠券', coupon)"
+              >
                 刪除
               </button>
             </td>
@@ -55,143 +110,102 @@
         </tbody>
       </table>
     </div>
-    <!-- <Pagination class="mt-8" :page-obj="pagination" @emit-page="getCoupon" /> -->
+    <Pagination class="mt-8" :page-obj="pagination" @emit-page="getCoupons" />
   </div>
-  <!-- article modal -->
-  <div
+  <!-- coupon modal -->
+  <CouponModal
     ref="couponModal"
-    id="couponModal"
-    tabindex="-1"
-    class="hidden fixed z-40 w-full px-4 overflow-x-hidden overflow-y-auto top-28 left-0 right-0 h-auto"
-  >
-    <div class="w-full max-w-xl h-full max-h-[calc(100vh-8.5rem)]">
-      <!-- Modal content -->
-      <div class="bg-white shadow rounded-lg overflow-hidden">
-        <!-- Modal header -->
-        <div
-          class="flex items-start justify-between p-4 border-b bg-black top-[6rem] w-[calc(100%-2rem)] max-w-xl z-50 rounded-t-lg fixed"
-        >
-          <h3 class="text-xl font-semibold text-gray-300">編輯優惠券</h3>
-          <button
-            type="button"
-            class="text-gray-400 bg-transparent hover:bg-gray-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-            @click="couponModal.hide()"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </div>
-        <!-- Modal body -->
-        <div class="p-6 mt-12">
-          <div class="w-full max-w-md mx-auto space-y-6">
-            <div>
-              <label for="name" class="block mb-2 font-medium"
-                >優惠券名稱</label
-              >
-              <input
-                type="text"
-                id="name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
-                required
-              />
-            </div>
-            <div>
-              <label for="coupon" class="block mb-2 font-medium">折扣碼</label>
-              <input
-                type="text"
-                id="coupon"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
-                required
-              />
-            </div>
-            <div class="grid grid-cols-3 gap-6">
-              <div class="col-span-2">
-                <label for="date" class="block mb-2 font-medium">到期日</label>
-                <input
-                  type="date"
-                  id="date"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
-                  required
-                  onkeypress="return false"
-                />
-              </div>
-              <div>
-                <label for="num" class="block mb-2 font-medium"
-                  >折扣百分比</label
-                >
-                <div class="flex justify-between items-center">
-                  <input
-                    type="number"
-                    id="num"
-                    class="text-end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 w-full p-2.5"
-                    required
-                  />
-                  <span class="ml-2">%</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <div class="flex">
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" class="sr-only peer" checked />
-                  <div
-                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"
-                  ></div>
-                  <span class="ml-3 text-md font-medium text-gray-900"
-                    >啟用</span
-                  >
-                </label>
-              </div>
-              <div class="flex justify-end">
-                <button type="button" class="admin-delete-button">取消</button>
-                <button type="button" class="ml-6 admin-primary-button">
-                  確認
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    :page="pagination.current_page"
+    @update-coupons="getCoupons"
+  />
+  <!-- delete modal -->
+  <DeleteModal
+    ref="deleteModal"
+    :page="pagination.current_page"
+    @update-coupons="getCoupons"
+  />
 </template>
 
 <script>
 import Pagination from "@/components/AdminPagination.vue";
-import { Modal } from "flowbite";
+import CouponModal from "@/components/modal/CouponModal.vue";
+import DeleteModal from "@/components/modal/DeleteModal.vue";
+
+import swalMixin from "@/mixins/swal.js";
+
+import { mapState } from "pinia";
+import loadingStore from "@/stores/loadingStore.js";
+const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
+  mixins: [swalMixin],
   data() {
-    return {};
+    return {
+      coupons: [],
+      pagination: {},
+      couponLoading: [],
+    };
+  },
+  methods: {
+    getCoupons(page = 1, process) {
+      this.loadings.fullLoading = true;
+      this.$http
+        .get(`${VITE_API}/api/${VITE_PATH}/admin/coupons?page=${page}`)
+        .then((res) => {
+          // console.log(res.data);
+          const { coupons, pagination } = res.data;
+          this.coupons = coupons;
+          this.pagination = pagination;
+          this.loadings.fullLoading = false;
+
+          if (process === "update") {
+            // Swal
+            this.adminToast("success", "已更新優惠券資料");
+          } else if (process === "delete") {
+            // SWal
+            this.adminToast("success", `已刪除優惠券資料`);
+          }
+        })
+        .catch((err) => {
+          // console.log(err);
+          this.loadings.fullLoading = false;
+          // Swal
+          this.adminToast("error", err.response.data.message);
+        });
+    },
+    updateEnable(coupon) {
+      this.couponLoading.push(coupon.id);
+      this.$http
+        .put(`${VITE_API}/api/${VITE_PATH}/admin/coupon/${coupon.id}`, {
+          data: coupon,
+        })
+        .then(() => {
+          // console.log(res.data);
+          this.couponLoading.shift();
+          // Swal
+          this.adminToast("success", "已更新啟用狀態");
+        })
+        .catch((err) => {
+          // console.log(err);
+          this.couponLoading.shift();
+          // Swal
+          this.adminToast("error", err.response.data.message);
+          this.getCoupons(this.page.current_page);
+        });
+    },
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
   },
   mounted() {
-    // modal options
-    const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.couponModal = new Modal(this.$refs.couponModal, modalOptions);
+    this.couponModal = this.$refs.couponModal;
+    this.deleteModal = this.$refs.deleteModal;
+    this.getCoupons();
   },
   components: {
     Pagination,
+    CouponModal,
+    DeleteModal,
   },
 };
 </script>
-
-<style>
-.ck-editor__editable_inline {
-  min-height: 300px;
-}
-</style>

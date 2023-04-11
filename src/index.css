@@ -16,7 +16,7 @@
     @apply top-36 sm:top-24 lg:top-28
   }
   .primary-button {
-    @apply text-white bg-gradient-to-r from-primary via-primary2 to-primary3 hover:bg-gradient-to-br focus:ring focus:outline-none focus:ring-primary0 font-medium rounded text-sm px-5 py-2.5 text-center
+    @apply text-white bg-gradient-to-r from-primary via-primary2 to-primary3 hover:bg-gradient-to-br focus:ring focus:outline-none focus:ring-primary0 font-medium rounded text-sm px-5 py-2.5 text-center disabled:hover:bg-gradient-to-r disabled:cursor-not-allowed
   }
   .dark-solid-button {
     @apply bg-transparent border-2 border-gray-300 focus:outline-none hover:text-dark hover:bg-gray-100 focus:ring focus:ring-gray-500 font-medium rounded text-sm px-5 py-2.5
