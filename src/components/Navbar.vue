@@ -7,7 +7,7 @@
   >
     <div class="w-full px-4 lg:px-24 py-4 bg-white/10">
       <div class="container flex flex-wrap items-center justify-between">
-        <router-link to="/" class="flex items-center">
+        <RouterLink to="/" class="flex items-center" @click="targetLink = ''">
           <img
             src="../../src/images/Logo.png"
             class="h-16 mr-3"
@@ -17,7 +17,7 @@
             class="self-center text-2xl font-bold whitespace-nowrap text-white"
             >MetaverSpace</span
           >
-        </router-link>
+        </RouterLink>
         <div class="flex items-center lg:order-2 ml-auto lg:ml-0 relative">
           <!-- favorite button -->
           <div ref="navFavBtn" class="relative" @click.stop="toggleFav">
@@ -29,8 +29,9 @@
               <!-- badge -->
               <div
                 class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
+                v-if="favorites.length > 0"
               >
-                20
+                {{ favorites.length }}
               </div>
             </div>
             <!-- favorite menu -->
@@ -40,15 +41,18 @@
               @click.stop="toggleFav"
             >
               <div class="p-2 bg-white/10">
-                <ul class="text-sm text-white">
-                  <li>
-                    <div class="flex py-2 border-b border-dashed">
+                <ul class="text-sm text-white max-h-80 overflow-y-auto">
+                  <li v-for="(item, i) in favorites" :key="item.id">
+                    <div
+                      class="flex py-2 border-dashed"
+                      :class="{ 'border-t': i !== 0 }"
+                    >
                       <div
                         class="basis-1/6 ml-2 hidden sm:flex justify-center items-center"
                       >
                         <img
-                          src="../images/products/Meta_Oculus_Quest2.jpg"
-                          class="w-14 h-14 object-cover"
+                          :src="item.imageUrl"
+                          class="w-14 h-14 object-cover bg-white"
                         />
                       </div>
                       <div
@@ -57,9 +61,11 @@
                         <p
                           class="basis text-left font-bold whitespace-nowrap truncate"
                         >
-                          Oculus Quest 2 256G
+                          {{ item.title }}
                         </p>
-                        <p class="basis text-gray-300 text-left">NT$ 17,500</p>
+                        <p class="basis text-gray-300 text-left">
+                          NT$ {{ $filters.currency(item.price) }}
+                        </p>
                       </div>
                       <div
                         class="basis-1/12 flex justify-center items-center mx-1"
@@ -68,51 +74,29 @@
                           :icon="['fas', 'xmark']"
                           size="2x"
                           class="text-center cursor-pointer hover:text-warm"
-                        />
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="flex py-2 border-b border-dashed">
-                      <div
-                        class="basis-1/6 ml-2 hidden sm:flex justify-center items-center"
-                      >
-                        <img
-                          src="../images/products/VIVE_XR_Elite.jpg"
-                          class="w-14 h-14 object-cover"
-                        />
-                      </div>
-                      <div
-                        class="flex flex-col flex-1 h-14 ml-2 justify-between overflow-hidden"
-                      >
-                        <p
-                          class="basis text-left font-bold whitespace-nowrap truncate"
-                        >
-                          XR Elite
-                        </p>
-                        <p class="basis text-gray-300 text-left">NT$ 34,300</p>
-                      </div>
-                      <div
-                        class="basis-1/12 flex justify-center items-center mx-1"
-                      >
-                        <font-awesome-icon
-                          :icon="['fas', 'xmark']"
-                          size="2x"
-                          class="text-center cursor-pointer hover:text-warm"
+                          @click="updateFavorite(item)"
                         />
                       </div>
                     </div>
                   </li>
                 </ul>
                 <div
-                  class="flex justify-between items-center mt-4 mb-1 mx-1 text-white"
+                  class="flex justify-between items-center mt-2 mb-1 mx-1 pt-2 text-white border-t"
                 >
-                  <p class="text-sm">共 20 種商品</p>
-                  <router-link
+                  <p class="text-sm" v-if="favorites.length > 0">
+                    共 {{ favorites.length }} 種商品
+                  </p>
+                  <p v-else class="text-sm">沒有收藏商品</p>
+                  <RouterLink
                     :to="{ name: '收藏清單' }"
-                    @click="hideCollapse"
+                    @click="
+                      () => {
+                        hideCollapse();
+                        targetLink = '';
+                      }
+                    "
                     class="relative primary-solid-button"
-                    >查看我的收藏</router-link
+                    >查看收藏</RouterLink
                   >
                 </div>
               </div>
@@ -140,71 +124,131 @@
               @click.stop="toggleCart"
             >
               <div class="p-2 bg-white/10">
-                <ul
-                  class="text-sm text-white"
-                  v-for="item in cart.carts"
-                  :key="item.id"
-                >
-                  <li>
-                    <div class="flex py-2 border-b border-dashed">
+                <ul class="text-sm text-white max-h-80 overflow-y-auto">
+                  <li v-for="(item, i) in cart.carts" :key="item.id">
+                    <div
+                      class="flex py-2 border-dashed"
+                      :class="{ 'border-t': i !== 0 }"
+                    >
                       <div
-                        class="basis-1/6 ml-2 hidden sm:flex justify-center items-center"
+                        class="basis-1/6 ml-2 hidden sm:flex justify-center mt-1"
                       >
                         <img
                           :src="item.product.imageUrl"
-                          class="w-14 h-14 object-cover"
+                          class="w-14 h-14 object-cover bg-white"
                         />
                       </div>
                       <div
-                        class="flex flex-col flex-1 h-14 ml-2 justify-between overflow-hidden"
+                        class="flex flex-col flex-1 ml-2 justify-between overflow-hidden"
                       >
-                        <p
-                          class="basis text-left font-bold whitespace-nowrap truncate"
-                        >
-                          {{ item.product.title }}
-                        </p>
                         <div
-                          class="flex justify-between items-end text-gray-300"
+                          class="flex justify-between items-end text-gray-300 mb-4"
                         >
-                          <p class="flex-1 text-left">
-                            NT$ {{ $filters.currency(item.product.price) }}
+                          <p class="basis text-left font-bold truncate">
+                            {{ item.product.title }}
                           </p>
-                          <div class="flex items-end">
-                            <span>數量：</span>
-                            <input
-                              type="number"
-                              min="1"
-                              class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-14 mr-1"
-                              v-model.lazy="item.qty"
-                            />
+                          <p class="mx-2 whitespace-nowrap">
+                            NT$ {{ $filters.currency(item.final_total) }}
+                          </p>
+                        </div>
+                        <!-- 有規格顯示個規格數量 -->
+                        <template v-if="item.cart_spec?.length">
+                          <div
+                            class="flex justify-between items-center"
+                            :class="{ 'mt-2': i > 0 }"
+                            v-for="(spec, i) in item.cart_spec"
+                            :key="i"
+                          >
+                            <div class="truncate">
+                              <button
+                                type="button"
+                                class="mr-1 cursor-pointer hover:text-warm disabled:text-gray-400 disabled:cursor-not-allowed"
+                                @click="deleteCartSpec(item, i)"
+                                :disabled="cartLoading.cartId === item.id"
+                                v-if="item.cart_spec?.length > 1"
+                              >
+                                <font-awesome-icon
+                                  :icon="['fas', 'circle-xmark']"
+                                />
+                              </button>
+                              <span>規格：{{ spec.title }}</span>
+                            </div>
+                            <div class="ml-2 whitespace-nowrap">
+                              <span>數量：</span>
+                              <input
+                                type="number"
+                                min="1"
+                                class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
+                                v-model.lazy="spec.qty"
+                                @change="updateCart(item, i)"
+                                :disabled="cartLoading.cartId === item.id"
+                              />
+                            </div>
                           </div>
+                        </template>
+                        <!-- 無規格顯示總數量 -->
+                        <div class="flex justify-end items-center" v-else>
+                          <span>數量：</span>
+                          <input
+                            type="number"
+                            min="1"
+                            class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
+                            v-model.lazy="item.qty"
+                            @change="updateCart(item)"
+                            :disabled="cartLoading.cartId === item.id"
+                          />
                         </div>
                       </div>
-                      <div
-                        class="basis-1/12 flex justify-center items-center mx-1"
-                        @click="deleteCart(item.id)"
-                      >
+                      <div class="basis-1/12 flex justify-center mx-1 mt-1">
                         <font-awesome-icon
-                          :icon="['fas', 'xmark']"
-                          size="2x"
+                          v-if="cartLoading.cartId !== item.id"
+                          :icon="['fas', 'trash-can']"
+                          size="lg"
                           class="text-center cursor-pointer hover:text-warm"
+                          @click="deleteCart(item.id)"
                         />
+                        <svg
+                          v-else
+                          class="animate-spin h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                          ></circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
                       </div>
                     </div>
                   </li>
                 </ul>
                 <div
-                  class="flex justify-between items-center mt-4 mb-1 mx-1 text-white"
+                  class="flex justify-between items-center mt-2 mb-1 mx-1 pt-2 text-white border-t"
                 >
                   <p class="text-sm" v-if="cart.carts?.length > 0">
                     共 {{ cart.carts?.length }} 種商品
                   </p>
                   <p class="text-sm" v-else>購物車沒有商品</p>
-                  <router-link
+                  <RouterLink
                     :to="{ name: '購物車' }"
-                    @click="hideCollapse"
+                    @click="
+                      () => {
+                        hideCollapse();
+                        targetLink = '';
+                      }
+                    "
                     class="relative primary-solid-button"
-                    >前往購物車</router-link
+                    >前往購物車</RouterLink
                   >
                 </div>
               </div>
@@ -242,26 +286,43 @@
             class="flex flex-col p-4 mt-4 text-white text-lg text-center lg:flex-row lg:space-x-8 lg:mt-0 lg:text-md lg:items-center lg:font-medium rounded gap-2.5 border lg:border-0 border-white/87 nav-menu-shadow"
           >
             <li>
-              <router-link
+              <RouterLink
                 :to="{ name: '預約體驗' }"
-                class="block py-2 pl-3 pr-4 rounded-lg lg:p-2 text-white bg-primary"
-                aria-current="page"
+                class="block py-2 pl-3 pr-4 text-white"
+                :class="[
+                  targetLink === 'reserve'
+                    ? 'bg-primary rounded-lg lg:p-2'
+                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                ]"
+                @click="targetLink = 'reserve'"
                 >預約體驗
-              </router-link>
+              </RouterLink>
             </li>
             <li>
-              <router-link
+              <RouterLink
                 :to="{ name: '交易紀錄' }"
-                class="block py-2 pl-3 pr-4 mt-2 lg:mt-0 lg:p-0 text-white hover:text-primary"
+                class="block py-2 pl-3 pr-4 text-white"
+                :class="[
+                  targetLink === 'order'
+                    ? 'bg-primary rounded-lg lg:p-2'
+                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                ]"
+                @click="targetLink = 'order'"
                 >交易記錄
-              </router-link>
+              </RouterLink>
             </li>
             <li>
-              <router-link
+              <RouterLink
                 :to="{ name: '商品列表' }"
-                class="block py-2 pl-3 pr-4 mt-2 lg:mt-0 lg:p-0 text-white hover:text-primary"
+                class="block py-2 pl-3 pr-4 text-white"
+                :class="[
+                  targetLink === 'products'
+                    ? 'bg-primary rounded-lg lg:p-2'
+                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                ]"
+                @click="targetLink = 'products'"
                 >商品列表
-              </router-link>
+              </RouterLink>
             </li>
           </ul>
         </div>
@@ -274,6 +335,7 @@
 import { Collapse } from "flowbite";
 
 import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -284,6 +346,7 @@ export default {
       navCollapse: "",
       cartCollapse: "",
       favCollapse: "",
+      targetLink: "",
     };
   },
   methods: {
@@ -307,10 +370,32 @@ export default {
       this.navCollapse.collapse();
       this.cartCollapse.collapse();
     },
-    ...mapActions(cartStore, ["getCart", "deleteCart"]),
+    ...mapActions(cartStore, [
+      "getCart",
+      "updateCart",
+      "deleteCart",
+      "deleteCartSpec",
+    ]),
+    ...mapActions(favoriteStore, ["getFavorite", "updateFavorite"]),
   },
   computed: {
-    ...mapState(cartStore, ["cart"]),
+    ...mapState(cartStore, ["cart", "cartLoading"]),
+    ...mapState(favoriteStore, ["favorites"]),
+  },
+  watch: {
+    $route(to, from) {
+      if (to.fullPath !== from.fullPath) {
+        if (this.$route.fullPath === "/reserve") {
+          this.targetLink = "reserve";
+        } else if (this.$route.fullPath === "/order") {
+          this.targetLink = "order";
+        } else if (this.$route.fullPath === "/products") {
+          this.targetLink = "products";
+        } else {
+          this.targetLink = "";
+        }
+      }
+    },
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
@@ -327,8 +412,18 @@ export default {
     this.navCollapse = new Collapse(navMenu, navBtn, navOptions);
     this.cartCollapse = new Collapse(navCart, navCartBtn);
     this.favCollapse = new Collapse(navFav, navFavBtn);
-
+    // 判斷目前開啟的頁面
+    if (this.$route.fullPath === "/reserve") {
+      this.targetLink = "reserve";
+    } else if (this.$route.fullPath === "/order") {
+      this.targetLink = "order";
+    } else if (this.$route.fullPath === "/products") {
+      this.targetLink = "products";
+    } else {
+      this.targetLink = "";
+    }
     this.getCart();
+    this.getFavorite();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.onScroll);

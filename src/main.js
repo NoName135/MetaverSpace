@@ -17,7 +17,12 @@ import "vue-loading-overlay/dist/css/index.css";
 // sweetAlert2
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-const swalOptions = {};
+const swalOptions = {
+  background: "#2B282F",
+  color: "#FFF",
+  cancelButtonText: "取消",
+  reverseButtons: true,
+};
 
 // vue-multiselect
 import Multiselect from "vue-multiselect";
@@ -57,6 +62,7 @@ import {
   faSortUp,
   faSortDown,
   faDeleteLeft,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -89,7 +95,8 @@ library.add(
   faSort,
   faSortUp,
   faSortDown,
-  faDeleteLeft
+  faDeleteLeft,
+  faCircleXmark
 );
 
 // vee-validate
@@ -107,6 +114,13 @@ defineRule("phone", (value) => {
     return true;
   } else {
     return "請輸入手機號碼格式";
+  }
+});
+defineRule("agree", (value) => {
+  if (value) {
+    return true;
+  } else {
+    return "需勾選同意條款";
   }
 });
 // vee-validate 語系

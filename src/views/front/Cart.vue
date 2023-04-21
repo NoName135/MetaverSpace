@@ -1,136 +1,247 @@
 <template>
   <div class="mt-nav">
     <div class="container px-2 md:px-0 pt-8">
-      <div class="border-2 rounded-lg overflow-hidden">
-        <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">我的購物車</h1>
-        <div class="px-8">
-          <div class="py-6 flex justify-between">
-            <button
-              type="button"
-              class="w-18 md:w-20 lg:w-24 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
-            >
-              全選
-            </button>
-            <button
-              type="button"
-              class="ml-2 dark-solid-button"
-              @click="favoriteModal.show()"
-            >
-              收藏清單
-            </button>
-          </div>
+      <div class="border-2 rounded-lg xl:mx-48 overflow-hidden">
+        <div
+          class="flex justify-between items-center px-4 py-2.5 bg-black/50 border-b-2"
+        >
+          <h1 class="text-xl font-bold">我的購物車</h1>
+          <button
+            type="button"
+            class="ml-2 dark-solid-button"
+            @click="favoriteModal.openModal()"
+          >
+            收藏清單
+          </button>
+        </div>
+        <div class="px-8 pb-4">
           <!-- 購物車商品 -->
-          <div class="py-8 grid grid-cols-12 md:gap-6 border-t">
-            <input
-              id="check1"
-              type="checkbox"
-              value=""
-              class="col-span-1 flex justify-self-center self-center w-5 h-5 sm:w-6 sm:h-6 text-primary rounded focus:ring-primary ring-offset-gray-800 focus:ring-2 bg-gray-600 border-gray-500"
-            />
-            <img
-              src="@/images/products/Meta_Oculus_Quest2.jpg"
-              alt=""
-              class="col-span-2 hidden md:block w-full h-28 lg:h-36 object-cover rounded"
-            />
-            <div
-              class="col-span-full md:col-span-9 flex flex-col justify-between mt-4 md:mt-0"
-            >
-              <div>
-                <div class="flex justify-between items-center">
-                  <h2 class="text-lg lg:text-xl">Meta</h2>
+          <p
+            class="mt-10 text-center text-2xl md:text-3xl pb-6 border-b"
+            v-if="!Object.keys(cart.carts)?.length"
+          >
+            購物車沒有商品
+          </p>
+          <ul v-else>
+            <li class="py-8 border-b" v-for="item in cart.carts" :key="item.id">
+              <div class="flex justify-between items-center">
+                <button
+                  type="button"
+                  class="w-18 focus:outline-none focus:ring-4 font-medium rounded text-sm px-4 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3 disabled:bg-primary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  :disabled="cartLoading.cartId === item.id"
+                  @click="moveToFavorite(item.id, item.product)"
+                >
                   <font-awesome-icon
-                    :icon="['fas', 'trash-can']"
-                    class="text-xl lg:text-2xl hover:text-warm cursor-pointer"
-                  />
-                </div>
-                <h3 class="text-xl lg:text-2xl mt-4 lg:mt-6">
-                  Oculus Quest 2 256G
-                </h3>
+                    :icon="['fas', 'heart']"
+                    class="mr-2"
+                  ></font-awesome-icon
+                  ><span>移動至收藏</span>
+                </button>
+                <font-awesome-icon
+                  v-if="cartLoading.cartId !== item.id"
+                  :icon="['fas', 'trash-can']"
+                  class="text-xl lg:text-2xl hover:text-warm cursor-pointer"
+                  @click="deleteAlert(item)"
+                />
+                <svg
+                  v-else
+                  class="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
               </div>
-              <div class="md:flex justify-between items-end mt-6">
-                <div class="flex flex-col sm:flex-row justify-between">
-                  <select
-                    id="spec1"
-                    class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+              <div class="grid grid-cols-12 md:gap-6 mt-6">
+                <img
+                  :src="item.product.imageUrl"
+                  alt=""
+                  class="col-span-3 hidden md:block w-full h-28 lg:h-32 xl:h-40 object-cover rounded bg-white"
+                />
+                <div
+                  class="col-span-full md:col-span-9 flex flex-col justify-between"
+                >
+                  <div class="flex flex-wrap justify-between items-center">
+                    <h2 class="text-lg lg:text-xl mr-4">
+                      {{ item.product.brand }}
+                    </h2>
+                    <router-link
+                      :to="`/product/${item.product.id}`"
+                      class="mt-2 sm:mt-0 dark-solid-button py-2 relative whitespace-nowrap"
+                    >
+                      查看商品
+                      <font-awesome-icon
+                        :icon="['fas', 'arrow-up-right-from-square']"
+                        class="absolute top-1 right-1 text-sm lg:text-md"
+                      ></font-awesome-icon>
+                    </router-link>
+                  </div>
+                  <h3 class="text-xl lg:text-2xl mt-4 lg:mt-6 font-bold">
+                    {{ item.product.title }}
+                  </h3>
+                  <div
+                    class="flex justify-between sm:justify-start items-start sm:items-center mt-8"
+                    v-for="(spec, i) in item.cart_spec"
+                    :key="spec.title"
                   >
-                    <option selected disabled class="bg-dark/10">
-                      選擇規格
-                    </option>
-                    <option value="黑色" class="bg-dark/10">黑色</option>
-                    <option value="白色" class="bg-dark/10">白色</option>
-                  </select>
-                  <select
-                    id="accessoryNum3"
-                    class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                    <div class="flex flex-col sm:flex-row justify-between">
+                      <select
+                        :id="`spec${i}`"
+                        class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                        :value="spec.title"
+                        @change="(e) => updateCartSpec(item, e.target.value, i)"
+                        :disabled="cartLoading.cartId === item.id"
+                      >
+                        <option
+                          class="bg-dark/10"
+                          v-for="productSpec in item.product.spec"
+                          :key="productSpec"
+                          :value="productSpec"
+                        >
+                          {{ productSpec }}
+                        </option>
+                      </select>
+                      <div class="flex mt-3 sm:mt-0 sm:ml-4">
+                        <span
+                          class="sm:hidden flex items-center text-md lg:text-lg"
+                          >數量：</span
+                        >
+                        <button
+                          type="button"
+                          class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                          @click="
+                            () => {
+                              spec.qty -= 1;
+                              updateCart(item, i);
+                            }
+                          "
+                          :disabled="
+                            spec.qty === 1 || cartLoading.cartId === item.id
+                          "
+                        >
+                          －
+                        </button>
+                        <input
+                          type="number"
+                          class="w-12 bg-dark text-sm text-end focus:border-secondary disabled:text-gray-500"
+                          min="1"
+                          max="99"
+                          v-model.lazy="spec.qty"
+                          @change="updateCart(item, i)"
+                          :disabled="cartLoading.cartId === item.id"
+                        />
+                        <button
+                          type="button"
+                          class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                          @click="
+                            () => {
+                              spec.qty += 1;
+                              updateCart(item, i);
+                            }
+                          "
+                          :disabled="
+                            spec.qty === 99 || cartLoading.cartId === item.id
+                          "
+                        >
+                          ＋
+                        </button>
+                      </div>
+                    </div>
+                    <font-awesome-icon
+                      :icon="['fas', 'xmark']"
+                      size="2xl"
+                      class="sm:hidden hover:text-warm"
+                      @click="deleteAlert(item, i)"
+                    />
+                    <button
+                      type="button"
+                      class="hidden sm:block ml-8 w-18 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-warm hover:bg-warm2 focus:ring-warm3 disabled:bg-warm2 disabled:text-gray-300 disabled:cursor-not-allowed"
+                      @click="deleteAlert(item, i)"
+                      :disabled="cartLoading.cartId === item.id"
+                      v-if="item.cart_spec?.length > 1"
+                    >
+                      刪除
+                    </button>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row justify-between items-center"
                   >
-                    <option selected value="1" class="bg-dark/10">1</option>
-                    <option value="2" class="bg-dark/10">2</option>
-                    <option value="3" class="bg-dark/10">3</option>
-                  </select>
+                    <div
+                      class="flex items-center self-start mt-6"
+                      v-if="!item.cart_spec"
+                    >
+                      <span class="text-md lg:text-lg">數量：</span>
+                      <div class="flex sm:mt-0 sm:ml-4">
+                        <button
+                          type="button"
+                          class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                          @click="
+                            () => {
+                              item.qty -= 1;
+                              updateCart(item, i);
+                            }
+                          "
+                          :disabled="
+                            item.qty === 1 || cartLoading.cartId === item.id
+                          "
+                        >
+                          －
+                        </button>
+                        <input
+                          type="number"
+                          class="w-12 bg-dark text-sm text-end focus:border-secondary disabled:text-gray-500"
+                          min="1"
+                          max="99"
+                          v-model.lazy="item.qty"
+                          @change="updateCart(item, i)"
+                          :disabled="cartLoading.cartId === item.id"
+                        />
+                        <button
+                          type="button"
+                          class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                          @click="
+                            () => {
+                              item.qty += 1;
+                              updateCart(item, i);
+                            }
+                          "
+                          :disabled="
+                            item.qty === 99 || cartLoading.cartId === item.id
+                          "
+                        >
+                          ＋
+                        </button>
+                      </div>
+                    </div>
+                    <div v-else></div>
+                    <h5 class="self-end text-lg lg:text-xl mt-6">
+                      總計：<span class="font-bold"
+                        >NT$ {{ $filters.currency(item.total) }}</span
+                      >
+                    </h5>
+                  </div>
                 </div>
-                <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
-                  總計：<span class="font-bold">NT$ 34,300</span>
-                </h5>
               </div>
-            </div>
-          </div>
-          <div class="py-8 grid grid-cols-12 md:gap-6 border-t">
-            <input
-              id="check1"
-              type="checkbox"
-              value=""
-              class="col-span-1 flex justify-self-center self-center w-5 h-5 sm:w-6 sm:h-6 text-primary rounded focus:ring-primary ring-offset-gray-800 focus:ring-2 bg-gray-600 border-gray-500"
-            />
-            <img
-              src="@/images/products/VIVE_XR_ELITE.jpg"
-              alt=""
-              class="col-span-2 hidden md:block w-full h-28 lg:h-36 object-cover rounded"
-            />
-            <div
-              class="col-span-full md:col-span-9 flex flex-col justify-between mt-4 md:mt-0"
-            >
-              <div>
-                <div class="flex justify-between items-center">
-                  <h2 class="text-lg lg:text-xl">VIVE</h2>
-                  <font-awesome-icon
-                    :icon="['fas', 'trash-can']"
-                    class="text-xl lg:text-2xl hover:text-warm cursor-pointer"
-                  />
-                </div>
-                <h3 class="text-xl lg:text-2xl mt-4 lg:mt-6">XR_ELITE</h3>
-              </div>
-              <div class="md:flex justify-between items-end mt-6">
-                <div class="flex flex-col sm:flex-row justify-between">
-                  <select
-                    id="spec1"
-                    class="border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected disabled class="bg-dark/10">
-                      選擇規格
-                    </option>
-                    <option value="黑色" class="bg-dark/10">黑色</option>
-                    <option value="白色" class="bg-dark/10">白色</option>
-                  </select>
-                  <select
-                    id="accessoryNum3"
-                    class="mt-2 sm:mt-0 md:ml-2 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected value="1" class="bg-dark/10">1</option>
-                    <option value="2" class="bg-dark/10">2</option>
-                    <option value="3" class="bg-dark/10">3</option>
-                  </select>
-                </div>
-                <h5 class="text-end mt-4 md:mt-0 text-lg lg:text-xl">
-                  總計：<span class="font-bold">NT$ 34,300</span>
-                </h5>
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
           <!-- 結帳金額區塊 -->
-          <div class="flex flex-col items-end py-6 border-t">
+          <div class="flex flex-col items-end py-6">
             <h4 class="mt-4 xs:mt-0 xs:ml-4 text-lg lg:text-xl text-end">
               結帳小計：<span class="font-bold whitespace-nowrap"
-                >NT$ 51,800</span
+                >NT$ {{ $filters.currency(cart.total) }}</span
               >
             </h4>
             <div class="mt-4 flex items-center">
@@ -138,20 +249,30 @@
                 type="text"
                 placeholder="請輸入優惠碼"
                 class="border text-sm rounded block w-28 sm:w-36 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-secondary focus:border-secondary"
+                v-model="coupon"
               />
               <button
                 type="button"
                 class="ml-2 w-18 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
+                @click="addCoupon"
               >
                 套用
               </button>
             </div>
-            <h5 class="mt-4 text-warm text-lg lg:text-xl">
-              折扣：<span class="font-bold">NT$ 1,000</span>
+            <h5
+              class="mt-4 text-warm text-lg lg:text-xl"
+              v-if="cart.total - cart.final_total > 0"
+            >
+              折扣：<span class="font-bold"
+                >NT$
+                {{
+                  $filters.currency(Math.ceil(cart.total - cart.final_total))
+                }}</span
+              >
             </h5>
             <h3 class="mt-4 text-primary0 text-xl lg:text-2xl text-end">
               總金額：<span class="font-bold whitespace-nowrap"
-                >NT$ 50,800</span
+                >NT$ {{ $filters.currency(cart.final_total) }}</span
               >
             </h3>
             <router-link :to="{ name: '結帳' }" class="mt-8 primary-button"
@@ -160,145 +281,107 @@
           </div>
         </div>
       </div>
-      <!-- Product modal -->
-      <div
-        ref="favoriteModal"
-        id="favoriteModal"
-        tabindex="-1"
-        aria-hidden="true"
-        class="fixed top-8 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] md:h-full max-h-[calc(100vh-3rem)]"
-      >
-        <div class="w-full h-full max-w-2xl">
-          <!-- Modal content -->
-          <div class="rounded-lg overflow-hidden shadow bg-dark">
-            <!-- Modal header -->
-            <div
-              class="flex items-start justify-between p-4 border rounded-t-lg border-gray-600 bg-black fixed top-5 w-[calc(100%-2rem)] md:w-full max-w-2xl z-50"
-            >
-              <h3 class="text-lg md:text-xl font-semibold text-white">
-                請選擇商品加入購物車
-              </h3>
-              <button
-                type="button"
-                class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-600 hover:text-white"
-                @click="favoriteModal.hide()"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <!-- Modal body -->
-            <div class="px-4 pt-6">
-              <div class="py-8 grid grid-cols-4 gap-6">
-                <img
-                  src="@/images/products/Meta_Oculus_Quest2.jpg"
-                  alt=""
-                  class="hidden md:flex self-center w-full h-28 object-cover rounded"
-                />
-                <div
-                  class="col-span-full md:col-span-3 flex flex-col justify-between"
-                >
-                  <div>
-                    <div class="flex justify-between items-center">
-                      <h2 class="text-lg lg:text-xl">Meta</h2>
-                      <select
-                        id="spec1"
-                        class="border text-xs sm:text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                      >
-                        <option selected disabled>選擇規格</option>
-                        <option value="黑色">黑色</option>
-                        <option value="白色">白色</option>
-                      </select>
-                    </div>
-                    <h3 class="text-xl lg:text-2xl mt-4">
-                      Oculus Quest 2 256G
-                    </h3>
-                  </div>
-                  <div>
-                    <div class="xs:flex justify-between items-end mt-4 md:mt-0">
-                      <h5 class="text-lg lg:text-xl">
-                        售價：<span class="font-bold">NT$ 17,500</span>
-                      </h5>
-                      <button
-                        type="button"
-                        class="mt-5 xs:mt-1 primary-button md:ml-3"
-                      >
-                        加入購物車
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="py-8 grid grid-cols-4 gap-6 border-t">
-                <img
-                  src="@/images/products/VIVE_XR_ELITE.jpg"
-                  alt=""
-                  class="hidden md:flex self-center w-full h-20 md:h-28 object-cover rounded"
-                />
-                <div
-                  class="col-span-full md:col-span-3 flex flex-col justify-between"
-                >
-                  <div>
-                    <div class="flex justify-between items-center">
-                      <h2 class="text-lg lg:text-xl">VIVE</h2>
-                      <select
-                        id="spec1"
-                        class="border text-xs sm:text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                      >
-                        <option selected disabled>選擇規格</option>
-                        <option value="黑色">黑色</option>
-                        <option value="白色">白色</option>
-                      </select>
-                    </div>
-                    <h3 class="text-xl lg:text-2xl mt-4">XR_ELITE</h3>
-                  </div>
-                  <div>
-                    <div class="xs:flex justify-between items-end mt-4 md:mt-0">
-                      <h5 class="text-lg lg:text-xl">
-                        售價：<span class="font-bold">NT$ 34,300</span>
-                      </h5>
-                      <button
-                        type="button"
-                        class="mt-5 xs:mt-1 primary-button md:ml-3"
-                      >
-                        加入購物車
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+    <user-favorite-modal ref="favoriteModal"></user-favorite-modal>
   </div>
 </template>
 
 <script>
-// import flowbite components
-import { Modal } from "flowbite";
+import UserFavoriteModal from "@/components/modal/UserFavoriteModal.vue";
+
+import loadingStore from "@/stores/loadingStore.js";
+import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
+import { mapActions, mapState } from "pinia";
+
+import swalMixin from "@/mixins/swal.js";
+
+const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
-  mounted() {
-    // modal options
-    const modalOptions = {
-      placement: "top-center",
-      backdrop: "dynamic",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-40",
-      closable: true,
+  mixins: [swalMixin],
+  data() {
+    return {
+      coupon: "",
     };
-    this.favoriteModal = new Modal(this.$refs.favoriteModal, modalOptions);
+  },
+  methods: {
+    deleteAlert(item, i) {
+      let spec = "";
+      if (i >= 0) {
+        spec = `(${item.cart_spec[i].title})`;
+      }
+      this.$swal
+        .fire({
+          title: "刪除購物車商品",
+          text: `確定要刪除 ${item.product.title} ${spec}？`,
+          icon: "warning",
+          confirmButtonColor: "#FE5F50",
+          confirmButtonText: "確定刪除",
+          backdrop: " rgba(0,0,0,0.8)",
+          showCancelButton: true,
+          cancelButtonColor: "#6b7280",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            if (i >= 0) {
+              this.deleteCartSpec(item, i);
+            } else {
+              this.deleteCart(item.id);
+            }
+          }
+        });
+    },
+    async moveToFavorite(id, product) {
+      if (
+        this.favorites.some((item) => {
+          return item.id === product.id;
+        })
+      ) {
+        this.userToast("warning", "商品已在收藏清單");
+      } else {
+        await this.deleteCart(id);
+        this.updateFavorite(product);
+      }
+    },
+    addCoupon() {
+      this.$http
+        .post(`${VITE_API}/api/${VITE_PATH}/coupon`, {
+          data: {
+            code: this.coupon,
+          },
+        })
+        .then((res) => {
+          // console.log(res.data);
+          this.userToast("success", res.data.message);
+          this.getCart();
+        })
+        .catch((err) => {
+          this.userToast("error", err.response.data.message);
+        });
+    },
+    ...mapActions(cartStore, [
+      "getCart",
+      "updateCart",
+      "updateCartSpec",
+      "deleteCart",
+      "deleteCartSpec",
+    ]),
+    ...mapActions(favoriteStore, ["updateFavorite"]),
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(cartStore, ["cart", "cartLoading"]),
+    ...mapState(favoriteStore, ["favorites"]),
+  },
+  mounted() {
+    this.favoriteModal = this.$refs.favoriteModal;
+    if(this.cart.carts?.length) {
+      this.coupon = this.cart.carts[0].coupon?.code || "";
+    }
+  },
+  components: {
+    UserFavoriteModal,
   },
 };
 </script>

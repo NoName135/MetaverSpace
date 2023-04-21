@@ -51,7 +51,7 @@
               }}</span>
             </h3>
             <h3 class="font-medium mt-6">
-              主要圖片 (輸入網址或上傳圖片)<span class="font-bold text-rose-500"
+              背景圖片 (輸入網址或上傳圖片)<span class="font-bold text-rose-500"
                 >*</span
               >
             </h3>

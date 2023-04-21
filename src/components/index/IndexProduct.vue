@@ -68,7 +68,7 @@
                   <div class="md:flex justify-between text-white">
                     <div>
                       <div class="text-left">
-                        <h5 class="text-lg font-bold mb-2">
+                        <h5 class="text-lg font-bold ellipse2 mb-2">
                           {{ product.title }}
                         </h5>
                         <p
@@ -88,17 +88,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="md:flex justify-between items-center">
-                    <button
-                      type="button"
-                      class="primary-button w-full md:max-w-[112px] mb-2 md:mb-0"
+                  <div class="flex justify-end">
+                    <RouterLink
+                      :to="`/product/${product.id}`"
+                      class="text-primary hover:underline"
                     >
-                      加入購物車
-                    </button>
-                    <a href="#" class="text-primary hover:underline">
                       了解詳情
                       <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                    </a>
+                    </RouterLink>
                   </div>
                 </div>
               </div>
@@ -240,6 +237,7 @@ export default {
         .get(`${VITE_API}/api/${VITE_PATH}/orders`)
         .then((res) => {
           this.allOrders = res.data.orders;
+          this.loadings.progress = Math.ceil(100 / 9);
         })
         .catch((err) => {
           // Swal
@@ -279,7 +277,7 @@ export default {
           );
 
           productsArray.push(data.product);
-          this.loadings.progress = Math.ceil((100 / 8) * (i + 1));
+          this.loadings.progress = Math.ceil((100 / 9) * (i + 2));
         }
         this.hotProducts = productsArray;
         await setTimeout(() => {
@@ -410,15 +408,9 @@ export default {
 <style>
 /* ellipsis */
 .ellipse2 {
-  display: none;
-}
-
-@media (min-width: 360px) {
-  .ellipse2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>

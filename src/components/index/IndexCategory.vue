@@ -26,7 +26,9 @@
             <p class="mb-12">
               透過攝影機影像的位置及角度精算並加上圖像分析技術，讓螢幕上的虛擬世界能夠與現實世界場景進行結合與互動的技術。
             </p>
-            <button type="button" class="w-24 primary-button">前往購買</button>
+            <RouterLink to="./products" class="w-24 primary-button"
+              >前往購買</RouterLink
+            >
           </div>
         </div>
         <p
@@ -58,7 +60,9 @@
             <p class="mb-12">
               利用電腦類比產生一個三維空間的虛擬世界，提供使用者視覺等感官的類比，感覺彷彿身歷其境，可以即時、沒有限制地觀察三維空間內的事物。
             </p>
-            <button type="button" class="w-24 primary-button">前往購買</button>
+            <RouterLink to="./products" class="w-24 primary-button"
+              >前往購買</RouterLink
+            >
           </div>
           <p
             ref="timeline2Title"
@@ -91,7 +95,9 @@
               混合了現實、擴增實境、增強虛擬和虛擬實境技術，混合實境 (MR)
               是一種虛擬實境 (VR) 加 擴增實境 (AR) 的合成品。
             </p>
-            <button type="button" class="w-24 primary-button">前往購買</button>
+            <RouterLink to="./products" class="w-24 primary-button"
+              >前往購買</RouterLink
+            >
           </div>
           <p
             ref="timeline3Title"
@@ -123,7 +129,9 @@
             <p class="mb-12">
               結合了實境和虛擬環境以及人機互動設備。其中可能包括了擴增實境(AR)、虛擬實境(VR)、混合實境(MR)，以及在這些之類的區域。
             </p>
-            <button type="button" class="w-24 primary-button">前往購買</button>
+            <RouterLink to="./products" class="w-24 primary-button"
+              >前往購買</RouterLink
+            >
           </div>
           <p
             ref="timeline4Title"

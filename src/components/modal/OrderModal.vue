@@ -107,12 +107,19 @@
               ></textarea>
             </div>
             <h3 class="font-medium">
-              付款方式<span class="ml-4 text-lg font-semibold text-gray-900">{{
-                tempOrder.pay
-              }}</span>
+              付款方式<span class="ml-4 text-lg font-medium text-gray-900">
+                {{ tempOrder.user.pay }}
+              </span>
+              <input
+                type="text"
+                id="address"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
+                required
+                v-model="tempOrder.user.pay"
+              />
             </h3>
             <h3 class="font-medium">
-              訂單金額<span class="ml-4 text-lg font-semibold text-teal-500"
+              訂單金額<span class="ml-4 text-xl font-semibold text-teal-500"
                 >NT$ {{ $filters.currency(tempOrder.total) }}</span
               >
             </h3>
@@ -141,39 +148,51 @@
                 </svg>
               </button>
               <!-- 明細區塊 -->
-              <div
-                ref="detailCollapseMenu"
-                class="px-6 border-2 border-gray-300 rounded mb-10"
-              >
-                <template
-                  v-for="(item, key, i) in tempOrder.products"
-                  :key="key"
+              <div ref="detailCollapseMenu" class="px-6 border-2 rounded mb-10">
+                <div
+                  class="py-8 grid grid-cols-5 gap-4"
+                  :class="{ 'border-t': i > 0 }"
+                  v-for="(cart, id, i) in tempOrder.products"
+                  :key="id"
                 >
+                  <img
+                    :src="cart.product.imageUrl"
+                    alt=""
+                    class="flex w-full h-24 object-cover rounded bg-white"
+                  />
                   <div
-                    class="py-8"
-                    :class="[i > 0 ? ' border-t border-gray-300' : '']"
+                    class="col-span-full md:col-span-4 flex flex-col justify-between"
                   >
-                    <div class="flex flex-col justify-between">
-                      <h2 class="text-lg">{{ item.product.brand }}</h2>
-                      <h3 class="text-xl mt-3">{{ item.product.title }}</h3>
-                      <div>
-                        <div class="flex justify-between items-center mt-2">
-                          <div class="flex flex-row justify-start mt-1 text-md">
-                            <p>
-                              規格：{{ item.cart_spec ? item.cart_spec : "無" }}
-                            </p>
-                            <p class="ml-4">數量：{{ item.qty }}</p>
-                          </div>
-                          <h5 class="text-lg text-end">
-                            總計：<span class="font-bold">{{
-                              $filters.currency(item.total)
-                            }}</span>
-                          </h5>
-                        </div>
+                    <h2 class="text-lg">{{ cart.product.brand }}</h2>
+                    <h3 class="text-xl mt-3">
+                      {{ cart.product.title }}
+                    </h3>
+                    <div
+                      class="flex items-center mt-4 text-lg"
+                      v-for="spec in cart.cart_spec"
+                      :key="spec.title"
+                    >
+                      <div class="flex flex-row justify-between">
+                        規格：{{ spec.title }}
+                        <div class="flex ml-4">數量：{{ spec.qty }}</div>
                       </div>
                     </div>
+                    <div class="flex flex-row justify-between items-center">
+                      <div
+                        class="flex items-center self-start mt-4"
+                        v-if="!cart.cart_spec"
+                      >
+                        <span class="text-lg">數量：{{ cart.qty }}</span>
+                      </div>
+                      <div v-else></div>
+                      <h5 class="self-end text-xl mt-4">
+                        總計：<span class="font-bold"
+                          >NT$ {{ $filters.currency(cart.total) }}</span
+                        >
+                      </h5>
+                    </div>
                   </div>
-                </template>
+                </div>
                 <div class="border-t border-gray-300" v-if="discount">
                   <p class="text-rose-500 text-lg py-4 text-end">
                     折扣：{{ discount }}

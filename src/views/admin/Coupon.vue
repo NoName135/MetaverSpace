@@ -165,6 +165,11 @@ export default {
             // SWal
             this.adminToast("success", `已刪除優惠券資料`);
           }
+          // 點擊頁碼後移動到上方
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         })
         .catch((err) => {
           // console.log(err);

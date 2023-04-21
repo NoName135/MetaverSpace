@@ -34,15 +34,16 @@
     </div>
     <!-- progress bar -->
     <div
-      class="mt-4 w-full bg-gray-200 rounded-full dark:bg-gray-700"
+      class="mt-4 w-full bg-gray-500 rounded-full relative overflow-hidden"
       v-if="loadings.opacity === 1"
     >
-      <div
-        class="bar bg-primary2 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full transition-all"
-        :style="`width: ${loadings.progress}%`"
-      >
+      <div class="absolute text-xs font-medium left-[calc(50%-8px)] text-white">
         {{ loadings.progress }}%
       </div>
+      <div
+        class="bar bg-primary2 p-0.5 leading-none rounded-full transition-all h-4"
+        :style="`width: ${loadings.progress}%`"
+      ></div>
     </div>
   </VueLoading>
   <router-view />

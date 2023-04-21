@@ -220,6 +220,7 @@ export default {
         .post(api)
         .then(() => {
           this.loadings.fullLoading = false;
+          document.cookie = `loginToken=;expires=${new Date()}`;
           this.$router.push("/login");
           // Swal
           this.adminToast("success", "已登出");

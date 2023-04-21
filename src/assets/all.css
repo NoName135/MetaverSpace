@@ -134,4 +134,18 @@ input[type=number] {
 
 .swiper-button-next::after {
   background-image: url(@/images/arrow-circle-right.png);
+}
+
+.swal2-top {
+  top: calc(105px + env(safe-area-inset-top));
+}
+
+.progress-bar.swal2-timer-progress-bar {
+  --tw-bg-opacity: 1;
+  background-color: rgb(57 183 223/var(--tw-bg-opacity));
+}
+
+.admin-progress-bar.swal2-timer-progress-bar {
+  --tw-bg-opacity: 1;
+  background-color: rgb(6 148 162/var(--tw-bg-opacity));
 }/*# sourceMappingURL=all.css.map */

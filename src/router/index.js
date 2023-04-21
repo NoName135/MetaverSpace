@@ -11,9 +11,15 @@ const routes = [
         component: () => import("../views/front/Index.vue"),
       },
       {
-        path: "article/:id",
-        name: "最新消息",
-        component: () => import("../views/front/Article.vue"),
+        path: "article",
+        component: () => import("../views/front/Articles.vue"),
+        children: [
+          {
+            path: ":id",
+            name: "最新消息",
+            component: () => import("../views/front/Article.vue"),
+          },
+        ],
       },
       {
         path: "products",
@@ -37,16 +43,7 @@ const routes = [
       {
         path: "order",
         name: "交易紀錄",
-        /* Explicitly tell the router to redirect to default children */
-        redirect: "/order",
         component: () => import("../views/front/Order.vue"),
-        children: [
-          {
-            path: "",
-            name: "交易明細",
-            component: () => import("../views/front/OrderDetail.vue"),
-          },
-        ],
       },
       {
         path: "checkout",

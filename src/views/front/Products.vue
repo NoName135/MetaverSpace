@@ -12,6 +12,7 @@
       :pagination="{
         clickable: true,
       }"
+      :observer="true"
       :modules="articleModules"
       class="productsArticleSwiper h-96"
     >
@@ -19,7 +20,7 @@
         <div
           class="h-full bg-cover bg-center"
           :style="{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${article.img})`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${article.image})`,
           }"
         >
           <div
@@ -29,9 +30,14 @@
               <h2 class="font-bold text-2xl lg:text-3xl">
                 {{ article.title }}
               </h2>
-              <p class="mt-8 text-lg lg:text-xl" v-html="article.content"></p>
+              <p
+                class="mt-8 text-lg lg:text-xl"
+                v-html="article.description"
+              ></p>
             </div>
-            <router-link to="./article/id" class="primary-button w-24"
+            <router-link
+              :to="`/article/${article.id}`"
+              class="primary-button w-24"
               >查看詳情</router-link
             >
           </div>
@@ -481,8 +487,15 @@
                       />
                       <font-awesome-icon
                         :icon="['fas', 'heart']"
-                        class="cursor-pointer hover:text-primary2"
-                        @click.prevent.stop="click('favorite')"
+                        class="cursor-pointer"
+                        :class="[
+                          favorites.some((item) => {
+                            return item.id === product.id;
+                          })
+                            ? 'text-primary2'
+                            : 'text-white hover:text-primary',
+                        ]"
+                        @click.prevent.stop="updateFavorite(product)"
                       />
                     </div>
                   </div>
@@ -535,17 +548,18 @@ import { Navigation, Pagination, Autoplay } from "swiper";
 import { Drawer } from "flowbite";
 
 import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import favoriteStore from "@/stores/favoriteStore.js";
+import { mapActions, mapState } from "pinia";
 
-import gsapMixin from "@/mixins/gsap.js";
 import swalMixin from "@/mixins/swal.js";
 
 const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
-  mixins: [gsapMixin, swalMixin],
+  mixins: [swalMixin],
   data() {
     return {
+      articles: [],
       allProducts: [],
       filterProducts: [],
       products: [],
@@ -563,27 +577,41 @@ export default {
       windowWidth: 0,
       articleModules: [Navigation, Pagination, Autoplay],
       productImages: [],
-      articles: [
-        {
-          id: 1,
-          title: "歡慶開幕",
-          content: "~限時折扣~<br>全館9折優惠",
-          img: "https://storage.googleapis.com/vue-course-api.appspot.com/weekhomeworks/1678191797417.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=L1XAs71p34dfbvfcswNctBS00%2B7pVJ3T4Hk8%2F2It8VLb%2FFS%2BHhLTpX4ZQYiaU1hkNesmoBMCwobts4dNCADTPTLK3KOTVHfL3wZXVAfSu3VpCrDm%2BbcFB95AwC3DloL71RkgRTr68EcWr0WmxRt0y0tQZg7PLQ2%2BQqymfYu89YZbfj3EKa06BFh6uDCHS8MEg%2F90ut%2FFshiJ0%2FjhcUyBWBEG%2FeFhrgNYSSV8GKZcmSt%2BGhfJiuzvizDAQj4xy%2Fjr9kUo6U2yxC2ZiKM7lTWr4%2BFaAzSylD%2FJgOWPhywUQNuCPnC3U5jl2Xh7zSzRnSzdET06UuwG0bfkB7o954%2FbQw%3D%3D",
-        },
-        {
-          id: 2,
-          title: "還沒想到",
-          content: "這個內容我不知道要打什麼",
-          img: "https://storage.googleapis.com/vue-course-api.appspot.com/weekhomeworks/1678190390342.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=MjgRHPJoefbWd0YHnCszl1RH1qDhsZknTl1IhN01Q0bMVlZ%2B%2FnUsbOvB6q%2B%2BBcz58DXvoifVilxEGFr4L%2FCldfpGO1MrTJRVic7i2mnPPo9wk7m2%2B2D9OfGlGl8ibNDhGNKnOzqrtIkrOk9uD1tidKmwkSlimzVf0PQcql6k%2BtXpknDPvglgv9Ez2VNGWuZ8MEfxX3VLGLI4QcokPgTv4MLEeDGuNoamyX4YFezNdMHsJMLjlA%2Fr45yPm5aZyDkrxpJiPQXkWgrC%2BFDR6fiD9ECMPyu64I3Hraar82Efbs04Q2IoYxeJ7IJfrkaYhtGlEvauEKxrOsqoKwZQEddIbw%3D%3D",
-        },
-      ],
     };
   },
   methods: {
-    // 抓取全部商品
-    getProducts() {
+    // 抓取全部商品和文章
+    async getAll() {
       this.loadings.fullLoading = true;
-      this.$http
+      await Promise.all([
+        this.$http.get(`${VITE_API}/api/${VITE_PATH}/products/all`),
+        this.$http.get(`${VITE_API}/api/${VITE_PATH}/articles`),
+      ])
+        .then((res) => {
+          // console.log(res);
+          this.allProducts = Object.values(res[0].data.products).reverse();
+          // 找出篩選的全部品牌
+          this.allProducts.forEach((item) => {
+            if (this.filtersBrand.indexOf(item.brand) === -1) {
+              this.filtersBrand.push(item.brand);
+            }
+          });
+          this.getFilterProducts();
+
+          this.articles = res[1].data.articles;
+          // console.log(this.articles);
+        })
+        .catch((err) => {
+          this.loadings.fullLoading = false;
+          // console.log(err);
+          // Swal
+          this.userToast("error", err.response.data.message);
+        });
+    },
+    // 抓取全部商品
+    async getProducts() {
+      this.loadings.fullLoading = true;
+      await this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/products/all`)
         .then((res) => {
           // 反轉產品順序由新到舊
@@ -598,6 +626,7 @@ export default {
           this.getFilterProducts();
         })
         .catch((err) => {
+          this.loadings.fullLoading = false;
           // console.log(err);
           // Swal
           this.userToast("error", err.response.data.message);
@@ -644,7 +673,7 @@ export default {
       };
 
       this.loadings.fullLoading = false;
-      console.log(this.products);
+      // console.log(this.products);
     },
     // 切換頁碼
     changePages(page = 1) {
@@ -661,10 +690,17 @@ export default {
       this.pagination.has_pre = page === 1 ? false : true;
       this.pagination.has_next =
         page === this.pagination.total_pages ? false : true;
+      // 點擊頁碼後移動到上方
+      window.scrollTo({
+        top: 400,
+        behavior: "smooth",
+      });
     },
+    ...mapActions(favoriteStore, ["updateFavorite"]),
   },
   computed: {
     ...mapState(loadingStore, ["loadings"]),
+    ...mapState(favoriteStore, ["favorites"]),
   },
   watch: {
     filters: {
@@ -698,7 +734,7 @@ export default {
     };
     this.filterDrawer = new Drawer(this.$refs.filterDrawer, drawerOptions);
 
-    this.getProducts();
+    this.getAll();
   },
   components: {
     Swiper,

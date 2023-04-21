@@ -230,6 +230,11 @@ export default {
           this.loadings.fullLoading = false;
           // Swal
           this.adminToast("success", "已更新訂單資料");
+          // 點擊頁碼後移動到上方
+          window.scrollTo({
+            top: 700,
+            behavior: "smooth",
+          });
         })
         .catch((err) => {
           // console.log(err);

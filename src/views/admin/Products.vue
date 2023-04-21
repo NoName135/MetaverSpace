@@ -311,6 +311,11 @@ export default {
       this.pagination.has_pre = page === 1 ? false : true;
       this.pagination.has_next =
         page === this.pagination.total_pages ? false : true;
+      // 點擊頁碼後移動到上方
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
     updateEnable(product) {
       this.productLoading.push(product.id);

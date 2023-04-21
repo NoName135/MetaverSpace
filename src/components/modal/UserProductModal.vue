@@ -118,13 +118,17 @@
               </li>
             </ul>
           </div>
+          <p class="text-sm" v-if="tempProduct.spec?.length">
+            ※ 選擇規格後才能加入購物車
+          </p>
           <div class="sm:flex items-center mt-2">
             <div class="flex items-center">
               <div class="flex">
                 <button
                   type="button"
-                  class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm"
+                  class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
                   @click="qty -= 1"
+                  :disabled="qty === 1"
                 >
                   －
                 </button>
@@ -137,8 +141,9 @@
                 />
                 <button
                   type="button"
-                  class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm"
+                  class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
                   @click="qty += 1"
+                  :disabled="qty === 99"
                 >
                   ＋
                 </button>
@@ -147,8 +152,11 @@
             <button
               type="button"
               class="w-full primary-button sm:ml-2 mt-4 sm:mt-0 relative"
-              :disabled="cartLoading.productModal"
-              @click="addCart(tempProduct.id, qty, cartSpec)"
+              :disabled="
+                cartLoading.productModal ||
+                (tempProduct.spec?.length ? !cartSpec : false)
+              "
+              @click="addCart(tempProduct, qty, cartSpec)"
             >
               <svg
                 v-if="cartLoading.productModal"
@@ -213,14 +221,14 @@ export default {
   methods: {
     openModal(item) {
       this.tempProduct = { ...item };
-      console.log(this.tempProduct);
+      // console.log(this.tempProduct);
       // 打開 modal 時讓 swiper 回到第一張圖
       this.$refs.productSwiper.$el.swiper.slideTo(0);
       this.cartSpec = "";
       this.qty = 1;
       this.productModal.show();
     },
-    ...mapActions(cartStore, ["getCart", "addCart"]),
+    ...mapActions(cartStore, ["getCart", "addCart", "createModalRef"]),
   },
   computed: {
     ...mapState(loadingStore, ["loadings"]),
@@ -245,6 +253,7 @@ export default {
       closable: true,
     };
     this.productModal = new Modal(this.$refs.productModal, modalOptions);
+    this.createModalRef(this.productModal);
   },
   components: {
     Swiper,

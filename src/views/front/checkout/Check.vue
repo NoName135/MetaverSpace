@@ -4,37 +4,43 @@
       <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">訂單內容</h1>
       <div class="py-8 flex flex-col">
         <div
-          class="mx-auto text-md md:text-lg px-4 w-[235px] sm:w-[285px] md:w-[450px] lg:w-[565px] xl:w-[620px]"
+          class="mx-auto text-md md:text-lg px-6 md:px-0 w-full md:w-[450px] lg:w-[565px] xl:w-[620px]"
         >
-          <h5 class="mb-4 leading-loose md:flex justify-between">
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
             <p>訂單編號：</p>
-            <span>-L9u11NAE0m0SpSBUDIq</span>
+            <span>{{ order.id }}</span>
           </h5>
-          <h5 class="mb-4 leading-loose md:flex justify-between">
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
             <p>訂單日期：</p>
-            <span>2023/01/29</span>
+            <span>{{ $filters.date(order.create_at) }}</span>
           </h5>
-          <h5 class="mb-4 leading-loose md:flex justify-between">
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
+            <p>訂購人姓名：</p>
+            <span>{{ order.user?.name }}</span>
+          </h5>
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
             <p>訂購人電話：</p>
-            <span>0912345678</span>
+            <span>{{ order.user?.tel }}</span>
           </h5>
-          <h5 class="mb-4 leading-loose md:flex justify-between">
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
             <p>訂購人Email：</p>
-            <span>qq@qq.qq</span>
+            <span>{{ order.user?.email }}</span>
           </h5>
-          <h5 class="mb-4 leading-loose md:flex justify-between">
-            <p>訂購人地址：</p>
-            <span>台灣的某個角落</span>
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
+            <p class="whitespace-nowrap mr-4">訂購人地址：</p>
+            <span class="text-end">{{ order.user?.address }}</span>
           </h5>
-          <h5 class="mb-4 leading-loose md:flex justify-between">
+          <h5 class="mb-4 leading-loose xs:flex justify-between">
             <p>付款方式：</p>
-            <span>信用卡</span>
+            <span>{{ order.user?.pay }}</span>
           </h5>
-          <h5 class="mb-6 leading-loose md:flex justify-between">
+          <h5 class="mb-6 leading-loose xs:flex justify-between">
             <p>訂單金額：</p>
-            <span class="font-bold">NT$ 50,800</span>
+            <span class="font-bold"
+              >NT$ {{ $filters.currency(order.total) }}</span
+            >
           </h5>
-          <div class="md:flex flex-wrap items-end">
+          <div>
             <div class="mb-10 md:mb-0">
               <button
                 type="button"
@@ -63,70 +69,69 @@
                 ref="detailCollapseMenu"
                 class="px-2 md:px-4 border-2 rounded mb-10"
               >
-                <div class="py-8 grid grid-cols-5 gap-4">
+                <div
+                  class="py-8 grid grid-cols-5 gap-4"
+                  :class="{ 'border-t': i > 0 }"
+                  v-for="(cart, id, i) in order.products"
+                  :key="id"
+                >
                   <img
-                    src="@/images/products/Meta_Oculus_Quest2.jpg"
+                    :src="cart.product.imageUrl"
                     alt=""
-                    class="hidden md:flex self-center w-full h-16 xl:h-24 object-cover rounded"
+                    class="hidden md:flex w-full h-16 xl:h-24 object-cover rounded bg-white"
                   />
                   <div
                     class="col-span-full md:col-span-4 flex flex-col justify-between"
                   >
-                    <h2 class="text-md xl:text-lg">Meta</h2>
+                    <h2 class="text-md xl:text-lg">{{ cart.product.brand }}</h2>
                     <h3 class="text-lg xl:text-xl mt-2 lg:mt-3">
-                      Oculus Quest 2 256G
+                      {{ cart.product.title }}
                     </h3>
-                    <div>
-                      <div class="md:flex justify-between items-center mt-2">
-                        <div
-                          class="flex flex-row justify-between md:justify-start mt-4 md:mt-1 text-sm xl:text-md"
-                        >
-                          <p>規格：無</p>
-                          <p class="md:ml-4">數量：1</p>
+                    <div
+                      class="flex items-start sm:items-center mt-4 text-md xl:text-lg"
+                      v-for="spec in cart.cart_spec"
+                      :key="spec.title"
+                    >
+                      <div class="flex flex-col sm:flex-row justify-between">
+                        規格：{{ spec.title }}
+                        <div class="flex mt-1 sm:mt-0 sm:ml-4">
+                          數量：{{ spec.qty }}
                         </div>
-                        <h5 class="text-md xl:text-lg mt-4 md:mt-0 text-end">
-                          總計：<span class="font-bold">NT$ 17,500</span>
-                        </h5>
                       </div>
+                    </div>
+                    <div
+                      class="flex flex-col sm:flex-row justify-between items-center"
+                    >
+                      <div
+                        class="flex items-center self-start mt-4"
+                        v-if="!cart.cart_spec"
+                      >
+                        <span class="text-md lg:text-lg"
+                          >數量：{{ cart.qty }}</span
+                        >
+                      </div>
+                      <div v-else></div>
+                      <h5 class="self-end text-lg lg:text-xl mt-4">
+                        總計：<span class="font-bold"
+                          >NT$ {{ $filters.currency(cart.total) }}</span
+                        >
+                      </h5>
                     </div>
                   </div>
                 </div>
-                <div class="py-8 grid grid-cols-5 gap-4 border-t">
-                  <img
-                    src="@/images/products/VIVE_XR_ELITE.jpg"
-                    alt=""
-                    class="hidden md:flex self-center w-full h-16 xl:h-24 object-cover rounded"
-                  />
-                  <div
-                    class="col-span-full md:col-span-4 flex flex-col justify-between"
-                  >
-                    <h2 class="text-md xl:text-lg">VIVE</h2>
-                    <h3 class="text-lg xl:text-xl mt-2 lg:mt-3">XR_ELITE</h3>
-                    <div>
-                      <div class="md:flex justify-between items-center mt-2">
-                        <div
-                          class="flex flex-row justify-between md:justify-start mt-4 md:mt-1 text-sm xl:text-md"
-                        >
-                          <p>規格：無</p>
-                          <p class="md:ml-4">數量：1</p>
-                        </div>
-                        <h5 class="text-md xl:text-lg mt-4 md:mt-0 text-end">
-                          總計：<span class="font-bold">NT$ 34,300</span>
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="border-t">
-                  <p class="text-warm text-lg py-4 text-end">折扣：1,000</p>
+                <div class="border-t border-gray-300" v-if="discount">
+                  <p class="text-warm text-lg py-4 text-end">
+                    折扣：{{ discount }}
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="ml-auto">
+            <div class="flex justify-end">
               <button
                 type="button"
                 class="w-full md:w-36 primary-button"
-                @click="nextStep()"
+                :disabled="payLoading"
+                @click="payOrder()"
               >
                 確認付款
               </button>
@@ -140,12 +145,65 @@
 
 <script>
 import { Collapse } from "flowbite";
+import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from "pinia";
+
+import swalMixin from "@/mixins/swal.js";
+
+const { VITE_API, VITE_PATH } = import.meta.env;
 
 export default {
+  emits: ["emit-step"],
+  mixins: [swalMixin],
+  data() {
+    return {
+      order: {},
+      discount: 0,
+      payLoading: false,
+    };
+  },
   methods: {
-    nextStep() {
-      this.$router.replace("/checkout/send/id");
+    getOrder() {
+      this.loadings.fullLoading = true;
+      this.$http
+        .get(`${VITE_API}/api/${VITE_PATH}/order/${this.$route.params.id}`)
+        .then((res) => {
+          // console.log(res.data);
+          this.loadings.fullLoading = false;
+          this.order = res.data.order;
+          this.discount = Object.values(this.order.products).reduce(
+            (acc, cur) => {
+              return acc + (cur.total - cur.final_total);
+            },
+            0
+          );
+        })
+        .catch((err) => {
+          this.loadings.fullLoading = false;
+          //Swal
+          this.userToast("error", err.response.data.message);
+        });
     },
+    payOrder() {
+      this.payLoading = true;
+      this.$http
+        .post(`${VITE_API}/api/${VITE_PATH}/pay/${this.$route.params.id}`)
+        .then((res) => {
+          // console.log(res.data);
+          this.payLoading = false;
+          //Swal
+          this.userToast("success", res.data.message);
+          this.$router.replace(`/checkout/send/${this.$route.params.id}`);
+        })
+        .catch((err) => {
+          this.payLoading = false;
+          //Swal
+          this.userToast("error", err.response.data.message);
+        });
+    },
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
   },
   mounted() {
     this.$emit("emit-step", 2);
@@ -169,6 +227,8 @@ export default {
       detailCollapseOptions
     );
     this.detailCollapse.collapse();
+
+    this.getOrder();
   },
 };
 </script>

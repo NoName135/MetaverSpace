@@ -1,7 +1,7 @@
 <template>
   <div class="mt-nav container px-2 md:px-0">
     <ol
-      class="pt-8 flex items-center w-full mb-4 sm:mb-5 px-0 md:px-20 lg:px-32 xl:px-40 relative"
+      class="pt-8 flex items-center w-full mb-4 sm:mb-6 px-0 md:px-20 lg:px-32 xl:px-40 relative"
     >
       <li
         class="z-10 flex w-full items-center after:content-[''] after:h-1.5 after:bg-primary2 after:transition-all after:duration-500"
@@ -80,7 +80,7 @@
         class="absolute w-full md:w-[calc(100%-10rem)] lg:w-[calc(100%-16rem)] xl:w-[calc(100%-20rem)] h-2 bg-gray-700 px-2"
       ></div>
     </ol>
-    <router-view class="mt-14 md:mt-8" @emit-step="changeStep"></router-view>
+    <router-view @emit-step="changeStep"></router-view>
   </div>
 </template>
 

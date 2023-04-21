@@ -8,7 +8,7 @@
       <div>
         <img
           :src="targetImage"
-          class="h-[240px] sm:h-[360px] xl:h-[480px] object-contain mx-auto"
+          class="h-[240px] sm:h-[360px] xl:h-[480px] object-contain mx-auto bg-white rounded"
           alt=""
         />
         <swiper
@@ -33,11 +33,20 @@
           :modules="productModules"
           class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24"
         >
-          <swiper-slide v-for="image in images" :key="image.id">
-            <div class="cursor-pointer" @click="changeImg(image.img)">
+          <swiper-slide>
+            <div class="cursor-pointer" @click="changeImg(product.imageUrl)">
               <img
-                class="h-20 object-contain mx-auto"
-                :src="image.img"
+                class="h-20 object-contain mx-auto bg-white"
+                :src="product.imageUrl"
+                alt=""
+              />
+            </div>
+          </swiper-slide>
+          <swiper-slide v-for="(image, i) in product.imagesUrl" :key="i">
+            <div class="cursor-pointer" @click="changeImg(image)">
+              <img
+                class="h-20 object-contain mx-auto bg-white"
+                :src="image"
                 alt=""
               />
             </div>
@@ -45,267 +54,236 @@
         </swiper>
       </div>
       <!-- 產品簡介 -->
-      <section>
+      <section class="flex flex-col">
         <div class="flex items-center">
-          <h4 class="col-span-2 text-2xl mr-3">Meta</h4>
-          <div class="bg-white/30 px-3.5 py-2 rounded text-sm">VR</div>
-        </div>
-        <h3 class="mt-2 text-3xl font-bold">Oculus Quest 2 256G</h3>
-        <div class="mt-3 text-lg">
-          <ul class="leading-loose">
-            <li>■ 硬體全面升級 輕鬆設定 安全使用</li>
-            <li>■ 雙眼皆提供 1832 x 1920 解析度</li>
-            <li>■ 支援 60、72、90 Hz 更新率</li>
-            <li>■ 定位音訊3D 定位音效 3.5mm 音訊插孔</li>
-            <li>■ 與朋友創造更精采的VR生活</li>
-            <li>■ 相容眼鏡 遊戲、健身、娛樂更多樂趣及中在一起</li>
-            <li>■ ⚡原廠公司貨 一年保固⚡</li>
-          </ul>
-        </div>
-        <div class="flex justify-between items-center mt-6">
-          <div class="flex items-end">
-            <p class="text-primary text-2xl font-bold">NT$ 17,500</p>
-            <p class="ml-2 line-through">NT$ 17,900</p>
-          </div>
-          <div class="flex items-center cursor-pointer hover:text-primary2">
-            <font-awesome-icon :icon="['fas', 'heart']" class="text-2xl" />
-            <p class="ml-2 hidden sm:block text-xl">未加入收藏</p>
+          <h4 class="col-span-2 text-2xl mr-3">{{ product.brand }}</h4>
+          <div class="bg-white/30 px-3.5 py-2 rounded text-sm">
+            {{ product.category }}
           </div>
         </div>
-        <div class="flex flex-wrap items-center mt-8">
-          <h5 class="text-lg mr-4 mb-6">規格：</h5>
-          <ul class="flex flex-wrap text-sm">
-            <li class="mb-6">
-              <input
-                type="radio"
-                id="spec1"
-                name="spec"
-                value=""
-                class="hidden peer"
-                required=""
-              />
-              <label
-                for="spec1"
-                class="mr-3 bg-black hover:bg-primary2 peer-checked:bg-primary peer-checked:hover:bg-primary2 peer-checked:ring-1 peer-checked:ring-white px-3 py-2 rounded cursor-pointer"
-              >
-                黑色
-              </label>
-            </li>
-            <li class="mb-6">
-              <input
-                type="radio"
-                id="spec2"
-                name="spec"
-                value=""
-                class="hidden peer"
-                required=""
-              />
-              <label
-                for="spec2"
-                class="mr-3 bg-black hover:bg-primary2 peer-checked:bg-primary peer-checked:hover:bg-primary2 peer-checked:ring-1 peer-checked:ring-white px-3 py-2 rounded cursor-pointer"
-              >
-                白色
-              </label>
-            </li>
-          </ul>
+        <h3 class="mt-2 text-3xl font-bold">{{ product.title }}</h3>
+        <div class="mt-3 text-md">
+          <div class="leading-relaxed" v-html="product.description"></div>
         </div>
-        <div class="sm:flex items-center mt-2">
-          <div class="flex items-center">
-            <div class="flex">
-              <button
-                type="button"
-                class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm"
-              >
-                －
-              </button>
-              <input
-                type="number"
-                class="w-12 bg-dark text-sm text-end focus:border-secondary"
-                min="1"
-                max="99"
-                value="1"
-              />
-              <button
-                type="button"
-                class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm"
-              >
-                ＋
-              </button>
+        <div class="flex-auto flex flex-col justify-end">
+          <div class="flex justify-between items-center mt-6">
+            <div class="flex items-end">
+              <p class="text-primary text-2xl font-bold">
+                NT$ {{ $filters.currency(product.price) }}
+              </p>
+              <p class="ml-2 line-through">
+                NT$ {{ $filters.currency(product.origin_price) }}
+              </p>
             </div>
-            <p class="ml-2 mr-4 whitespace-nowrap">還剩 10 件</p>
+            <div
+              v-if="
+                favorites.some((item) => {
+                  return item.id === product.id;
+                })
+              "
+              class="flex items-center cursor-pointer text-primary2"
+              @click="updateFavorite(product)"
+            >
+              <font-awesome-icon :icon="['fas', 'heart']" class="text-2xl" />
+              <p class="ml-2 hidden sm:block text-xl">已加入收藏</p>
+            </div>
+            <div
+              v-else
+              class="flex items-center cursor-pointer hover:text-primary"
+              @click="updateFavorite(product)"
+            >
+              <font-awesome-icon :icon="['fas', 'heart']" class="text-2xl" />
+              <p class="ml-2 hidden sm:block text-xl">未加入收藏</p>
+            </div>
           </div>
-          <button
-            type="button"
-            class="w-full primary-button sm:ml-2 mt-4 sm:mt-0"
-            @click="productModal.hide()"
-          >
-            加入購物車
-          </button>
+          <div class="flex flex-wrap items-center mt-8" v-if="product.spec">
+            <h5 class="text-lg mr-4 mb-6">規格：</h5>
+            <ul class="flex flex-wrap text-sm">
+              <li class="mb-6" v-for="(spec, i) in product.spec" :key="i">
+                <input
+                  type="radio"
+                  :id="`spec${i}`"
+                  name="spec"
+                  class="hidden peer"
+                  :value="spec"
+                  v-model="cartSpec"
+                  required
+                />
+                <label
+                  :for="`spec${i}`"
+                  class="mr-3 bg-black hover:bg-primary2 peer-checked:bg-primary peer-checked:hover:bg-primary2 peer-checked:ring-1 peer-checked:ring-white px-3 py-2 rounded cursor-pointer"
+                >
+                  {{ spec }}
+                </label>
+              </li>
+            </ul>
+          </div>
+          <p class="text-sm" v-if="product.spec?.length">
+            ※ 選擇規格後才能加入購物車
+          </p>
+          <div class="sm:flex items-center mt-4">
+            <div class="flex items-center">
+              <div class="flex">
+                <button
+                  type="button"
+                  class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  @click="qty -= 1"
+                  :disabled="qty === 1"
+                >
+                  －
+                </button>
+                <input
+                  type="number"
+                  class="w-12 bg-dark text-sm text-end focus:border-secondary"
+                  min="1"
+                  max="99"
+                  v-model.lazy="qty"
+                />
+                <button
+                  type="button"
+                  class="bg-secondary hover:bg-secondary2 px-2 rounded-r text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  @click="qty += 1"
+                  :disabled="qty === 99"
+                >
+                  ＋
+                </button>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="w-full primary-button sm:ml-2 mt-4 sm:mt-0 relative"
+              :disabled="
+                cartLoading.cartId === product.id ||
+                (product.spec?.length ? !cartSpec : false)
+              "
+              @click="addCart(product, qty, cartSpec)"
+            >
+              <svg
+                v-if="cartLoading.cartId === product.id"
+                class="animate-spin h-5 w-5 mr-3 text-white absolute"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              加入購物車
+            </button>
+          </div>
         </div>
       </section>
     </div>
     <!-- 加購區塊 -->
-    <div class="mt-8 bg-black/50 px-2 md:px-0">
+    <div class="mt-8 bg-black/50 px-2 md:px-0" v-if="product.accessory">
       <div class="container py-8">
         <h3 class="text-xl font-bold pb-3 border-b">加購配件</h3>
         <div class="flex flex-wrap mt-4 px-2">
-          <div class="border rounded w-64 mt-6 mx-3">
+          <div
+            class="border rounded w-64 mt-6 mx-3"
+            v-for="(accessory, i) in accessories"
+            :key="accessory.id"
+          >
             <div class="bg-white">
               <img
-                src="https://scontent-tpe1-1.xx.fbcdn.net/v/t39.8562-6/272188674_294895389338070_4390989989588038235_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6825c5&_nc_ohc=rVjRjWDBvQkAX_evmTx&_nc_ht=scontent-tpe1-1.xx&oh=00_AfA3fq5Rygz94wmIb7sJ3V5WMVJqoFn63JvYcswCEYK5xw&oe=6411F47B"
+                :src="accessory.imageUrl"
                 alt=""
-                class="w-full h-48 object-contain object-center"
+                class="w-full h-48 object-contain object-center bg-white"
               />
             </div>
             <div class="flex flex-col px-2 py-4 h-[calc(100%-192px)]">
-              <h4 class="text-lg font-bold">Meta Quest 2 收納盒</h4>
-              <p class="mt-4 text-md">
-                無論是在家中存放或攜帶外出，隨時助您保護遊戲系統。
-              </p>
+              <h4 class="text-lg font-bold">{{ accessory.title }}</h4>
+              <p class="mt-4 text-md" v-html="accessory.description"></p>
               <div class="flex-auto flex flex-col justify-end">
-                <div class="flex">
+                <p v-if="accessory.spec" class="text-sm mt-4">※請先選擇規格</p>
+                <div
+                  class="flex items-center"
+                  :class="[accessory.spec ? ' mt-2' : ' mt-6']"
+                >
                   <select
+                    v-if="accessory.spec"
                     id="accessorySpec1"
-                    class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                    class="border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                    v-model="cart_specs[i].spec"
                   >
-                    <option selected disabled class="bg-white/20">
+                    <option selected disabled value="" class="bg-white/10">
                       選擇規格
                     </option>
-                    <option value="黑色" class="bg-white/20">黑色</option>
-                    <option value="白色" class="bg-white/20">白色</option>
+                    <option
+                      class="bg-white/10"
+                      v-for="spec in accessory.spec"
+                      :key="spec"
+                      :value="spec"
+                    >
+                      {{ spec }}
+                    </option>
                   </select>
+                  <p v-else class="w-full">選擇數量：</p>
                   <select
                     id="accessoryNum1"
-                    class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
+                    class="ml-1 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary w-24"
+                    v-model.number="cart_specs[i].qty"
                   >
-                    <option selected value="1" class="bg-white/20">1</option>
-                    <option value="2" class="bg-white/20">2</option>
-                    <option value="3" class="bg-white/20">3</option>
+                    <option selected value="1" class="bg-white/10">1</option>
+                    <option value="2" class="bg-white/10">2</option>
+                    <option value="3" class="bg-white/10">3</option>
+                    <option value="4" class="bg-white/10">4</option>
+                    <option value="5" class="bg-white/10">5</option>
                   </select>
                 </div>
                 <div class="flex justify-between items-end mt-4">
-                  <div class="flex items-center">
-                    <input
-                      id="accessoryCheck1"
-                      type="checkbox"
-                      value=""
-                      class="w-4 h-4 text-primary rounded focus:ring-primary ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
-                    />
-                    <label
-                      for="accessoryCheck1"
-                      class="ml-2 text-sm font-medium text-white"
-                      >加購</label
+                  <p class="text-xl font-bold text-primary">
+                    NT$ {{ $filters.currency(accessory.price) }}
+                  </p>
+                  <button
+                    type="button"
+                    class="w-20 px-0 py-2 primary-button sm:ml-2 mt-4 sm:mt-0 relative"
+                    :disabled="
+                      cartLoading.cartId === cart_specs[i].id ||
+                      (accessory.spec && !cart_specs[i].spec)
+                    "
+                    @click="
+                      addCart(
+                        accessories[i],
+                        cart_specs[i].qty,
+                        cart_specs[i].spec
+                      )
+                    "
+                  >
+                    <svg
+                      v-if="cartLoading.cartId === cart_specs[i].id"
+                      class="animate-spin h-3 w-3 mr-1 text-white absolute top-3 left-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
                     >
-                  </div>
-                  <p class="text-xl font-bold text-primary">NT$ 1,899</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border rounded w-64 mt-6 mx-3">
-            <div class="bg-white">
-              <img
-                src="https://scontent.frmq2-2.fna.fbcdn.net/v/t39.8562-6/310594663_8088305627909132_8783615667161731967_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6825c5&_nc_ohc=FT_D8TLB8kAAX92TguT&_nc_ht=scontent.frmq2-2.fna&oh=00_AfBFLfRyYp2tyeG06tuy3Tess4GU7YNfxDpff1TfAoH5Ug&oe=6411AB49"
-                alt=""
-                class="w-full h-48 object-contain object-center"
-              />
-            </div>
-            <div class="flex flex-col px-2 py-4 h-[calc(100%-192px)]">
-              <h4 class="text-lg font-bold">Link 連接線</h4>
-              <p class="mt-4 text-md">
-                只要將連接線從電腦連接到 Meta Quest
-                頭戴式裝置，就能在遊玩時存取最強的電腦 VR 遊戲。
-              </p>
-              <div class="flex-auto flex flex-col justify-end">
-                <div class="flex">
-                  <select
-                    id="accessorySpec2"
-                    class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected disabled class="bg-white/20">
-                      選擇規格
-                    </option>
-                    <option value="黑色" class="bg-white/20">黑色</option>
-                    <option value="白色" class="bg-white/20">白色</option>
-                  </select>
-                  <select
-                    id="accessoryNum2"
-                    class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected value="1" class="bg-white/20">1</option>
-                    <option value="2" class="bg-white/20">2</option>
-                    <option value="3" class="bg-white/20">3</option>
-                  </select>
-                </div>
-                <div class="flex justify-between items-end mt-4">
-                  <div class="flex items-center">
-                    <input
-                      id="accessoryCheck2"
-                      type="checkbox"
-                      value=""
-                      class="w-4 h-4 text-primary rounded focus:ring-primary ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
-                    />
-                    <label
-                      for="accessoryCheck2"
-                      class="ml-2 text-sm font-medium text-white"
-                      >加購</label
-                    >
-                  </div>
-                  <p class="text-xl font-bold text-primary">NT$ 2,499</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border rounded w-64 mt-6 mx-3">
-            <div class="bg-white">
-              <img
-                src="https://scontent.frmq2-2.fna.fbcdn.net/v/t39.8562-6/300570751_1210718196387794_597323196944757362_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6825c5&_nc_ohc=ABppkcQBAXgAX8LfpWs&_nc_ht=scontent.frmq2-2.fna&oh=00_AfDz2PIhtUDLVeCicqmboFmXwJHpEFATzX8lQNKk15jGgQ&oe=6412B2DE"
-                alt=""
-                class="w-full h-48 object-contain object-center"
-              />
-            </div>
-            <div class="flex flex-col px-2 py-4 h-[calc(100%-192px)]">
-              <h4 class="text-lg font-bold">Meta Quest Pro 全方位遮光罩</h4>
-              <p class="mt-4 text-md">
-                全方位遮光臉部靠墊可輕鬆吸附在 Meta Quest Pro
-                上，讓用戶享有更身歷其境的體驗。
-              </p>
-              <div class="flex-auto flex flex-col justify-end">
-                <div class="flex">
-                  <select
-                    id="accessorySpec3"
-                    class="mt-6 border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected disabled class="bg-white/20">
-                      選擇規格
-                    </option>
-                    <option value="黑色" class="bg-white/20">黑色</option>
-                    <option value="白色" class="bg-white/20">白色</option>
-                  </select>
-                  <select
-                    id="accessoryNum3"
-                    class="ml-1 mt-6 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
-                  >
-                    <option selected value="1" class="bg-white/20">1</option>
-                    <option value="2" class="bg-white/20">2</option>
-                    <option value="3" class="bg-white/20">3</option>
-                  </select>
-                </div>
-                <div class="flex justify-between items-end mt-4">
-                  <div class="flex items-center">
-                    <input
-                      id="accessoryCheck3"
-                      type="checkbox"
-                      value=""
-                      class="w-4 h-4 text-primary rounded focus:ring-primary ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
-                    />
-                    <label
-                      for="accessoryCheck3"
-                      class="ml-2 text-sm font-medium text-white"
-                      >加購</label
-                    >
-                  </div>
-                  <p class="text-xl font-bold text-primary">NT$ 1,599</p>
+                      <circle
+                        class="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"
+                      ></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    加購
+                  </button>
                 </div>
               </div>
             </div>
@@ -314,24 +292,13 @@
       </div>
     </div>
     <!-- 商品詳細區塊 -->
-    <div class="px-2 md:px-0">
+    <div class="px-2 md:px-0" v-if="product.content">
       <div class="container py-8">
         <h3 class="text-xl font-bold pb-3 border-b">商品詳細資訊</h3>
-        <p class="mt-4 leading-loose">
-          【使用注意】<br />升級系統時千萬不要中斷或者關機重啟，以免死機。<br />Quest
-          2需要您的Facebook帳戶才能登錄，從而可以輕鬆與VR中的朋友見面並發現世界各地的社區<br />簡易設置-只需打開盒子，使用智能手機應用進行設置，然後跳入VR。無需PC或控制台。需要無線互聯網訪問和Oculus應用（免費下載）才能設置設備<br />若要用steam
-          VR遊戲，也要先確認自己的電腦設備夠不夠新，否則會有與裝置不相容無法玩的問題發生。
-        </p>
-        <img
-          src="https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/87b51e6e859cdbd02aa2787b01365f9bca4bb1ab_800x448.jpeg?t=1663756505621"
-          alt=""
-          class="mt-4"
-        />
-        <img
-          src="https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/5005b6e1f405c9f8fc563541bdf5bb3cf087f41b_800x450.jpeg?t=1663756505621"
-          alt=""
-          class="mt-4"
-        />
+        <p class="mt-4 leading-loose" v-html="product.content"></p>
+        <template v-for="(image, i) in product.contentImages" :key="i">
+          <img :src="image" alt="" class="mt-4" />
+        </template>
       </div>
     </div>
   </div>
@@ -348,50 +315,98 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+import loadingStore from "@/stores/loadingStore.js";
+import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
+import { mapActions, mapState } from "pinia";
+
+import swalMixin from "@/mixins/swal.js";
+
+const { VITE_API, VITE_PATH } = import.meta.env;
+
 export default {
+  mixins: [swalMixin],
   data() {
     return {
+      product: {},
+      accessories: [],
+      cartSpec: "",
+      qty: 1,
+      cart_specs: [],
       productModules: [Navigation],
       targetImage: "",
-      images: [
-        {
-          id: 0,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/ffo.jpg?t=1663756505621",
-        },
-        {
-          id: 1,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/oculus01-750.jpg?t=1663756505621",
-        },
-        {
-          id: 2,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/001.jpg?t=1663756505621",
-        },
-        {
-          id: 3,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/002.jpg?t=1663756505621",
-        },
-        {
-          id: 4,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/003.jpg?t=1663756505621",
-        },
-        {
-          id: 5,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/004.jpg?t=1663756505621",
-        },
-        {
-          id: 6,
-          img: "https://img1.momoshop.com.tw/expertimg/0010/482/084/mobile/ds.jpg?t=1663756505621",
-        },
-      ],
     };
   },
   methods: {
+    getProduct(id) {
+      this.loadings.fullLoading = true;
+      this.$http
+        .get(`${VITE_API}/api/${VITE_PATH}/product/${id}`)
+        .then((res) => {
+          // console.log(res.data);
+          this.product = res.data.product;
+          this.targetImage = this.product.imageUrl;
+          // 有配件的商品執行 getAccessory
+          if (this.product.accessory) {
+            this.getAccessory();
+          } else {
+            this.loadings.fullLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.loadings.fullLoading = false;
+          // console.log(err);
+          // Swal
+          this.userToast("error", err.response.data.message);
+        });
+    },
+    async getAccessory() {
+      const getAccessoryApi = this.product.accessory.map((item) =>
+        this.$http.get(`${VITE_API}/api/${VITE_PATH}/product/${item.id}`)
+      );
+      try {
+        const data = await Promise.allSettled(getAccessoryApi);
+        // console.log(data);
+        this.accessories = data
+          .filter((item) => item.status === "fulfilled")
+          .map((item) => item.value.data.product);
+        // 商品配件的spec預設空值
+        this.cart_specs = this.accessories.map((item) => {
+          return { id: item.id, spec: "", qty: 1, check: false };
+        });
+        this.loadings.fullLoading = false;
+      } catch (err) {
+        this.loadings.fullLoading = false;
+        // console.log(err);
+        // Swal
+        this.userToast("error", err.response.data.message);
+      }
+
+      this.loadings.fullLoading = false;
+    },
     changeImg(img) {
       this.targetImage = img;
     },
+    ...mapActions(cartStore, ["getCart", "addCart"]),
+    ...mapActions(favoriteStore, ["updateFavorite"]),
+  },
+  computed: {
+    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(cartStore, ["cart", "cartLoading"]),
+    ...mapState(favoriteStore, ["favorites"]),
+  },
+  watch: {
+    qty() {
+      if (this.qty < 1) {
+        this.qty = 1;
+      }
+      if (this.qty > 99) {
+        this.qty = 99;
+      }
+    },
   },
   mounted() {
-    this.targetImage = this.images[0].img;
+    this.getProduct(this.$route.params.id);
   },
   components: {
     Swiper,
