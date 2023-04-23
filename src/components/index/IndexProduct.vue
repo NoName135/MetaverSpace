@@ -155,10 +155,10 @@
         <p class="mt-4">
           我們提供預約體驗，每小時只要100元，即可體驗各類商品，找出適合您的設備。
         </p>
-        <div class="mt-16">
-          <router-link to="./reserve" class="primary-button"
-            >前往預約</router-link
-          >
+        <div class="mt-10 xl:mt-16">
+          <RouterLink to="./reserve" class="primary-button"
+            >前往預約
+          </RouterLink>
         </div>
       </div>
       <div
@@ -170,24 +170,32 @@
       >
         <h5 class="text-xl lg:text-3xl font-bold">訂閱電子報獲取優惠券</h5>
         <div class="w-12 border border-b-8 mt-2"></div>
-        <div class="relative w-full">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
-            <font-awesome-icon
-              :icon="['fas', 'envelope']"
-              class="text-black/70"
+        <V-form v-slot="{ errors }" @submit="getCoupon">
+          <div class="relative w-full">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'envelope']"
+                class="text-black/70"
+              />
+            </div>
+            <V-field
+              type="text"
+              name="Email"
+              class="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-primary0 focus:border-primary0 block w-full pl-10 p-2.5"
+              :class="{ 'border-warm': errors['email'] }"
+              rules="required|email"
+              placeholder="Email"
             />
           </div>
-          <input
-            type="text"
-            class="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-primary0 focus:border-primary0 block w-full pl-10 p-2.5"
-            placeholder="Email"
-          />
-        </div>
-        <div class="mt-16">
-          <a href="#" class="primary-button">訂閱</a>
-        </div>
+          <div>
+            <ErrorMessage name="Email" class="text-warm text-sm"></ErrorMessage>
+          </div>
+          <button type="submit" class="mt-10 primary-button">
+            <span>訂閱</span>
+          </button>
+        </V-form>
       </div>
     </div>
   </section>
@@ -386,6 +394,15 @@ export default {
               "<"
             );
         },
+      });
+    },
+    getCoupon() {
+      this.$swal.fire({
+        title: "恭喜獲得優惠券",
+        text: "85 折優惠碼 subscribe，可於購物車使用",
+        icon: "info",
+        confirmButtonColor: "#39B7DF",
+        backdrop: " rgba(0,0,0,0.8)",
       });
     },
   },

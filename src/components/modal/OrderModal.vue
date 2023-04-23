@@ -277,7 +277,7 @@ export default {
   methods: {
     openModal(item) {
       this.detailCollapse.collapse();
-      this.tempOrder = item;
+      this.tempOrder = JSON.parse(JSON.stringify(item));
       this.discount = Object.values(this.tempOrder.products).reduce(
         (acc, cur) => {
           return acc + (cur.total - cur.final_total);

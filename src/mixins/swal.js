@@ -23,6 +23,7 @@ export default {
         },
         customClass: {
           timerProgressBar: "admin-progress-bar", // all.scss 變更 progress-bar color
+          popup: "admin-swal2-top", // all.scss 變更 top 位置
         },
       });
     },

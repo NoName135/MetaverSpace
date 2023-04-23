@@ -718,8 +718,23 @@ export default {
       },
       deep: true,
     },
+    // 點擊 router-link 時判斷是否有改變參數
+    "$route.query": {
+      handler() {
+        if (this.$route.fullPath.includes("products")) {
+          window.location.reload();
+        }
+      },
+      deep: true,
+    },
   },
   mounted() {
+    // 判斷是否有 ?category
+    const query = this.$route.query.category;
+    if (query) {
+      this.filters.category.push(query);
+    }
+
     this.windowWidth = window.innerWidth;
     this.productModal = this.$refs.productModal;
 

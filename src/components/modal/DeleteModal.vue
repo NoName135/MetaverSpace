@@ -38,7 +38,13 @@
         <!-- Modal body -->
         <div class="p-6">
           <p class="text-lg leading-relaxed text-gray-900">
-            是否刪除 {{ tempItem.title || tempItem.id }} (刪除後無法恢復)
+            是否刪除
+            {{
+              target === "預約" || target === "留言"
+                ? `${tempItem.name}的${target}`
+                : tempItem.title || tempItem.id
+            }}
+            (刪除後無法恢復)
           </p>
         </div>
         <!-- Modal footer -->
@@ -102,6 +108,10 @@ export default {
         url = `${VITE_API}/api/${VITE_PATH}/admin/coupon/${this.tempItem.id}`;
       } else if (this.target == "文章") {
         url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempItem.id}`;
+      } else if (this.target == "預約") {
+        url = `https://metarverspace-server.onrender.com/reserves/${this.tempItem.id}`;
+      } else if (this.target == "留言") {
+        url = `https://metarverspace-server.onrender.com/contacts/${this.tempItem.id}`;
       }
 
       this.loadings.fullLoading = true;
@@ -117,13 +127,21 @@ export default {
             this.$emit("updateCoupons", this.page, "delete");
           } else if (this.target == "文章") {
             this.$emit("updateArticles", this.page, "delete");
+          } else if (this.target == "預約") {
+            this.$emit("updateReserves", this.page, "delete");
+          } else if (this.target == "留言") {
+            this.$emit("updateContacts", this.page, "delete");
           }
           this.deleteModal.hide();
         })
         .catch((err) => {
           // console.log(err);
           // SWal
-          this.adminToast("error", err.response.data.message);
+          if (this.target === "預約" || this.target === "留言") {
+            this.adminToast("error", err.message);
+          } else {
+            this.adminToast("error", err.response.data.message);
+          }
         });
     },
   },

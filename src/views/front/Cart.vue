@@ -376,7 +376,7 @@ export default {
   },
   mounted() {
     this.favoriteModal = this.$refs.favoriteModal;
-    if(this.cart.carts?.length) {
+    if (this.cart.carts?.length) {
       this.coupon = this.cart.carts[0].coupon?.code || "";
     }
   },

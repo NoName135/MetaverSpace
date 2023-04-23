@@ -72,16 +72,7 @@ const routes = [
       {
         path: "ReserveHistory",
         name: "預約紀錄",
-        /* Explicitly tell the router to redirect to default children */
-        redirect: "/ReserveHistory",
         component: () => import("../views/front/ReserveHistory.vue"),
-        children: [
-          {
-            path: "",
-            name: "預約明細",
-            component: () => import("../views/front/ReserveDetail.vue"),
-          },
-        ],
       },
       {
         path: "contact",
@@ -117,6 +108,10 @@ const routes = [
       {
         path: "coupon",
         component: () => import("../views/admin/Coupon.vue"),
+      },
+      {
+        path: "contact",
+        component: () => import("../views/admin/Contact.vue"),
       },
     ],
   },

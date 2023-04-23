@@ -7,7 +7,9 @@
   >
     <div class="flex flex-col justify-around h-full items-center">
       <div>
-        <h2 class="font-bold text-3xl lg:text-4xl">{{ article.title }}</h2>
+        <h2 class="font-bold text-3xl lg:text-4xl text-center">
+          {{ article.title }}
+        </h2>
         <p
           class="mt-8 text-xl leading-relaxed lg:text-2xl lg:leading-loose text-center"
           v-html="article.description"
