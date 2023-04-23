@@ -50,7 +50,7 @@
                 Email：<span class="ml-4">{{ tempContact.email }}</span>
               </h2>
             </div>
-            <div>
+            <div v-if="tempContact.images?.length">
               <h2 class="text-lg">圖片檢視</h2>
               <ul class="grid grid-cols-5 gap-3">
                 <li

@@ -218,9 +218,12 @@ export default {
     updateReserve() {
       this.loadings.fullLoading = true;
       this.$http
-        .put(`https://metarverspace-server.onrender.com/reserves/${this.tempReserve.id}`, {
-          ...this.tempReserve,
-        })
+        .put(
+          `https://metarverspace-server.onrender.com/reserves/${this.tempReserve.id}`,
+          {
+            ...this.tempReserve,
+          }
+        )
         .then(() => {
           // console.log(res.data);
           this.$emit("updateReserves", this.page, "update");

@@ -95,7 +95,9 @@ export default {
           if (result.isConfirmed) {
             this.loadings.fullLoading = true;
             this.$http
-              .delete(`https://metarverspace-server.onrender.com/reserves/${item.id}`)
+              .delete(
+                `https://metarverspace-server.onrender.com/reserves/${item.id}`
+              )
               .then(() => {
                 // console.log(res);
                 this.$emit("update-reserves", item.id);
