@@ -1,13 +1,13 @@
 <template>
   <div class="container mt-nav">
     <div class="pt-8">
-      <router-link
+      <RouterLink
         to="../products"
         class="cursor-pointer hover:text-primary text-xl mx-2 lg:mx-0 hover:underline"
       >
         <font-awesome-icon :icon="['fas', 'arrow-left']" />
         返回商品列表
-      </router-link>
+      </RouterLink>
 
       <RouterView @emit-id="getPageLink"></RouterView>
 

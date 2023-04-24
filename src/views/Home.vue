@@ -3,7 +3,7 @@
     <div class="main-area">
       <Navbar ref="navbar" />
       <main>
-        <router-view></router-view>
+        <RouterView></RouterView>
       </main>
     </div>
     <footer

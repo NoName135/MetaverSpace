@@ -12,8 +12,11 @@
           <span class="self-center text-2xl font-bold whitespace-nowrap"
             >MetaverSpace</span
           >
-          <router-link to="/" class="ml-8 primary-solid-button" target="_blank"
-            >開啟前台</router-link
+          <RouterLink
+            to="/products"
+            class="ml-8 primary-solid-button"
+            target="_blank"
+            >開啟前台</RouterLink
           >
         </div>
         <button class="primary-button" @click="logout()">登出</button>
@@ -31,7 +34,7 @@
       <div class="h-full px-3 pb-4 overflow-y-auto bg-gray-800">
         <ul class="space-y-4">
           <li>
-            <router-link
+            <RouterLink
               to="/admin/products"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -54,10 +57,10 @@
                 />
               </svg>
               <span class="ml-3">商品管理</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li>
-            <router-link
+            <RouterLink
               to="/admin/order"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -85,10 +88,10 @@
                 />
               </svg>
               <span class="ml-3">訂單管理</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li>
-            <router-link
+            <RouterLink
               to="/admin/article"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -111,10 +114,10 @@
                 />
               </svg>
               <span class="ml-3">文章管理</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li>
-            <router-link
+            <RouterLink
               to="/admin/reserve"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -137,10 +140,10 @@
                 />
               </svg>
               <span class="ml-3">預約管理</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li>
-            <router-link
+            <RouterLink
               to="/admin/coupon"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -168,10 +171,10 @@
                 />
               </svg>
               <span class="ml-3">優惠券管理</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li>
-            <router-link
+            <RouterLink
               to="/admin/contact"
               class="flex items-center p-2 text-base font-normal rounded-lg text-white"
               :class="[
@@ -195,7 +198,7 @@
               </svg>
 
               <span class="ml-3">留言板管理</span>
-            </router-link>
+            </RouterLink>
           </li>
         </ul>
       </div>
@@ -217,7 +220,7 @@
           />
         </button>
       </div>
-      <router-view v-if="checkLogin" />
+      <RouterView v-if="checkLogin" />
     </main>
   </div>
 </template>

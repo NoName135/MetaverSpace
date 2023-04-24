@@ -221,7 +221,11 @@
   <!-- delete modal -->
   <DeleteModal
     ref="deleteModal"
-    :page="pagination.current_page"
+    :page="
+      products.length > 1
+        ? pagination.current_page
+        : pagination.current_page - 1
+    "
     @update-products="getProducts"
   />
 </template>

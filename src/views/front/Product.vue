@@ -29,23 +29,27 @@
             },
           }"
           :spaceBetween="30"
+          :loop="true"
           :navigation="true"
           :modules="productModules"
           class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24"
         >
           <swiper-slide>
-            <div class="cursor-pointer" @click="changeImg(product.imageUrl)">
+            <div
+              class="cursor-pointer"
+              @mouseover="changeImg(product.imageUrl)"
+            >
               <img
-                class="h-20 object-contain mx-auto bg-white"
+                class="h-20 object-contain mx-auto bg-white border-2 hover:border-primary"
                 :src="product.imageUrl"
                 alt=""
               />
             </div>
           </swiper-slide>
           <swiper-slide v-for="(image, i) in product.imagesUrl" :key="i">
-            <div class="cursor-pointer" @click="changeImg(image)">
+            <div class="cursor-pointer" @mouseover="changeImg(image)">
               <img
-                class="h-20 object-contain mx-auto bg-white"
+                class="h-20 object-contain mx-auto bg-white border-2 hover:border-primary"
                 :src="image"
                 alt=""
               />

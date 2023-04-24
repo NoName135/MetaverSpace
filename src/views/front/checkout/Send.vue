@@ -37,11 +37,11 @@
       </h3>
     </section>
     <div class="mt-10 flex justify-center">
-      <router-link
+      <RouterLink
         :to="{ name: '商品列表' }"
         replace
         class="w-40 primary-button"
-        >繼續購物</router-link
+        >繼續購物</RouterLink
       >
     </div>
   </div>

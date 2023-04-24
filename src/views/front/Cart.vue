@@ -16,12 +16,15 @@
         </div>
         <div class="px-8 pb-4">
           <!-- 購物車商品 -->
-          <p
-            class="mt-10 text-center text-2xl md:text-3xl pb-6 border-b"
+          <div
+            class="mt-10 border-b flex flex-col items-center pb-6"
             v-if="!Object.keys(cart.carts)?.length"
           >
-            購物車沒有商品
-          </p>
+            <p class="text-2xl md:text-3xl">購物車沒有商品</p>
+            <RouterLink to="./products" class="primary-button mt-4"
+              >前往商店</RouterLink
+            >
+          </div>
           <ul v-else>
             <li class="py-8 border-b" v-for="item in cart.carts" :key="item.id">
               <div class="flex justify-between items-center">
@@ -78,7 +81,7 @@
                     <h2 class="text-lg lg:text-xl mr-4">
                       {{ item.product.brand }}
                     </h2>
-                    <router-link
+                    <RouterLink
                       :to="`/product/${item.product.id}`"
                       class="mt-2 sm:mt-0 dark-solid-button py-2 relative whitespace-nowrap"
                     >
@@ -87,7 +90,7 @@
                         :icon="['fas', 'arrow-up-right-from-square']"
                         class="absolute top-1 right-1 text-sm lg:text-md"
                       ></font-awesome-icon>
-                    </router-link>
+                    </RouterLink>
                   </div>
                   <h3 class="text-xl lg:text-2xl mt-4 lg:mt-6 font-bold">
                     {{ item.product.title }}
@@ -275,8 +278,11 @@
                 >NT$ {{ $filters.currency(cart.final_total) }}</span
               >
             </h3>
-            <router-link :to="{ name: '結帳' }" class="mt-8 primary-button"
-              >前往結帳</router-link
+            <RouterLink
+              :to="{ name: '結帳' }"
+              class="mt-8 primary-button"
+              v-if="cart.total"
+              >前往結帳</RouterLink
             >
           </div>
         </div>

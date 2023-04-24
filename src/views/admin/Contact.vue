@@ -54,7 +54,11 @@
   <!-- delete modal -->
   <DeleteModal
     ref="deleteModal"
-    :page="pagination.current_page"
+    :page="
+      contacts.length > 1
+        ? pagination.current_page
+        : pagination.current_page - 1
+    "
     @update-contacts="getContacts"
   />
 </template>

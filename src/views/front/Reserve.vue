@@ -4,7 +4,7 @@
       <h1 class="text-primary text-2xl md:text-3xl font-bold">
         MetaverSpace 預約體驗
       </h1>
-      <router-link
+      <RouterLink
         to="/ReserveHistory"
         class="mt-4 md:mt-0 w-32 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
       >
@@ -13,7 +13,7 @@
           :icon="['fas', 'arrow-up-right-from-square']"
           class="ml-2"
         />
-      </router-link>
+      </RouterLink>
     </div>
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div>

@@ -3,12 +3,15 @@
     <div class="container px-2 md:px-0 pt-8">
       <div class="border-2 rounded-lg xl:mx-48 overflow-hidden">
         <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">收藏清單</h1>
-        <p
-          class="mt-10 text-center text-2xl md:text-3xl"
+        <div
+          class="mt-10 flex flex-col items-center pb-6"
           v-if="!favorites.length"
         >
-          收藏清單沒有商品
-        </p>
+          <p class="text-2xl md:text-3xl">收藏清單沒有商品</p>
+          <RouterLink to="./products" class="primary-button mt-4"
+            >前往商店</RouterLink
+          >
+        </div>
         <ul class="px-8 pb-4">
           <li
             class="py-8"
@@ -17,7 +20,7 @@
             :key="item.id"
           >
             <div class="flex justify-between items-center mb-4">
-              <router-link
+              <RouterLink
                 :to="`/product/${item.id}`"
                 class="mt-2 sm:mt-0 sm:mr-4 dark-solid-button py-2 relative whitespace-nowrap"
               >
@@ -25,7 +28,7 @@
                 <font-awesome-icon
                   :icon="['fas', 'arrow-up-right-from-square']"
                   class="absolute top-1 right-1 text-sm lg:text-md"
-                ></font-awesome-icon> </router-link
+                ></font-awesome-icon> </RouterLink
               ><font-awesome-icon
                 v-if="cartLoading.cartId !== item.id"
                 :icon="['fas', 'trash-can']"

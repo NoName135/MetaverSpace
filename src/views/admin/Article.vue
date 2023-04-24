@@ -115,7 +115,11 @@
   <!-- delete modal -->
   <DeleteModal
     ref="deleteModal"
-    :page="pagination.current_page"
+    :page="
+      articles.length > 1
+        ? pagination.current_page
+        : pagination.current_page - 1
+    "
     @update-articles="getArticles"
   />
 </template>
@@ -146,7 +150,7 @@ export default {
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/admin/articles?page=${page}`)
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           const { articles, pagination } = res.data;
           this.articles = articles;
           this.pagination = pagination;

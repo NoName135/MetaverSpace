@@ -46,7 +46,7 @@
       ></div>
     </div>
   </VueLoading>
-  <router-view />
+  <RouterView />
 </template>
 
 <script>

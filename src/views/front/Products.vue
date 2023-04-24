@@ -35,10 +35,10 @@
                 v-html="article.description"
               ></p>
             </div>
-            <router-link
+            <RouterLink
               :to="`/article/${article.id}`"
               class="primary-button w-24"
-              >查看詳情</router-link
+              >查看詳情</RouterLink
             >
           </div>
         </div>
@@ -426,7 +426,7 @@
           v-if="products.length"
         >
           <template v-for="(product, i) in products" :key="product.id">
-            <router-link
+            <RouterLink
               :to="`./product/${product.id}`"
               class="group"
               @mouseover="
@@ -510,7 +510,7 @@
                   </div>
                 </div>
               </div>
-            </router-link>
+            </RouterLink>
           </template>
         </div>
         <p class="ml-4" v-else>搜尋不到相符的商品！</p>
@@ -718,7 +718,7 @@ export default {
       },
       deep: true,
     },
-    // 點擊 router-link 時判斷是否有改變參數
+    // 點擊 RouterLink 時判斷是否有改變參數
     "$route.query": {
       handler() {
         if (this.$route.fullPath.includes("products")) {

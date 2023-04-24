@@ -2,8 +2,8 @@
   <section class="container py-24">
     <div class="text-center mb-12">
       <h3 class="text-3xl font-bold mb-6">熱銷商品</h3>
-      <router-link to="./products" class="dark-solid-button"
-        >瀏覽所有商品</router-link
+      <RouterLink to="./products" class="dark-solid-button"
+        >瀏覽所有商品</RouterLink
       >
     </div>
     <div ref="products" class="overflow-hidden">
@@ -116,7 +116,7 @@
           <font-awesome-icon :icon="['fas', 'truck-fast']" />
           <span class="ml-6">快速出貨</span>
         </h5>
-        <p class="mb-4">現貨24小時出貨，最晚2天內出貨。</p>
+        <p class="mt-4">現貨24小時出貨，最晚2天內出貨。</p>
       </div>
       <div
         ref="service2"
@@ -126,7 +126,7 @@
           <font-awesome-icon :icon="['fas', 'dollar-sign']" />
           <span class="ml-6">滿額免運</span>
         </h5>
-        <p class="mb-4">單筆訂單滿2000即享免運宅配服務。</p>
+        <p class="mt-4">單筆訂單滿2000即享免運宅配服務。</p>
       </div>
       <div
         ref="service3"
