@@ -53,7 +53,6 @@
                 v-model="date"
                 format="yyyy/MM/dd HH:mm"
                 :allowed-dates="allowDates"
-                week-start="0"
                 :start-time="{ hours: 10, minutes: 0 }"
                 :min-time="{ hours: 10, minutes: 0 }"
                 :max-time="{ hours: 21, minutes: 0 }"
