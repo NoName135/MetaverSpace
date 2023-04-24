@@ -176,7 +176,7 @@
                 placeholder="請輸入備註"
               ></V-field>
             </div>
-            <div class="mt-8 flex flex-col mb-4">
+            <div class="mt-8 flex flex-col">
               <div class="flex items-center">
                 <V-field
                   id="agreeCheck"
@@ -198,15 +198,17 @@
                 class="text-warm text-sm ml-6 mt-1"
               ></ErrorMessage>
             </div>
-            <p class="mt-2 text-sm">
-              1. 預約查詢經審核後顯示預約成功才算完成預約。
-            </p>
-            <p class="mt-2 text-sm">
-              2. 若需取消預約請於 1 小時前於線上或來電取消。
-            </p>
-            <p class="mt-2 text-sm">
-              3. 逾時 15 分鐘未入場將自動取消並列入黑名單。
-            </p>
+            <div>
+              <p class="text-sm">
+                1. 預約查詢經審核後顯示預約成功才算完成預約。
+              </p>
+              <p class="mt-2 text-sm">
+                2. 若需取消預約請於 1 小時前於線上或來電取消。
+              </p>
+              <p class="mt-2 text-sm">
+                3. 逾時 15 分鐘未入場將自動取消並列入黑名單。
+              </p>
+            </div>
             <button type="submit" class="mt-6 w-full primary-button">
               送出預約
             </button>
@@ -263,7 +265,7 @@
           <div>
             <img
               :src="branch.image"
-              class="md:mt-8 w-full h-[400px] object-cover object-center"
+              class="md:mt-8 w-full h-[420px] object-cover object-center"
             />
           </div>
         </div>
