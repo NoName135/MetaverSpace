@@ -75,7 +75,7 @@
                 </svg>
               </div>
               <input
-                type="search"
+                type="text"
                 id="mainImgLink"
                 class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500"
                 placeholder="請輸入圖片網址"

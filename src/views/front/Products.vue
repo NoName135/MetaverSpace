@@ -379,7 +379,7 @@
                 </svg>
               </div>
               <input
-                type="search"
+                type="text"
                 id="search"
                 class="block w-full p-3 lg:pl-10 text-sm rounded-r-lg lg:rounded-l-lg bg-gray-700 border border-gray-600 placeholder-gray-400 text-white focus:ring-primary-0 focus:border-primary"
                 placeholder="請輸入關鍵字"
