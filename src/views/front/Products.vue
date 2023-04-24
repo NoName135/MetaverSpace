@@ -352,7 +352,7 @@
             <font-awesome-icon :icon="['fas', 'filter']" />
             篩選
           </button>
-          <form class="grow">
+          <div class="grow">
             <label
               for="search"
               class="text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -381,7 +381,7 @@
               <input
                 type="text"
                 id="search"
-                class="block w-full p-3 lg:pl-10 text-sm rounded-r-lg lg:rounded-l-lg bg-gray-700 border border-gray-600 placeholder-gray-400 text-white focus:ring-primary-0 focus:border-primary"
+                class="w-full p-3 lg:pl-10 text-sm rounded-r-lg lg:rounded-l-lg bg-gray-700 border border-gray-600 placeholder-gray-400 text-white focus:ring-primary-0 focus:border-primary"
                 placeholder="請輸入關鍵字"
                 v-model="filters.title"
               />
@@ -418,7 +418,7 @@
                 />
               </button>
             </div>
-          </form>
+          </div>
         </div>
         <!-- 產品卡片區塊 -->
         <div
