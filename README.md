@@ -70,7 +70,7 @@ Demo 網址：[Github Page](https://noname135.github.io/TWTravel/)
 - pinia
 - gsap
 - flowbite
-- c3
+- C3.js
 
 
 ## 模擬 RESTful API
