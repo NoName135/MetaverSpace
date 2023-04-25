@@ -34,7 +34,6 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 ![範例圖片 3]()
 
 ## 資料夾說明
-
 - views - Vue files
 - router - Vue router
 - components - Vue components
@@ -46,7 +45,6 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 
 
 ## 專案技術
-
 - Node.js v
 - NPM v
 - Vite v4.0.0
@@ -58,18 +56,17 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 
 
 ## 第三方服務
-
-- vue sweetalert2
-- vue multiselect
-- vue loading overlay
 - vue axios
 - vue fontawesome
+- vue loading overlay
+- vue sweetalert2
+- vue multiselect
 - vue datepicker
 - vee validate
-- swiper
 - pinia
-- gsap
 - flowbite
+- swiper
+- gsap
 - C3.js
 
 
