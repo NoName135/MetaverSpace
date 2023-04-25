@@ -1,36 +1,78 @@
-# MetaverSpace
-[MetaverSpace](https://noname135.github.io/MetaverSpace)
+Demo 網址：[Github Page](https://noname135.github.io/TWTravel/)
 
-This template should help get you started developing with Vue 3 in Vite.
+![專案封面圖]()
 
-## Recommended IDE Setup
+## 功能
+### 前台
+- [x] 瀏覽文章
+- [x] 瀏覽、篩選商品
+- [x] 商品加入購物車
+- [x] 商品加入收藏清單
+- [x] 購物車及收藏清單商品移動
+- [x] 商品結帳、輸入優惠碼
+- [x] 送出訂單、付款
+- [x] 交易記錄查詢、前往付款頁面
+- [x] 預約平台表單
+- [x] 預約查詢、取消預約
+- [x] 留言板
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### 後台
+- [x] 登入 / 登出
+- [x] 商品管理
+- [x] 主要商品選擇配件
+- [x] 訂單管理
+- [x] 訂單圖表統計
+- [x] 文章管理
+- [x] 預約管理
+- [x] 優惠券管理
+- [x] 留言板管理
 
-## Customize configuration
+## 畫面
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![範例圖片 1]()
+![範例圖片 2]()
+![範例圖片 3]()
 
-## Project Setup
+## 資料夾說明
 
-```sh
-npm install
-```
+- views - Vue files
+- components - Vue components
+- methods - global functions
+- mixins - Vue mixins
+- stores - pinia files
+- router - vue router
+- assets - SCSS、CSS files
+- images - image files
 
-### Compile and Hot-Reload for Development
 
-```sh
-npm run dev
-```
+## 專案技術
 
-### Compile and Minify for Production
+- Node.js v
+- NPM v
+- Vite v4.0.0
+- Vue v3.2.45
+- Vue Router v4.1.6
+- pinia v2.0.28
+- sass v1.58.0
+- Tailwind v3.2.6
 
-```sh
-npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
+## 第三方服務
 
-```sh
-npm run lint
-```
+- vue sweetalert2
+- vue multiselect
+- vue loading overlay
+- vue axios
+- vue fontawesome
+- vue datepicker
+- vee validate
+- swiper
+- pinia
+- gsap
+- flowbite
+- c3
+
+
+## 模擬 RESTful API
+- Render
+- JSON Server
