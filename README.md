@@ -45,8 +45,8 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 
 
 ## 專案技術
-- Node.js v
-- NPM v
+- Node.js v18.14.0
+- NPM v9.4.1
 - Vite v4.0.0
 - Vue v3.2.45
 - Vue Router v4.1.6
