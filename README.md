@@ -36,11 +36,11 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 ## 資料夾說明
 
 - views - Vue files
+- router - Vue router
 - components - Vue components
-- methods - global functions
 - mixins - Vue mixins
-- stores - pinia files
-- router - vue router
+- stores - Pinia files
+- methods - global functions
 - assets - SCSS、CSS files
 - images - image files
 
