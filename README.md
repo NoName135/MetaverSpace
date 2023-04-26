@@ -3,6 +3,7 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 ![專案封面圖](https://github.com/NoName135/MetaverSpace/blob/main/src/images/Readme/HomePage.JPG)
 
 ## 功能
+
 ### 前台
 - [x] 瀏覽文章
 - [x] 瀏覽、篩選商品
@@ -27,6 +28,7 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 - [x] 優惠券編輯、刪除
 - [x] 留言板檢視、刪除
 
+
 ## 畫面
 
 ![範例圖片 1](https://github.com/NoName135/MetaverSpace/blob/main/src/images/Readme/picture1.JPG)
@@ -34,6 +36,7 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 ![範例圖片 2](https://github.com/NoName135/MetaverSpace/blob/main/src/images/Readme/picture2.JPG)
 
 ![範例圖片 3](https://github.com/NoName135/MetaverSpace/blob/main/src/images/Readme/picture3.JPG)
+
 
 ## 資料夾說明
 - views - Vue files
@@ -71,7 +74,9 @@ Demo 網址：[Github Page](https://noname135.github.io/MetaverSpace/)
 - gsap
 - C3.js
 
+
 ## RESTful API
+
 ### 主要 RESTful API
 - 六角學院 - Vue 課程 API 文件
 
