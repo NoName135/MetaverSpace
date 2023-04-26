@@ -9,7 +9,11 @@
           <button
             type="button"
             class="ml-2 dark-solid-button"
-            @click="favoriteModal.openModal()"
+            @click="
+              favorites.length
+                ? favoriteModal.openModal()
+                : userToast('info', '收藏清單沒有商品')
+            "
           >
             收藏清單
           </button>
