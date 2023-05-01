@@ -31,7 +31,7 @@
                 {{ article.title }}
               </h2>
               <p
-                class="mt-8 text-lg lg:text-xl"
+                class="mt-8 text-lg lg:text-xl prose prose-front prose-styles"
                 v-html="article.description"
               ></p>
             </div>
@@ -178,7 +178,7 @@
               v-model="filters.maxPrice"
             />
           </div>
-          <div class="flex mt-6">
+          <div class="flex mt-6 mb-10">
             <button
               type="button"
               class="w-20 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-warm hover:bg-warm2 focus:ring-warm3"
@@ -573,8 +573,6 @@ export default {
         minPrice: null,
         maxPrice: null,
       },
-
-      windowWidth: 0,
       articleModules: [Navigation, Pagination, Autoplay],
       productImages: [],
     };
@@ -582,6 +580,13 @@ export default {
   methods: {
     // 抓取全部商品和文章
     async getAll() {
+      // 判斷是否有 ?category
+      const query = this.$route.query.category;
+      this.filters.category = []
+      if (query) {
+        this.filters.category.push(query);
+      }
+
       this.loadings.fullLoading = true;
       await Promise.all([
         this.$http.get(`${VITE_API}/api/${VITE_PATH}/products/all`),
@@ -722,20 +727,13 @@ export default {
     "$route.query": {
       handler() {
         if (this.$route.fullPath.includes("products")) {
-          window.location.reload();
+          this.getAll();
         }
       },
       deep: true,
     },
   },
   mounted() {
-    // 判斷是否有 ?category
-    const query = this.$route.query.category;
-    if (query) {
-      this.filters.category.push(query);
-    }
-
-    this.windowWidth = window.innerWidth;
     this.productModal = this.$refs.productModal;
 
     // drawer options

@@ -34,7 +34,7 @@
             <swiper-slide class="rounded border overflow-hidden">
               <div class="h-full">
                 <img
-                  class="h-1/2 md:h-3/5 w-full object-cover relative"
+                  class="h-1/2 md:h-3/5 w-full object-cover bg-white relative"
                   :src="product.imageUrl"
                   alt=""
                 />
@@ -66,18 +66,20 @@
                   "
                 >
                   <div class="md:flex justify-between text-white">
-                    <div>
+                    <div class="mb-6 md:mb-0">
                       <div class="text-left">
                         <h5 class="text-lg font-bold ellipse2 mb-2">
                           {{ product.title }}
                         </h5>
-                        <p
-                          class="text-sm ellipse2 mb-2 md:mb-0"
-                          v-html="product.description"
-                        ></p>
+                        <div class="hidden xs:block">
+                          <p
+                            class="text-sm ellipse2 mb-2 md:mb-0 prose prose-front prose-styles leading-normal"
+                            v-html="product.description"
+                          ></p>
+                        </div>
                       </div>
                     </div>
-                    <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-2">
+                    <div class="whitespace-nowrap mb-2 md:mb-0 md:ml-4">
                       <div
                         class="block text-left xs:flex justify-between items-center md:block md:text-right"
                       >

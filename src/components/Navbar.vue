@@ -389,7 +389,7 @@ export default {
           this.targetLink = "reserve";
         } else if (this.$route.fullPath === "/order") {
           this.targetLink = "order";
-        } else if (this.$route.fullPath === "/products") {
+        } else if (this.$route.fullPath.includes("/products")) {
           this.targetLink = "products";
         } else {
           this.targetLink = "";
@@ -417,7 +417,7 @@ export default {
       this.targetLink = "reserve";
     } else if (this.$route.fullPath === "/order") {
       this.targetLink = "order";
-    } else if (this.$route.fullPath === "/products") {
+    } else if (this.$route.fullPath.includes("/products")) {
       this.targetLink = "products";
     } else {
       this.targetLink = "";

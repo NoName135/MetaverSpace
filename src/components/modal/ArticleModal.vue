@@ -153,7 +153,7 @@
             </div>
             <div>
               <h3 class="mb-2 font-medium">文章摘要</h3>
-              <div>
+              <div class="prose max-w-full prose-p:my-0">
                 <ckeditor
                   :editor="editor"
                   :config="editorConfig"
@@ -165,7 +165,7 @@
               <h3 class="mb-2 font-medium">
                 詳細內容<span class="font-bold text-rose-500">*</span>
               </h3>
-              <div>
+              <div class="prose max-w-full prose-p:my-0">
                 <ckeditor
                   :editor="editor"
                   :config="editorConfig"

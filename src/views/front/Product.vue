@@ -14,22 +14,26 @@
         <swiper
           ref="productSwiper"
           :slidesPerView="3"
+          :slidesPerGroup="3"
           :breakpoints="{
             480: {
               slidesPerView: 4,
+              slidesPerGroup: 4,
             },
             768: {
               slidesPerView: 5,
+              slidesPerGroup: 5,
             },
             976: {
               slidesPerView: 4,
+              slidesPerGroup: 4,
             },
             1440: {
               slidesPerView: 5,
+              slidesPerGroup: 5,
             },
           }"
           :spaceBetween="30"
-          :loop="true"
           :navigation="true"
           :modules="productModules"
           class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24"
@@ -67,7 +71,10 @@
         </div>
         <h3 class="mt-2 text-3xl font-bold">{{ product.title }}</h3>
         <div class="mt-3 text-md">
-          <div class="leading-relaxed" v-html="product.description"></div>
+          <div
+            class="prose prose-front prose-styles leading-relaxed"
+            v-html="product.description"
+          ></div>
         </div>
         <div class="flex-auto flex flex-col justify-end">
           <div class="flex justify-between items-center mt-6">
@@ -190,7 +197,7 @@
       </section>
     </div>
     <!-- 加購區塊 -->
-    <div class="mt-8 bg-black/50 px-2 md:px-0" v-if="product.accessory">
+    <section class="mt-8 bg-black/50 px-2 md:px-0" v-if="product.accessory">
       <div class="container py-8">
         <h3 class="text-xl font-bold pb-3 border-b">加購配件</h3>
         <div class="flex flex-wrap mt-4 px-2">
@@ -208,7 +215,7 @@
             </div>
             <div class="flex flex-col px-2 py-4 h-[calc(100%-192px)]">
               <h4 class="text-lg font-bold">{{ accessory.title }}</h4>
-              <p class="mt-4 text-md" v-html="accessory.description"></p>
+              <div class="mt-4 text-md" v-html="accessory.description"></div>
               <div class="flex-auto flex flex-col justify-end">
                 <p v-if="accessory.spec" class="text-sm mt-4">※請先選擇規格</p>
                 <div
@@ -294,17 +301,115 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- 商品詳細區塊 -->
-    <div class="px-2 md:px-0" v-if="product.content">
+    <section
+      class="bg-black/50 px-2 md:px-0"
+      :class="{ 'mt-8': !product.accessory }"
+      v-if="product.content || product.contentImages?.length"
+    >
       <div class="container py-8">
-        <h3 class="text-xl font-bold pb-3 border-b">商品詳細資訊</h3>
-        <p class="mt-4 leading-loose" v-html="product.content"></p>
+        <h3 class="text-xl font-bold pb-3 mb-4 border-b">商品詳細資訊</h3>
+        <div
+          class="prose prose-front prose-styles leading-loose"
+          v-html="product.content"
+        ></div>
         <template v-for="(image, i) in product.contentImages" :key="i">
-          <img :src="image" alt="" class="mt-4" />
+          <img :src="image" alt="" class="mt-4 rounded-lg max-w-4xl" />
         </template>
       </div>
-    </div>
+    </section>
+    <!-- 其他商品 Swiper 區塊 -->
+    <section class="container mt-8 px-2 md:px-0">
+      <h3 class="text-xl font-bold pb-3 mb-4 border-b">您可能也喜歡</h3>
+      <swiper
+        ref="productSwiper"
+        :slidesPerView="1"
+        :slidesPerGroup="1"
+        :breakpoints="{
+          768: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+          },
+          976: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          1440: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+        }"
+        :spaceBetween="30"
+        :navigation="true"
+        :modules="productModules"
+        class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24 h-[420px]"
+      >
+        <swiper-slide
+          v-for="otherProduct in otherProducts"
+          :key="otherProduct.id"
+        >
+          <div class="h-full">
+            <img
+              class="h-1/2 w-full object-cover bg-white rounded-t relative"
+              :src="otherProduct.imageUrl"
+              alt=""
+            />
+            <div class="absolute top-4 left-4">
+              <div class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1">
+                {{ otherProduct.brand }}
+              </div>
+            </div>
+            <div
+              class="p-3 md:p-5 h-1/2 flex flex-col justify-between rounded-b"
+              style="
+                background: linear-gradient(
+                  142.88deg,
+                  rgba(255, 255, 255, 0.16) 8.09%,
+                  rgba(255, 255, 255, 0.064) 27.24%,
+                  rgba(255, 255, 255, 0.064) 34.42%,
+                  rgba(255, 255, 255, 0.1088) 48.78%,
+                  rgba(255, 255, 255, 0) 100%
+                );
+              "
+            >
+              <div class="text-white">
+                <div class="text-left">
+                  <h5 class="text-lg font-bold ellipse2 mb-2">
+                    {{ otherProduct.title }}
+                  </h5>
+                  <p
+                    class="text-sm ellipse2 prose prose-front prose-styles leading-normal"
+                    v-html="otherProduct.description"
+                  ></p>
+                </div>
+              </div>
+              <div class="flex flex-col justify-end">
+                <div class="whitespace-nowrap mb-2">
+                  <div class="flex justify-between items-center">
+                    <p class="text-gray-400 line-through text-xs">
+                      NT$ {{ $filters.currency(otherProduct.origin_price) }}
+                    </p>
+                    <p class="text-md font-bold">
+                      NT$ {{ $filters.currency(otherProduct.price) }}
+                    </p>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <RouterLink
+                    :to="`/product/${otherProduct.id}`"
+                    class="text-primary hover:underline"
+                  >
+                    了解詳情
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </section>
   </div>
   <ScrollTop />
 </template>
@@ -333,6 +438,7 @@ export default {
   data() {
     return {
       product: {},
+      otherProducts: [],
       accessories: [],
       cartSpec: "",
       qty: 1,
@@ -350,6 +456,8 @@ export default {
           // console.log(res.data);
           this.product = res.data.product;
           this.targetImage = this.product.imageUrl;
+          // 取得其他產品
+          this.getotherProducts();
           // 有配件的商品執行 getAccessory
           if (this.product.accessory) {
             this.getAccessory();
@@ -363,6 +471,41 @@ export default {
           // Swal
           this.userToast("error", err.response.data.message);
         });
+    },
+    async getotherProducts() {
+      if (this.product.category === "配件") {
+        await this.$http
+          .get(`${VITE_API}/api/${VITE_PATH}/products?category=配件`)
+          .then((res) => {
+            // console.log(res.data);
+            this.otherProducts = res.data.products;
+          })
+          .catch((err) => {
+            // Swal
+            this.userToast("error", err.response.data.message);
+          });
+      } else {
+        const categories = ["AR", "VR", "MR", "XR"];
+        try {
+          await Promise.all(
+            categories.map(async (category) => {
+              const res = await this.$http.get(
+                `${VITE_API}/api/${VITE_PATH}/products?category=${category}`
+              );
+              this.otherProducts.push(...res.data.products);
+            })
+          );
+        } catch (err) {
+          // Swal
+          this.userToast("error", err.message);
+        }
+      }
+      // 移除相同的商品
+      this.otherProducts.forEach((item, i) => {
+        if (item.id === this.product.id) {
+          this.otherProducts.splice(i, 1);
+        }
+      });
     },
     async getAccessory() {
       const getAccessoryApi = this.product.accessory.map((item) =>
@@ -408,6 +551,12 @@ export default {
         this.qty = 99;
       }
     },
+    // 點擊其他商品時判斷是否有改變參數
+    "$route.params.id"() {
+      if (this.$route.fullPath.includes("/product/")) {
+        this.getProduct(this.$route.params.id);
+      }
+    },
   },
   mounted() {
     this.getProduct(this.$route.params.id);
@@ -419,3 +568,13 @@ export default {
   },
 };
 </script>
+
+<style>
+/* ellipsis */
+.ellipse2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>

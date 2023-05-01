@@ -36,6 +36,15 @@ module.exports = {
         warm2: "#BF463B",
         warm3: "#802F28",
       },
+      typography: {
+        // prose-front 使用以下樣式
+        front: {
+          css: {
+            "--tw-prose-counters": "white",
+            "--tw-prose-bullets": "white",
+          },
+        },
+      },
       opacity: {
         38: "0.38",
         85: "0.85",
@@ -59,5 +68,9 @@ module.exports = {
     extend: false,
   },
   // eslint-disable-next-line no-undef
-  plugins: [require("@tailwindcss/forms"), require("flowbite/plugin")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
+    require("flowbite/plugin"),
+  ],
 };

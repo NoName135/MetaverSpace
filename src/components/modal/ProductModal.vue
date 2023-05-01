@@ -283,21 +283,25 @@
               <h3 for="message" class="mb-2 font-medium text-gray-900">
                 商品功能簡介
               </h3>
-              <ckeditor
-                :editor="editor"
-                :config="editorConfig"
-                v-model="tempProduct.description"
-              ></ckeditor>
+              <div class="prose max-w-full prose-p:my-0">
+                <ckeditor
+                  :editor="editor"
+                  :config="descriptionConfig"
+                  v-model="tempProduct.description"
+                ></ckeditor>
+              </div>
             </div>
             <div>
               <h3 for="message" class="mb-2 font-medium text-gray-900">
                 商品詳細內容
               </h3>
-              <ckeditor
-                :editor="editor"
-                :config="detailConfig"
-                v-model="tempProduct.content"
-              ></ckeditor>
+              <div class="prose max-w-full prose-p:my-0">
+                <ckeditor
+                  :editor="editor"
+                  :config="contentConfig"
+                  v-model="tempProduct.content"
+                ></ckeditor>
+              </div>
             </div>
             <div class="mt-8 space-y-4">
               <h3 class="font-medium">商品詳細內容圖庫</h3>
@@ -459,7 +463,7 @@ export default {
       accessoryOptions: [],
       // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v3.html#editor
       editor: ClassicEditor,
-      editorConfig: {
+      descriptionConfig: {
         toolbar: [
           "heading",
           "bold",
@@ -474,7 +478,7 @@ export default {
           "link",
         ],
       },
-      detailConfig: {
+      contentConfig: {
         toolbar: [
           "heading",
           "bold",

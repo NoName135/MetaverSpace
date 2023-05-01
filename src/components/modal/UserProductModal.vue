@@ -82,7 +82,10 @@
           <h3 class="mt-2 text-xl md:text-2xl font-bold">
             {{ tempProduct.title }}
           </h3>
-          <p class="mt-2 ellipse5" v-html="tempProduct.description"></p>
+          <p
+            class="mt-2 ellipse5 prose prose-front prose-styles leading-normal"
+            v-html="tempProduct.description"
+          ></p>
           <p class="text-primary text-lg md:text-xl font-bold mt-4">
             NT$ {{ $filters.currency(tempProduct.price) }}
           </p>
@@ -227,6 +230,8 @@ export default {
       this.cartSpec = "";
       this.qty = 1;
       this.productModal.show();
+      // modal 移到最上方
+      this.$refs.productModal.scrollTop = 0;
     },
     ...mapActions(cartStore, ["getCart", "addCart", "createModalRef"]),
   },

@@ -11,12 +11,12 @@
           {{ article.title }}
         </h2>
         <p
-          class="mt-8 text-xl leading-relaxed lg:text-2xl lg:leading-loose text-center"
+          class="mt-8 text-xl leading-relaxed lg:text-2xl lg:leading-loose text-center prose prose-front prose-styles"
           v-html="article.description"
         ></p>
       </div>
       <p
-        class="mt-8 text-lg leading-relaxed lg:text-xl lg:leading-loose text-center"
+        class="mt-8 text-lg leading-relaxed lg:text-xl lg:leading-loose text-center prose prose-front prose-styles"
         v-html="article.content"
       ></p>
     </div>
