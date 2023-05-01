@@ -44,7 +44,7 @@
               @mouseover="changeImg(product.imageUrl)"
             >
               <img
-                class="h-20 object-contain mx-auto bg-white border-2 hover:border-primary"
+                class="h-12 xs:h-16 md:h-20 lg:h-16 xl:h-20 object-contain rounded-sm mx-auto bg-white border-2 hover:border-primary"
                 :src="product.imageUrl"
                 alt=""
               />
@@ -53,7 +53,7 @@
           <swiper-slide v-for="(image, i) in product.imagesUrl" :key="i">
             <div class="cursor-pointer" @mouseover="changeImg(image)">
               <img
-                class="h-20 object-contain mx-auto bg-white border-2 hover:border-primary"
+                class="h-12 xs:h-16 md:h-20 lg:h-16 xl:h-20 object-contain mx-auto rounded-sm bg-white border-2 hover:border-primary"
                 :src="image"
                 alt=""
               />
@@ -315,7 +315,11 @@
           v-html="product.content"
         ></div>
         <template v-for="(image, i) in product.contentImages" :key="i">
-          <img :src="image" alt="" class="mt-4 rounded-lg max-w-4xl" />
+          <img
+            :src="image"
+            alt=""
+            class="mt-4 mx-auto rounded lg:rounded-lg w-full max-w-4xl"
+          />
         </template>
       </div>
     </section>
