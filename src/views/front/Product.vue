@@ -457,7 +457,7 @@ export default {
           this.product = res.data.product;
           this.targetImage = this.product.imageUrl;
           // 取得其他產品
-          this.getotherProducts();
+          this.getOtherProducts();
           // 有配件的商品執行 getAccessory
           if (this.product.accessory) {
             this.getAccessory();
@@ -472,7 +472,8 @@ export default {
           this.userToast("error", err.response.data.message);
         });
     },
-    async getotherProducts() {
+    async getOtherProducts() {
+      this.otherProducts = [];
       if (this.product.category === "配件") {
         await this.$http
           .get(`${VITE_API}/api/${VITE_PATH}/products?category=配件`)
