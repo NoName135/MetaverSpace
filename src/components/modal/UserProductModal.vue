@@ -193,78 +193,78 @@
 
 <script>
 // import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue'
 // import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 // import Swiper required modules
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from 'swiper'
 
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import loadingStore from "@/stores/loadingStore.js";
-import cartStore from "@/stores/cartStore.js";
-import { mapActions, mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import cartStore from '@/stores/cartStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
 // const { VITE_API, VITE_PATH } = import.meta.env;
 export default {
-  props: ["page"],
+  props: ['page'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       productModules: [Navigation, Pagination],
       tempProduct: [],
-      cartSpec: "",
-      qty: 1,
-    };
+      cartSpec: '',
+      qty: 1
+    }
   },
   methods: {
-    openModal(item) {
-      this.tempProduct = { ...item };
+    openModal (item) {
+      this.tempProduct = { ...item }
       // console.log(this.tempProduct);
       // 打開 modal 時讓 swiper 回到第一張圖
-      this.$refs.productSwiper.$el.swiper.slideTo(0);
-      this.cartSpec = "";
-      this.qty = 1;
-      this.productModal.show();
+      this.$refs.productSwiper.$el.swiper.slideTo(0)
+      this.cartSpec = ''
+      this.qty = 1
+      this.productModal.show()
       // modal 移到最上方
-      this.$refs.productModal.scrollTop = 0;
+      this.$refs.productModal.scrollTop = 0
     },
-    ...mapActions(cartStore, ["getCart", "addCart", "createModalRef"]),
+    ...mapActions(cartStore, ['getCart', 'addCart', 'createModalRef'])
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-    ...mapState(cartStore, ["cart", "cartLoading"]),
+    ...mapState(loadingStore, ['loadings']),
+    ...mapState(cartStore, ['cart', 'cartLoading'])
   },
   watch: {
-    qty() {
+    qty () {
       if (this.qty < 1) {
-        this.qty = 1;
+        this.qty = 1
       }
       if (this.qty > 99) {
-        this.qty = 99;
+        this.qty = 99
       }
-    },
+    }
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "dynamic",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.productModal = new Modal(this.$refs.productModal, modalOptions);
-    this.createModalRef(this.productModal);
+      placement: 'center',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.productModal = new Modal(this.$refs.productModal, modalOptions)
+    this.createModalRef(this.productModal)
   },
   components: {
     Swiper,
-    SwiperSlide,
-  },
-};
+    SwiperSlide
+  }
+}
 </script>
 
 <style>

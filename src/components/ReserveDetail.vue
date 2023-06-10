@@ -62,58 +62,58 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
-  props: ["reserves"],
+  props: ['reserves'],
   methods: {
-    deleteReserve(item) {
+    deleteReserve (item) {
       this.$swal
         .fire({
-          title: "取消預約",
+          title: '取消預約',
           text: `確定要取消 ${new Date(item.reserve_time).toLocaleString(
-            "zh-TW",
+            'zh-TW',
             {
               hour12: false,
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
             }
           )} 的預約？`,
-          icon: "warning",
-          confirmButtonColor: "#FE5F50",
-          confirmButtonText: "確定取消",
-          backdrop: " rgba(0,0,0,0.8)",
+          icon: 'warning',
+          confirmButtonColor: '#FE5F50',
+          confirmButtonText: '確定取消',
+          backdrop: ' rgba(0,0,0,0.8)',
           showCancelButton: true,
-          cancelButtonColor: "#6b7280",
+          cancelButtonColor: '#6b7280'
         })
         .then((result) => {
           if (result.isConfirmed) {
-            this.loadings.fullLoading = true;
+            this.loadings.fullLoading = true
             this.$http
               .delete(`${VITE_RENDER_API}/reserves/${item.id}`)
               .then(() => {
                 // console.log(res);
-                this.$emit("update-reserves", item.id);
-                this.loadings.fullLoading = false;
+                this.$emit('update-reserves', item.id)
+                this.loadings.fullLoading = false
               })
               .catch((err) => {
-                this.loadings.fullLoading = false;
+                this.loadings.fullLoading = false
                 // Swal
-                this.userToast("error", err.message);
-              });
+                this.userToast('error', err.message)
+              })
           }
-        });
-    },
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

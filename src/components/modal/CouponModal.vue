@@ -153,96 +153,96 @@
 </template>
 
 <script>
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  props: ["page"],
+  props: ['page'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       isNew: true,
       tempCoupon: {},
-      dueDate: "",
-    };
+      dueDate: ''
+    }
   },
   methods: {
-    openModal(type, item) {
-      let timeStamp = new Date();
-      if (type === "new") {
-        this.isNew = true;
+    openModal (type, item) {
+      let timeStamp = new Date()
+      if (type === 'new') {
+        this.isNew = true
         this.tempCoupon = {
-          is_enabled: 0,
-        };
-        this.couponModal.show();
+          is_enabled: 0
+        }
+        this.couponModal.show()
       } else {
-        this.isNew = false;
-        this.tempCoupon = { ...item };
-        timeStamp = new Date(this.tempCoupon.due_date * 1000);
-        this.couponModal.show();
+        this.isNew = false
+        this.tempCoupon = { ...item }
+        timeStamp = new Date(this.tempCoupon.due_date * 1000)
+        this.couponModal.show()
       }
       this.dueDate = `${timeStamp.getFullYear()}-${(
-        "0" +
+        '0' +
         (timeStamp.getMonth() + 1)
-      ).slice(-2)}-${("0" + timeStamp.getDate()).slice(-2)}`;
+      ).slice(-2)}-${('0' + timeStamp.getDate()).slice(-2)}`
 
       // modal 移到最上方
-      this.$refs.couponModal.scrollTop = 0;
+      this.$refs.couponModal.scrollTop = 0
     },
     // 更新優惠券資料
-    updateCoupon() {
-      let httpVerb = "post";
-      let url = `${VITE_API}/api/${VITE_PATH}/admin/coupon`;
+    updateCoupon () {
+      let httpVerb = 'post'
+      let url = `${VITE_API}/api/${VITE_PATH}/admin/coupon`
 
       if (!this.isNew) {
-        httpVerb = "put";
-        url = `${VITE_API}/api/${VITE_PATH}/admin/coupon/${this.tempCoupon.id}`;
+        httpVerb = 'put'
+        url = `${VITE_API}/api/${VITE_PATH}/admin/coupon/${this.tempCoupon.id}`
       }
 
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       this.$http[httpVerb](url, {
-        data: this.tempCoupon,
+        data: this.tempCoupon
       })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateCoupons", this.page, "update");
-          this.couponModal.hide();
+          this.$emit('updateCoupons', this.page, 'update')
+          this.couponModal.hide()
         })
         .catch((err) => {
           // console.log(err);
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
-    },
+          this.adminToast('error', err.response.data.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
   watch: {
-    dueDate() {
-      this.tempCoupon.due_date = Math.floor(new Date(this.dueDate) / 1000);
+    dueDate () {
+      this.tempCoupon.due_date = Math.floor(new Date(this.dueDate) / 1000)
     },
-    "tempCoupon.percent"() {
+    'tempCoupon.percent' () {
       if (this.tempCoupon.percent < 1 || this.tempCoupon.percent > 99) {
-        this.tempCoupon.percent = null;
+        this.tempCoupon.percent = null
       }
-    },
+    }
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.couponModal = new Modal(this.$refs.couponModal, modalOptions);
-  },
-};
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.couponModal = new Modal(this.$refs.couponModal, modalOptions)
+  }
+}
 </script>

@@ -154,86 +154,86 @@
 </template>
 
 <script>
-import gsapMixin from "@/mixins/gsap.js";
+import gsapMixin from '@/mixins/gsap.js'
 
-import AR from "@/assets/images/AR.jpg";
-import VR from "@/assets/images/VR.jpg";
-import MR from "@/assets/images/MR.jpg";
-import XR from "@/assets/images/XR.jpg";
+import AR from '@/assets/images/AR.jpg'
+import VR from '@/assets/images/VR.jpg'
+import MR from '@/assets/images/MR.jpg'
+import XR from '@/assets/images/XR.jpg'
 
 export default {
   mixins: [gsapMixin],
-  data() {
+  data () {
     return {
       categories: {
-        AR: AR,
-        VR: VR,
-        MR: MR,
-        XR: XR,
-      },
-    };
+        AR,
+        VR,
+        MR,
+        XR
+      }
+    }
   },
   methods: {
-    gsapCategory() {
+    gsapCategory () {
       Object.keys(this.categories).forEach((key, i) => {
         this.ScrollTrigger.matchMedia({
-          "(max-width: 975px)": () => {
+          '(max-width: 975px)': () => {
             this.gsap
               .timeline({
                 scrollTrigger: {
                   trigger: this.$refs[`timeline${i + 1}`],
-                  start: "top 35%",
-                  toggleActions: "play none none reverse",
+                  start: 'top 35%',
+                  toggleActions: 'play none none reverse'
                   // markers: true,
-                },
+                }
               })
               .from(this.$refs[`timeline${i + 1}Image`], {
                 y: 100,
                 opacity: 0,
-                ease: "back",
-                duration: 1,
+                ease: 'back',
+                duration: 1
               })
               .from(
                 this.$refs[`timeline${i + 1}Text`],
-                { y: 100, opacity: 0, ease: "back", duration: 1, delay: 0.5 },
-                "<"
-              );
+                { y: 100, opacity: 0, ease: 'back', duration: 1, delay: 0.5 },
+                '<'
+              )
           },
-          "(min-width: 976px)": () => {
+          '(min-width: 976px)': () => {
             this.gsap
               .timeline({
                 scrollTrigger: {
                   trigger: this.$refs[`timeline${i + 1}`],
-                  start: "top 40%",
-                  toggleActions: "play none none reverse",
+                  start: 'top 40%',
+                  toggleActions: 'play none none reverse'
                   // markers: true,
-                },
+                }
               })
               .from(this.$refs[`timeline${i + 1}Text`], {
                 y: 100,
                 opacity: 0,
-                ease: "back",
-                duration: 1,
+                ease: 'back',
+                duration: 1
               })
               .from(
                 this.$refs[`timeline${i + 1}Image`],
-                { x: 100, opacity: 0, ease: "back", duration: 1 },
-                "<"
+                { x: 100, opacity: 0, ease: 'back', duration: 1 },
+                '<'
               )
               .from(
                 this.$refs[`timeline${i + 1}Title`],
-                { y: 100, opacity: 0, ease: "expo", duration: 1, delay: 0.5 },
-                "<"
-              );
-          },
-        });
-      });
-    },
+                { y: 100, opacity: 0, ease: 'expo', duration: 1, delay: 0.5 },
+                '<'
+              )
+          }
+        })
+      })
+    }
   },
-  mounted() {
-    this.gsapCategory();
-  },
-};
+  mounted () {
+    this.gsapCategory()
+  }
+}
 </script>
 
 <style>

@@ -545,32 +545,32 @@
 </template>
 
 <script>
-import UserProductModal from "@/components/modal/UserProductModal.vue";
-import ProductsPagination from "@/components/UserPagination.vue";
+import UserProductModal from '@/components/modal/UserProductModal.vue'
+import ProductsPagination from '@/components/UserPagination.vue'
 
 // import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue'
 // import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 // import Swiper required modules
-import { Navigation, Pagination, Autoplay } from "swiper";
+import { Navigation, Pagination, Autoplay } from 'swiper'
 
 // import flowbite components
-import { Drawer } from "flowbite";
+import { Drawer } from 'flowbite'
 
-import loadingStore from "@/stores/loadingStore.js";
-import favoriteStore from "@/stores/favoriteStore.js";
-import { mapActions, mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       articles: [],
       allProducts: [],
@@ -580,84 +580,84 @@ export default {
       filtersBrand: [], // 篩選功能顯示的品牌
       // 搜尋項目
       filters: {
-        title: "",
+        title: '',
         brand: [],
         category: [],
         minPrice: null,
-        maxPrice: null,
+        maxPrice: null
       },
       articleModules: [Navigation, Pagination, Autoplay],
-      productImages: [],
-    };
+      productImages: []
+    }
   },
   methods: {
     // 抓取全部商品和文章
-    async getAll() {
+    async getAll () {
       // 判斷是否有 ?category
-      const query = this.$route.query.category;
-      this.filters.category = [];
+      const query = this.$route.query.category
+      this.filters.category = []
       if (query) {
-        this.filters.category.push(query);
+        this.filters.category.push(query)
       }
 
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       await Promise.all([
         this.$http.get(`${VITE_API}/api/${VITE_PATH}/products/all`),
-        this.$http.get(`${VITE_API}/api/${VITE_PATH}/articles`),
+        this.$http.get(`${VITE_API}/api/${VITE_PATH}/articles`)
       ])
         .then((res) => {
           // console.log(res);
-          this.allProducts = Object.values(res[0].data.products).reverse();
+          this.allProducts = Object.values(res[0].data.products).reverse()
           // 找出篩選的全部品牌
           this.allProducts.forEach((item) => {
             if (this.filtersBrand.indexOf(item.brand) === -1) {
-              this.filtersBrand.push(item.brand);
+              this.filtersBrand.push(item.brand)
             }
-          });
-          this.getFilterProducts();
+          })
+          this.getFilterProducts()
 
-          this.articles = res[1].data.articles;
+          this.articles = res[1].data.articles
           // console.log(this.articles);
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // console.log(err);
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
     },
     // 抓取全部商品
-    async getProducts() {
-      this.loadings.fullLoading = true;
+    async getProducts () {
+      this.loadings.fullLoading = true
       await this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/products/all`)
         .then((res) => {
           // 反轉產品順序由新到舊
-          this.allProducts = Object.values(res.data.products).reverse();
+          this.allProducts = Object.values(res.data.products).reverse()
           // 找出篩選的全部品牌
           this.allProducts.forEach((item) => {
             if (this.filtersBrand.indexOf(item.brand) === -1) {
-              this.filtersBrand.push(item.brand);
+              this.filtersBrand.push(item.brand)
             }
-          });
+          })
 
-          this.getFilterProducts();
+          this.getFilterProducts()
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // console.log(err);
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
     },
     // 篩選商品
-    getFilterProducts(page = 1) {
+    getFilterProducts (page = 1) {
       this.filterProducts = this.allProducts.filter((item) => {
         return (
           (this.filters.title
             ? item.title
-                .toLowerCase()
-                .indexOf(this.filters.title.toLowerCase().trim()) > -1
+              .toLowerCase()
+              .indexOf(this.filters.title.toLowerCase().trim()) > -1
             : true) &&
           (this.filters.brand.length > 0
             ? this.filters.brand.indexOf(item.brand) > -1
@@ -669,104 +669,104 @@ export default {
             ? this.filters.minPrice <= item.price
             : true) &&
           (this.filters.maxPrice ? this.filters.maxPrice >= item.price : true)
-        );
-      });
+        )
+      })
       this.products = this.filterProducts.filter(
         (item, i) => Math.ceil((i + 1) / 12) == page
-      );
-      this.productImages = [];
+      )
+      this.productImages = []
       this.products.forEach((item) => {
-        this.productImages.push(item.imageUrl);
-      });
+        this.productImages.push(item.imageUrl)
+      })
 
       // 頁碼物件處理
       const totalPages = Math.ceil(
         Object.keys(this.filterProducts).length / 12
-      );
+      )
       this.pagination = {
         total_pages: totalPages,
         current_page: page,
-        has_pre: page === 1 ? false : true,
-        has_next: page === totalPages ? false : true,
-      };
+        has_pre: page !== 1,
+        has_next: page !== totalPages
+      }
 
-      this.loadings.fullLoading = false;
+      this.loadings.fullLoading = false
       // console.log(this.products);
     },
     // 切換頁碼
-    changePages(page = 1) {
+    changePages (page = 1) {
       this.products = Object.values(this.filterProducts).filter(
         (item, i) => Math.ceil((i + 1) / 12) == page
-      );
+      )
 
-      this.productImages = [];
+      this.productImages = []
       this.products.forEach((item) => {
-        this.productImages.push(item.imageUrl);
-      });
+        this.productImages.push(item.imageUrl)
+      })
 
-      this.pagination.current_page = page;
-      this.pagination.has_pre = page === 1 ? false : true;
+      this.pagination.current_page = page
+      this.pagination.has_pre = page !== 1
       this.pagination.has_next =
-        page === this.pagination.total_pages ? false : true;
+        page !== this.pagination.total_pages
       // 點擊頁碼後移動到上方
       window.scrollTo({
         top: 400,
-        behavior: "smooth",
-      });
+        behavior: 'smooth'
+      })
     },
-    ...mapActions(favoriteStore, ["updateFavorite"]),
+    ...mapActions(favoriteStore, ['updateFavorite'])
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-    ...mapState(favoriteStore, ["favorites"]),
+    ...mapState(loadingStore, ['loadings']),
+    ...mapState(favoriteStore, ['favorites'])
   },
   watch: {
     filters: {
-      handler() {
+      handler () {
         if (this.filters.minPrice) {
           this.filters.minPrice < 1
             ? (this.filters.minPrice = 1)
-            : this.filters.minPrice;
+            : this.filters.minPrice
         }
         if (this.filters.maxPrice) {
           this.filters.maxPrice < this.filters.minPrice
             ? (this.filters.maxPrice = this.filters.minPrice)
-            : this.filters.maxPrice;
+            : this.filters.maxPrice
         }
       },
-      deep: true,
+      deep: true
     },
     // 點擊 RouterLink 時判斷是否有改變參數
-    "$route.query": {
-      handler() {
-        if (this.$route.fullPath.includes("products")) {
-          this.getAll();
+    '$route.query': {
+      handler () {
+        if (this.$route.fullPath.includes('products')) {
+          this.getAll()
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  mounted() {
-    this.productModal = this.$refs.productModal;
+  mounted () {
+    this.productModal = this.$refs.productModal
 
     // drawer options
     const drawerOptions = {
-      placement: "left",
+      placement: 'left',
       backdrop: true,
       bodyScrolling: false,
       edge: false,
-      edgeOffset: "",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-    };
-    this.filterDrawer = new Drawer(this.$refs.filterDrawer, drawerOptions);
+      edgeOffset: '',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30'
+    }
+    this.filterDrawer = new Drawer(this.$refs.filterDrawer, drawerOptions)
 
-    this.getAll();
+    this.getAll()
   },
   components: {
     Swiper,
     SwiperSlide,
     UserProductModal,
-    ProductsPagination,
-  },
-};
+    ProductsPagination
+  }
+}
 </script>

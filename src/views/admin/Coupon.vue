@@ -129,90 +129,90 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import CouponModal from "@/components/modal/CouponModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import CouponModal from '@/components/modal/CouponModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
-const { VITE_API, VITE_PATH } = import.meta.env;
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       coupons: [],
       pagination: {},
-      couponLoading: [],
-    };
+      couponLoading: []
+    }
   },
   methods: {
-    getCoupons(page = 1, process) {
-      this.loadings.fullLoading = true;
+    getCoupons (page = 1, process) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/admin/coupons?page=${page}`)
         .then((res) => {
           // console.log(res.data);
-          const { coupons, pagination } = res.data;
-          this.coupons = coupons;
-          this.pagination = pagination;
-          this.loadings.fullLoading = false;
+          const { coupons, pagination } = res.data
+          this.coupons = coupons
+          this.pagination = pagination
+          this.loadings.fullLoading = false
 
-          if (process === "update") {
+          if (process === 'update') {
             // Swal
-            this.adminToast("success", "已更新優惠券資料");
-          } else if (process === "delete") {
+            this.adminToast('success', '已更新優惠券資料')
+          } else if (process === 'delete') {
             // SWal
-            this.adminToast("success", `已刪除優惠券資料`);
+            this.adminToast('success', '已刪除優惠券資料')
           }
           // 點擊頁碼後移動到上方
           window.scrollTo({
             top: 0,
-            behavior: "smooth",
-          });
+            behavior: 'smooth'
+          })
         })
         .catch((err) => {
           // console.log(err);
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    updateEnable(coupon) {
-      this.couponLoading.push(coupon.id);
+    updateEnable (coupon) {
+      this.couponLoading.push(coupon.id)
       this.$http
         .put(`${VITE_API}/api/${VITE_PATH}/admin/coupon/${coupon.id}`, {
-          data: coupon,
+          data: coupon
         })
         .then(() => {
           // console.log(res.data);
-          this.couponLoading.shift();
+          this.couponLoading.shift()
           // Swal
-          this.adminToast("success", "已更新啟用狀態");
+          this.adminToast('success', '已更新啟用狀態')
         })
         .catch((err) => {
           // console.log(err);
-          this.couponLoading.shift();
+          this.couponLoading.shift()
           // Swal
-          this.adminToast("error", err.response.data.message);
-          this.getCoupons(this.page.current_page);
-        });
-    },
+          this.adminToast('error', err.response.data.message)
+          this.getCoupons(this.page.current_page)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.couponModal = this.$refs.couponModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getCoupons();
+  mounted () {
+    this.couponModal = this.$refs.couponModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getCoupons()
   },
   components: {
     Pagination,
     CouponModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>

@@ -24,49 +24,49 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import { mapState } from 'pinia'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  data() {
+  data () {
     return {
-      article: {},
-    };
+      article: {}
+    }
   },
   methods: {
-    getArticle(id) {
-      this.$emit("emitId", this.$route.params.id);
-      this.loadings.fullLoading = true;
+    getArticle (id) {
+      this.$emit('emitId', this.$route.params.id)
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/article/${id}`)
         .then((res) => {
           // console.log(res.data);
-          this.article = res.data.article;
-          this.loadings.fullLoading = false;
+          this.article = res.data.article
+          this.loadings.fullLoading = false
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // console.log(err);
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
-    },
+          this.userToast('error', err.response.data.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
   watch: {
     // 在路由發生變化時重新渲染
-    $route(to) {
-      if (to.fullPath.includes("article")) {
-        this.getArticle(this.$route.params.id);
+    $route (to) {
+      if (to.fullPath.includes('article')) {
+        this.getArticle(this.$route.params.id)
       }
-    },
+    }
   },
-  mounted() {
-    this.getArticle(this.$route.params.id);
-  },
-};
+  mounted () {
+    this.getArticle(this.$route.params.id)
+  }
+}
 </script>

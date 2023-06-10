@@ -51,20 +51,20 @@
 
 <script>
 // vue-loading
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
 export default {
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
   components: {
-    Loading,
-  },
-};
+    Loading
+  }
+}
 </script>
 
 <!-- loading css -->

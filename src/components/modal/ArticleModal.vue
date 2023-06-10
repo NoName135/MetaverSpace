@@ -230,126 +230,126 @@
 </template>
 
 <script>
-import UploadImg from "@/components/UploadImg.vue";
+import UploadImg from '@/components/UploadImg.vue'
 
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  props: ["page"],
+  props: ['page'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       isNew: true,
       tempArticle: [],
       editor: ClassicEditor,
       editorConfig: {
         toolbar: [
-          "heading",
-          "bold",
-          "italic",
-          "|",
-          "undo",
-          "redo",
-          "|",
-          "numberedList",
-          "bulletedList",
-          "|",
-          "link",
-        ],
+          'heading',
+          'bold',
+          'italic',
+          '|',
+          'undo',
+          'redo',
+          '|',
+          'numberedList',
+          'bulletedList',
+          '|',
+          'link'
+        ]
       },
-      content: "預設文章摘要",
-      description: "預設詳細內容",
-      tag: [],
-    };
+      content: '預設文章摘要',
+      description: '預設詳細內容',
+      tag: []
+    }
   },
   methods: {
-    openModal(type, id) {
-      if (type === "new") {
-        this.isNew = true;
+    openModal (type, id) {
+      if (type === 'new') {
+        this.isNew = true
         this.tempArticle = {
           create_at: Date.now() / 1000,
           tag: [],
-          isPublic: false,
-        };
-        this.articleModal.show();
+          isPublic: false
+        }
+        this.articleModal.show()
       } else {
-        this.isNew = false;
-        this.loadings.fullLoading = true;
+        this.isNew = false
+        this.loadings.fullLoading = true
         this.$http
           .get(`${VITE_API}/api/${VITE_PATH}/admin/article/${id}`)
           .then((res) => {
             // console.log(res.data);
-            const article = res.data.article;
+            const article = res.data.article
             this.tempArticle.tag
               ? (this.tempArticle = { ...article })
-              : (this.tempArticle = { ...article, tag: [] });
-            this.articleModal.show();
-            this.loadings.fullLoading = false;
+              : (this.tempArticle = { ...article, tag: [] })
+            this.articleModal.show()
+            this.loadings.fullLoading = false
           })
           .catch((err) => {
             // console.log(err);
-            this.loadings.fullLoading = false;
+            this.loadings.fullLoading = false
             // Swal
-            this.adminToast("error", err.response.data.message);
-          });
+            this.adminToast('error', err.response.data.message)
+          })
       }
       // modal 移到最上方
-      this.$refs.articleModal.scrollTop = 0;
+      this.$refs.articleModal.scrollTop = 0
     },
     // 更新貼文資料
-    updateArticle() {
-      let httpVerb = "post";
-      let url = `${VITE_API}/api/${VITE_PATH}/admin/article`;
+    updateArticle () {
+      let httpVerb = 'post'
+      let url = `${VITE_API}/api/${VITE_PATH}/admin/article`
 
       if (!this.isNew) {
-        httpVerb = "put";
-        url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempArticle.id}`;
+        httpVerb = 'put'
+        url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempArticle.id}`
       }
 
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       this.$http[httpVerb](url, {
-        data: this.tempArticle,
+        data: this.tempArticle
       })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateArticles", this.page, "update");
-          this.articleModal.hide();
+          this.$emit('updateArticles', this.page, 'update')
+          this.articleModal.hide()
         })
         .catch((err) => {
           // console.log(err);
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    changeImage(index, target, imgUrl) {
+    changeImage (index, target, imgUrl) {
       // console.log(index, target, imgUrl);
-      this.tempArticle.image = imgUrl;
-    },
+      this.tempArticle.image = imgUrl
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.articleModal = new Modal(this.$refs.articleModal, modalOptions);
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.articleModal = new Modal(this.$refs.articleModal, modalOptions)
   },
   components: {
-    UploadImg,
-  },
-};
+    UploadImg
+  }
+}
 </script>

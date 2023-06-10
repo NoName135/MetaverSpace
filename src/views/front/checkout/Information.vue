@@ -258,59 +258,59 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
-import cartStore from "@/stores/cartStore.js";
-import { mapActions, mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import cartStore from '@/stores/cartStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  emits: ["emit-step"],
+  emits: ['emit-step'],
   mixins: [swalMixin],
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
-    createOrder(values) {
-      this.loadings.fullLoading = true;
+    createOrder (values) {
+      this.loadings.fullLoading = true
       this.$http
         .post(`${VITE_API}/api/${VITE_PATH}/order`, {
           data: {
             user: {
-              name: values["姓名"].trim(),
-              email: values["email"],
-              tel: values["電話"],
-              address: values["地址"].trim(),
-              pay: values["付款方式"],
+              name: values['姓名'].trim(),
+              email: values.email,
+              tel: values['電話'],
+              address: values['地址'].trim(),
+              pay: values['付款方式']
             },
-            message: values["留言"],
-          },
+            message: values['留言']
+          }
         })
         .then((res) => {
           // console.log(res.data)
           // this.$refs.form.resetForm();
-          this.loadings.fullLoading = false;
-          this.getCart();
-          //Swal
-          this.userToast("success", res.data.message);
-          this.$router.replace(`/checkout/check/${res.data.orderId}`);
+          this.loadings.fullLoading = false
+          this.getCart()
+          // Swal
+          this.userToast('success', res.data.message)
+          this.$router.replace(`/checkout/check/${res.data.orderId}`)
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          //Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.loadings.fullLoading = false
+          // Swal
+          this.userToast('error', err.response.data.message)
+        })
     },
-    ...mapActions(cartStore, ["getCart"]),
+    ...mapActions(cartStore, ['getCart'])
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-    ...mapState(cartStore, ["cart"]),
+    ...mapState(loadingStore, ['loadings']),
+    ...mapState(cartStore, ['cart'])
   },
-  mounted() {
-    this.$emit("emit-step", 1);
-  },
-};
+  mounted () {
+    this.$emit('emit-step', 1)
+  }
+}
 </script>

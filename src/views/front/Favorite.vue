@@ -128,52 +128,52 @@
 </template>
 
 <script>
-import favoriteStore from "@/stores/favoriteStore.js";
-import cartStore from "@/stores/cartStore.js";
-import { mapActions, mapState } from "pinia";
+import favoriteStore from '@/stores/favoriteStore.js'
+import cartStore from '@/stores/cartStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
 export default {
   mixins: [swalMixin],
   methods: {
-    moveToCart(favorite, spec) {
+    moveToCart (favorite, spec) {
       if (
         this.cart.carts.some((item) => {
-          return item.product_id === favorite.id;
+          return item.product_id === favorite.id
         })
       ) {
         // Swal
-        this.userToast("warning", "此商品已在購物車");
+        this.userToast('warning', '此商品已在購物車')
       } else {
-        this.addCart(favorite, 1, spec);
+        this.addCart(favorite, 1, spec)
       }
     },
-    deleteFavorite(item) {
+    deleteFavorite (item) {
       this.$swal
         .fire({
-          title: "刪除收藏商品",
+          title: '刪除收藏商品',
           text: `確定要刪除 ${item.title}？`,
-          icon: "warning",
-          confirmButtonColor: "#FE5F50",
-          confirmButtonText: "確定刪除",
-          backdrop: " rgba(0,0,0,0.8)",
+          icon: 'warning',
+          confirmButtonColor: '#FE5F50',
+          confirmButtonText: '確定刪除',
+          backdrop: ' rgba(0,0,0,0.8)',
           showCancelButton: true,
-          cancelButtonColor: "#6b7280",
+          cancelButtonColor: '#6b7280'
         })
         .then((result) => {
           if (result.isConfirmed) {
-            this.updateFavorite(item);
+            this.updateFavorite(item)
           }
-        });
+        })
     },
-    ...mapActions(favoriteStore, ["getFavorite", "updateFavorite"]),
-    ...mapActions(cartStore, ["addCart"]),
+    ...mapActions(favoriteStore, ['getFavorite', 'updateFavorite']),
+    ...mapActions(cartStore, ['addCart'])
   },
   computed: {
-    ...mapState(favoriteStore, ["favorites", "cart_specs"]),
-    ...mapState(cartStore, ["cartLoading", "cart"]),
+    ...mapState(favoriteStore, ['favorites', 'cart_specs']),
+    ...mapState(cartStore, ['cartLoading', 'cart'])
   },
-  mounted() {},
-};
+  mounted () {}
+}
 </script>

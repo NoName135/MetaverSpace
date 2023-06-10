@@ -90,29 +90,29 @@
 </template>
 
 <script>
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
 export default {
-  data() {
+  data () {
     return {
-      tempContact: {},
-    };
+      tempContact: {}
+    }
   },
   methods: {
-    openModal(contact) {
-      this.tempContact = { ...contact };
-      this.contactModal.show();
-    },
+    openModal (contact) {
+      this.tempContact = { ...contact }
+      this.contactModal.show()
+    }
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "dynamic",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.contactModal = new Modal(this.$refs.contactModal, modalOptions);
-  },
-};
+      placement: 'center',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.contactModal = new Modal(this.$refs.contactModal, modalOptions)
+  }
+}
 </script>

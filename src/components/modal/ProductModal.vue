@@ -438,221 +438,221 @@
   </div>
 </template>
 <script>
-import UploadImg from "@/components/UploadImg.vue";
+import UploadImg from '@/components/UploadImg.vue'
 
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
-import Multiselect from "vue-multiselect";
+import swalMixin from '@/mixins/swal.js'
+import Multiselect from 'vue-multiselect'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  props: ["page", "accessories"],
+  props: ['page', 'accessories'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       isNew: true,
       tempProduct: {},
       isNewAccessory: false,
-      accessoryPlaceholder: "",
+      accessoryPlaceholder: '',
       accessoryDisable: false,
       accessoryOptions: [],
       // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v3.html#editor
       editor: ClassicEditor,
       descriptionConfig: {
         toolbar: [
-          "heading",
-          "bold",
-          "italic",
-          "|",
-          "undo",
-          "redo",
-          "|",
-          "numberedList",
-          "bulletedList",
-          "|",
-          "link",
-        ],
+          'heading',
+          'bold',
+          'italic',
+          '|',
+          'undo',
+          'redo',
+          '|',
+          'numberedList',
+          'bulletedList',
+          '|',
+          'link'
+        ]
       },
       contentConfig: {
         toolbar: [
-          "heading",
-          "bold",
-          "italic",
-          "|",
-          "undo",
-          "redo",
-          "|",
-          "numberedList",
-          "bulletedList",
-          "outdent",
-          "indent",
-          "|",
-          "link",
-          "insertTable",
-        ],
-      },
-    };
+          'heading',
+          'bold',
+          'italic',
+          '|',
+          'undo',
+          'redo',
+          '|',
+          'numberedList',
+          'bulletedList',
+          'outdent',
+          'indent',
+          '|',
+          'link',
+          'insertTable'
+        ]
+      }
+    }
   },
   methods: {
-    openModal(type, item) {
-      if (type === "new") {
-        this.isNew = true;
+    openModal (type, item) {
+      if (type === 'new') {
+        this.isNew = true
         this.tempProduct = {
           imagesUrl: [],
-          category: "",
-          unit: "件",
+          category: '',
+          unit: '件',
           spec: [],
           accessory: [],
           contentImages: [],
-          is_enabled: 0,
-        };
-        this.productModal.show();
+          is_enabled: 0
+        }
+        this.productModal.show()
       } else {
-        this.isNewAccessory = true; // 避免 watch tempProduct.brand 清空
-        this.isNew = false;
-        this.tempProduct = { ...item };
+        this.isNewAccessory = true // 避免 watch tempProduct.brand 清空
+        this.isNew = false
+        this.tempProduct = { ...item }
         if (!this.tempProduct.imagesUrl) {
-          this.tempProduct.imagesUrl = [];
+          this.tempProduct.imagesUrl = []
         }
         if (!this.tempProduct.spec) {
-          this.tempProduct.spec = [];
+          this.tempProduct.spec = []
         }
         if (!this.tempProduct.accessory) {
-          this.tempProduct.accessory = [];
+          this.tempProduct.accessory = []
         }
         if (!this.tempProduct.contentImages) {
-          this.tempProduct.contentImages = [];
+          this.tempProduct.contentImages = []
         }
 
-        this.productModal.show();
+        this.productModal.show()
       }
       // modal 移到最上方
-      this.$refs.productModal.scrollTop = 0;
-      this.changeAccessory();
+      this.$refs.productModal.scrollTop = 0
+      this.changeAccessory()
     },
     // 更新產品資料
-    updateProduct() {
-      let httpVerb = "post";
-      let url = `${VITE_API}/api/${VITE_PATH}/admin/product`;
+    updateProduct () {
+      let httpVerb = 'post'
+      let url = `${VITE_API}/api/${VITE_PATH}/admin/product`
 
       if (!this.isNew) {
-        httpVerb = "put";
-        url = `${VITE_API}/api/${VITE_PATH}/admin/product/${this.tempProduct.id}`;
+        httpVerb = 'put'
+        url = `${VITE_API}/api/${VITE_PATH}/admin/product/${this.tempProduct.id}`
       }
 
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       this.$http[httpVerb](url, {
-        data: this.tempProduct,
+        data: this.tempProduct
       })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateProducts", this.page, "update");
-          this.productModal.hide();
-          this.tempProduct.brand = ""; // 重置 watch tempProduct.brand
+          this.$emit('updateProducts', this.page, 'update')
+          this.productModal.hide()
+          this.tempProduct.brand = '' // 重置 watch tempProduct.brand
         })
         .catch((err) => {
           // console.log(err);
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
     // 判斷上傳到主要圖片、多圖區塊或詳細內容圖庫
-    changeImage(index, target, imgUrl) {
+    changeImage (index, target, imgUrl) {
       // console.log(index, target, imgUrl);
-      if (target === "imageUrl") {
-        this.tempProduct[target] = imgUrl;
-      } else if (target === "imagesUrl") {
-        this.tempProduct[target][index] = imgUrl;
+      if (target === 'imageUrl') {
+        this.tempProduct[target] = imgUrl
+      } else if (target === 'imagesUrl') {
+        this.tempProduct[target][index] = imgUrl
       } else {
-        this.tempProduct[target][index] = imgUrl;
+        this.tempProduct[target][index] = imgUrl
       }
       // 主要圖片變更之外 modal 移到最下方
-      if (target !== "imageUrl") {
+      if (target !== 'imageUrl') {
         this.$refs.productModal.scrollTo({
-          top: this.$refs.productModal.scrollHeight,
+          top: this.$refs.productModal.scrollHeight
           // behavior: "smooth",
-        });
+        })
       }
     },
-    changeAccessory() {
-      this.accessoryOptions = [];
+    changeAccessory () {
+      this.accessoryOptions = []
       this.accessories.forEach((item) => {
         if (
           item.brand.toLowerCase() === this.tempProduct.brand?.toLowerCase()
         ) {
-          this.accessoryOptions.push({ id: item.id, name: item.title });
+          this.accessoryOptions.push({ id: item.id, name: item.title })
         }
-      });
-    },
+      })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
   watch: {
-    "tempProduct.brand"() {
+    'tempProduct.brand' () {
       // 確認配件是否存在
       this.tempProduct.accessory.forEach((item, i) => {
         if (!this.accessories.some((data) => data.id === item.id)) {
-          this.tempProduct.accessory.splice(i, 1);
+          this.tempProduct.accessory.splice(i, 1)
           // 判斷 modal 是否為開啟狀態 (開啟 modal 才會傳入 accessories)
           if (this.accessories.length > 0) {
             this.adminAlert(
-              "warning",
-              "請更新商品",
-              "已刪除不存在的配件，請記得點擊確認更新商品資訊！"
-            );
+              'warning',
+              '請更新商品',
+              '已刪除不存在的配件，請記得點擊確認更新商品資訊！'
+            )
           }
         }
-      });
+      })
       // 如果有在 modal 變更 brand，將清空 accessory
       if (!this.isNewAccessory) {
-        this.tempProduct.accessory = [];
+        this.tempProduct.accessory = []
       }
-      this.isNewAccessory = false;
+      this.isNewAccessory = false
     },
     tempProduct: {
-      handler() {
+      handler () {
         if (!this.tempProduct.brand || !this.tempProduct.category) {
-          this.accessoryPlaceholder = "請先輸入品牌及類別";
-          this.accessoryDisable = true;
+          this.accessoryPlaceholder = '請先輸入品牌及類別'
+          this.accessoryDisable = true
         } else {
-          this.accessoryPlaceholder = "關鍵字搜尋";
-          this.accessoryDisable = false;
+          this.accessoryPlaceholder = '關鍵字搜尋'
+          this.accessoryDisable = false
         }
 
         if (this.tempProduct.origin_price < 1) {
-          this.tempProduct.origin_price = null;
+          this.tempProduct.origin_price = null
         }
         if (this.tempProduct.price > this.tempProduct.origin_price) {
-          this.tempProduct.price = this.tempProduct.origin_price;
+          this.tempProduct.price = this.tempProduct.origin_price
         }
       },
-      deep: true,
+      deep: true
       // immediate: true,
-    },
+    }
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.productModal = new Modal(this.$refs.productModal, modalOptions);
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.productModal = new Modal(this.$refs.productModal, modalOptions)
   },
   components: {
     UploadImg,
-    Multiselect,
-  },
-};
+    Multiselect
+  }
+}
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

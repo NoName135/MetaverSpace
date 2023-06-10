@@ -45,60 +45,60 @@
 </template>
 
 <script>
-import titleImg from "@/assets/images/title.jpg";
-import titleIcon from "@/assets/images/controller.png";
+import titleImg from '@/assets/images/title.jpg'
+import titleIcon from '@/assets/images/controller.png'
 
-import gsapMixin from "@/mixins/gsap.js";
+import gsapMixin from '@/mixins/gsap.js'
 
 export default {
-  props: ["loading"],
+  props: ['loading'],
   mixins: [gsapMixin],
-  data() {
+  data () {
     return {
-      title: "MetaverSpace",
-      titleImg: titleImg,
-      titleIcon: titleIcon,
-    };
+      title: 'MetaverSpace',
+      titleImg,
+      titleIcon
+    }
   },
   methods: {
-    gsapTitle() {
+    gsapTitle () {
       const indexTitle = this.gsap.timeline({
         scrollTrigger: {
           trigger: this.$refs.indexTitle,
-          start: "top 50%",
-          toggleActions: "play none none none",
+          start: 'top 50%',
+          toggleActions: 'play none none none'
           // markers: true,
-        },
-      });
-      this.title.split("").forEach((split, i) => {
+        }
+      })
+      this.title.split('').forEach((split, i) => {
         indexTitle.from(
           this.$refs[`split${i}`],
           {
             yPercent: -100,
             opacity: 0,
-            ease: "expo",
+            ease: 'expo',
             duration: 0.8,
-            delay: 0.1,
+            delay: 0.1
           },
-          "<"
-        );
-      });
+          '<'
+        )
+      })
       indexTitle.from(
         this.$refs.text,
-        { yPercent: 100, opacity: 0, ease: "back", duration: 0.8, delay: 0.3 },
-        "<"
-      );
+        { yPercent: 100, opacity: 0, ease: 'back', duration: 0.8, delay: 0.3 },
+        '<'
+      )
       indexTitle.from(
         this.$refs.scrollDown,
-        { y: 500, opacity: 0, ease: "back", duration: 0.8, delay: 0.5 },
-        "<"
-      );
-    },
+        { y: 500, opacity: 0, ease: 'back', duration: 0.8, delay: 0.5 },
+        '<'
+      )
+    }
   },
   watch: {
-    loading() {
-      this.gsapTitle();
-    },
-  },
-};
+    loading () {
+      this.gsapTitle()
+    }
+  }
+}
 </script>

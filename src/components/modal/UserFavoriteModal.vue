@@ -104,48 +104,48 @@
 </template>
 <script>
 // import flowbite components
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import favoriteStore from "@/stores/favoriteStore.js";
-import cartStore from "@/stores/cartStore.js";
-import { mapActions, mapState } from "pinia";
+import favoriteStore from '@/stores/favoriteStore.js'
+import cartStore from '@/stores/cartStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
 export default {
   mixins: [swalMixin],
   methods: {
-    openModal() {
-      this.favoriteModal.show();
+    openModal () {
+      this.favoriteModal.show()
     },
-    moveToCart(favorite, spec) {
+    moveToCart (favorite, spec) {
       if (
         this.cart.carts.some((item) => {
-          return item.product_id === favorite.id;
+          return item.product_id === favorite.id
         })
       ) {
         // Swal
-        this.userToast("warning", "此商品已在購物車");
+        this.userToast('warning', '此商品已在購物車')
       } else {
-        this.addCart(favorite, 1, spec);
+        this.addCart(favorite, 1, spec)
       }
     },
-    ...mapActions(favoriteStore, ["getFavorite", "updateFavorite"]),
-    ...mapActions(cartStore, ["addCart"]),
+    ...mapActions(favoriteStore, ['getFavorite', 'updateFavorite']),
+    ...mapActions(cartStore, ['addCart'])
   },
   computed: {
-    ...mapState(favoriteStore, ["favorites", "cart_specs"]),
-    ...mapState(cartStore, ["cartLoading", "cart"]),
+    ...mapState(favoriteStore, ['favorites', 'cart_specs']),
+    ...mapState(cartStore, ['cartLoading', 'cart'])
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "top-center",
-      backdrop: "dynamic",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-40",
-      closable: true,
-    };
-    this.favoriteModal = new Modal(this.$refs.favoriteModal, modalOptions);
-  },
-};
+      placement: 'top-center',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-40',
+      closable: true
+    }
+    this.favoriteModal = new Modal(this.$refs.favoriteModal, modalOptions)
+  }
+}
 </script>

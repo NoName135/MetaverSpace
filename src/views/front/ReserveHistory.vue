@@ -97,55 +97,55 @@
 </template>
 
 <script>
-import ReserveDetail from "@/components/ReserveDetail.vue";
+import ReserveDetail from '@/components/ReserveDetail.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       searchLoading: false,
       reserves: [],
-      filterReserves: [],
-    };
+      filterReserves: []
+    }
   },
   methods: {
-    getReserves(values) {
-      const name = values["姓名"].trim();
-      const info = values["電話或Email"].trim();
+    getReserves (values) {
+      const name = values['姓名'].trim()
+      const info = values['電話或Email'].trim()
 
-      this.searchLoading = true;
+      this.searchLoading = true
       this.$http
         .get(`${VITE_RENDER_API}/reserves`)
         .then((res) => {
           // console.log(res.data);
-          this.reserves = res.data;
+          this.reserves = res.data
           this.filterReserves = this.reserves.filter((item) => {
             return (
               item.name === name && (item.email === info || item.tel === info)
-            );
-          });
-          this.searchLoading = false;
+            )
+          })
+          this.searchLoading = false
         })
         .catch((err) => {
-          this.searchLoading = false;
-          //Swal
-          this.userToast("error", err.message);
-        });
+          this.searchLoading = false
+          // Swal
+          this.userToast('error', err.message)
+        })
     },
-    updateReserves(id) {
+    updateReserves (id) {
       this.filterReserves = this.filterReserves.filter((item) => {
-        return item.id !== id;
-      });
+        return item.id !== id
+      })
       // Swal
-      this.userToast("success", "取消預約成功");
-    },
+      this.userToast('success', '取消預約成功')
+    }
   },
   components: {
-    ReserveDetail,
-  },
-};
+    ReserveDetail
+  }
+}
 </script>

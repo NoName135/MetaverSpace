@@ -256,90 +256,90 @@
 </template>
 
 <script>
-import { Collapse, Modal } from "flowbite";
+import { Collapse, Modal } from 'flowbite'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  props: ["page"],
+  props: ['page'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       tempOrder: { user: {}, products: {} },
-      discount: 0,
-    };
+      discount: 0
+    }
   },
   methods: {
-    openModal(item) {
-      this.detailCollapse.collapse();
-      this.tempOrder = JSON.parse(JSON.stringify(item));
+    openModal (item) {
+      this.detailCollapse.collapse()
+      this.tempOrder = JSON.parse(JSON.stringify(item))
       this.discount = Object.values(this.tempOrder.products).reduce(
         (acc, cur) => {
-          return acc + (cur.total - cur.final_total);
+          return acc + (cur.total - cur.final_total)
         },
         0
-      );
-      this.orderModal.show();
+      )
+      this.orderModal.show()
       // modal 移到最上方
-      this.$refs.orderModal.scrollTop = 0;
+      this.$refs.orderModal.scrollTop = 0
     },
     // 更新產品資料
-    updateOrder() {
-      this.loadings.fullLoading = true;
+    updateOrder () {
+      this.loadings.fullLoading = true
       this.$http
         .put(`${VITE_API}/api/${VITE_PATH}/admin/order/${this.tempOrder.id}`, {
-          data: this.tempOrder,
+          data: this.tempOrder
         })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateOrders", this.page);
-          this.orderModal.hide();
+          this.$emit('updateOrders', this.page)
+          this.orderModal.hide()
         })
         .catch((err) => {
           // console.log(err);
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
-    },
+          this.adminToast('error', err.response.data.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // collapse options
     const detailCollapseOptions = {
       onToggle: function (item) {
         if (item._visible) {
           item._triggerEl
-            .querySelector("[data-accordion-icon]")
-            .classList.add("-rotate-180");
+            .querySelector('[data-accordion-icon]')
+            .classList.add('-rotate-180')
         } else {
           item._triggerEl
-            .querySelector("[data-accordion-icon]")
-            .classList.remove("-rotate-180");
+            .querySelector('[data-accordion-icon]')
+            .classList.remove('-rotate-180')
         }
-      },
-    };
+      }
+    }
     this.detailCollapse = new Collapse(
       this.$refs.detailCollapseMenu,
       this.$refs.detailCollapseBtn,
       detailCollapseOptions
-    );
-    this.detailCollapse.collapse();
+    )
+    this.detailCollapse.collapse()
 
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.orderModal = new Modal(this.$refs.orderModal, modalOptions);
-  },
-};
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.orderModal = new Modal(this.$refs.orderModal, modalOptions)
+  }
+}
 </script>

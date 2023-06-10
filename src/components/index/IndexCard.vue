@@ -157,161 +157,161 @@
 
 <script>
 // import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue'
 // import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
 // import Swiper required modules
-import { Navigation } from "swiper";
+import { Navigation } from 'swiper'
 
-import gsapMixin from "@/mixins/gsap.js";
+import gsapMixin from '@/mixins/gsap.js'
 
-import game from "@/assets/images/cards/game.png";
-import sport from "@/assets/images/cards/sport.png";
-import movie from "@/assets/images/cards/movie.png";
-import active from "@/assets/images/cards/active.png";
-import social from "@/assets/images/cards/social.png";
-import work from "@/assets/images/cards/work.png";
-import study from "@/assets/images/cards/study.png";
+import game from '@/assets/images/cards/game.png'
+import sport from '@/assets/images/cards/sport.png'
+import movie from '@/assets/images/cards/movie.png'
+import active from '@/assets/images/cards/active.png'
+import social from '@/assets/images/cards/social.png'
+import work from '@/assets/images/cards/work.png'
+import study from '@/assets/images/cards/study.png'
 
 export default {
   mixins: [gsapMixin],
-  data() {
+  data () {
     return {
       cardModules: [Navigation],
       cards: [
         {
           img: game,
-          text: "遊戲",
+          text: '遊戲',
           description:
-            "提供上百款多人和更多類型的遊戲，在前所未有的環境中享受無與倫比的自由。",
-          flipCard: "",
+            '提供上百款多人和更多類型的遊戲，在前所未有的環境中享受無與倫比的自由。',
+          flipCard: ''
         },
         {
           img: sport,
-          text: "運動",
+          text: '運動',
           description:
-            "體驗各種室內或戶外運動，不再被距離、天氣或是其他意外狀況影響訓練。",
-          flipCard: "",
+            '體驗各種室內或戶外運動，不再被距離、天氣或是其他意外狀況影響訓練。',
+          flipCard: ''
         },
         {
           img: movie,
-          text: "電影",
+          text: '電影',
           description:
-            "和朋友一起觀看電影、紀錄片、綜藝或各種節目，宛如與大家同處一室。",
-          flipCard: "",
+            '和朋友一起觀看電影、紀錄片、綜藝或各種節目，宛如與大家同處一室。',
+          flipCard: ''
         },
         {
           img: active,
-          text: "活動",
+          text: '活動',
           description:
-            "觀看各種表演、體育賽事、唱歌或是參加派對，朋友在世界各地也可同聚狂歡。",
-          flipCard: "",
+            '觀看各種表演、體育賽事、唱歌或是參加派對，朋友在世界各地也可同聚狂歡。',
+          flipCard: ''
         },
         {
           img: social,
-          text: "社交",
+          text: '社交',
           description:
-            "聯絡親友的方式變得更加有趣，社群應用或多人遊戲，隨時隨地與朋友同樂。",
-          flipCard: "",
+            '聯絡親友的方式變得更加有趣，社群應用或多人遊戲，隨時隨地與朋友同樂。',
+          flipCard: ''
         },
         {
           img: work,
-          text: "工作",
+          text: '工作',
           description:
-            "在世界各地相聚開會，或是使用可縮放畫面多工處理，讓工作變的方便有趣。",
-          flipCard: "",
+            '在世界各地相聚開會，或是使用可縮放畫面多工處理，讓工作變的方便有趣。',
+          flipCard: ''
         },
         {
           img: study,
-          text: "學習",
+          text: '學習',
           description:
-            "提供安全、符合成本的環境來學習真實情境，遇到任何失敗都可以重新來過。",
-          flipCard: "",
-        },
-      ],
-    };
+            '提供安全、符合成本的環境來學習真實情境，遇到任何失敗都可以重新來過。',
+          flipCard: ''
+        }
+      ]
+    }
   },
   methods: {
-    gsapMoveCards() {
+    gsapMoveCards () {
       const moveCard = this.gsap.timeline({
         scrollTrigger: {
           trigger: this.$refs.indexCards,
           scrub: true,
           pin: true,
-          start: "top 64px",
-          end: "bottom -300%",
+          start: 'top 64px',
+          end: 'bottom -300%'
           // markers: true,
-        },
-      });
+        }
+      })
 
       this.ScrollTrigger.matchMedia({
-        "(max-width: 767px)": () => {
+        '(max-width: 767px)': () => {
           this.gsap.from(this.$refs.swiperCards, {
             scrollTrigger: {
               trigger: this.$refs.swiperCards,
-              start: "top 75%",
-              toggleActions: "play none none none",
+              start: 'top 75%',
+              toggleActions: 'play none none none'
               // markers: true,
             },
             y: 100,
             opacity: 0,
-            ease: "back",
-            duration: 0.8,
-          });
+            ease: 'back',
+            duration: 0.8
+          })
         },
-        "(min-width: 768px) and (max-width: 975px)": () => {
-          moveCard.from(this.$refs.card0, { xPercent: "150" });
-          moveCard.from(this.$refs.card1, { xPercent: "250" });
-          moveCard.from(this.$refs.card2, { xPercent: "250" }, "<");
-          moveCard.from(this.$refs.card3, { xPercent: "250" });
-          moveCard.from(this.$refs.card4, { xPercent: "250" }, "<");
-          moveCard.from(this.$refs.card5, { xPercent: "250" });
-          moveCard.from(this.$refs.card6, { xPercent: "250" }, "<");
+        '(min-width: 768px) and (max-width: 975px)': () => {
+          moveCard.from(this.$refs.card0, { xPercent: '150' })
+          moveCard.from(this.$refs.card1, { xPercent: '250' })
+          moveCard.from(this.$refs.card2, { xPercent: '250' }, '<')
+          moveCard.from(this.$refs.card3, { xPercent: '250' })
+          moveCard.from(this.$refs.card4, { xPercent: '250' }, '<')
+          moveCard.from(this.$refs.card5, { xPercent: '250' })
+          moveCard.from(this.$refs.card6, { xPercent: '250' }, '<')
         },
-        "(min-width: 976px)": () => {
-          moveCard.from(this.$refs.card0, { xPercent: "350" });
-          moveCard.from(this.$refs.card1, { xPercent: "350" }, "<");
-          moveCard.from(this.$refs.card2, { xPercent: "350" }, "<");
-          moveCard.from(this.$refs.card3, { xPercent: "450" });
-          moveCard.from(this.$refs.card4, { xPercent: "450" }, "<");
-          moveCard.from(this.$refs.card5, { xPercent: "450" }, "<");
-          moveCard.from(this.$refs.card6, { xPercent: "450" }, "<");
-        },
-      });
+        '(min-width: 976px)': () => {
+          moveCard.from(this.$refs.card0, { xPercent: '350' })
+          moveCard.from(this.$refs.card1, { xPercent: '350' }, '<')
+          moveCard.from(this.$refs.card2, { xPercent: '350' }, '<')
+          moveCard.from(this.$refs.card3, { xPercent: '450' })
+          moveCard.from(this.$refs.card4, { xPercent: '450' }, '<')
+          moveCard.from(this.$refs.card5, { xPercent: '450' }, '<')
+          moveCard.from(this.$refs.card6, { xPercent: '450' }, '<')
+        }
+      })
     },
-    gsapFlipCards() {
+    gsapFlipCards () {
       this.cards.forEach((card, i) => {
         this.gsap.set(this.$refs[`card${i}`], {
-          transformStyle: "preserve-3d",
-          transformPerspective: 800,
-        });
-        const q = this.gsap.utils.selector(this.$refs[`card${i}`]);
-        this.gsap.set(q(this.$refs[`cardBack${i}`]), { rotationY: -180 });
+          transformStyle: 'preserve-3d',
+          transformPerspective: 800
+        })
+        const q = this.gsap.utils.selector(this.$refs[`card${i}`])
+        this.gsap.set(q(this.$refs[`cardBack${i}`]), { rotationY: -180 })
         this.cards[i].flipCard = this.gsap
           .timeline({ paused: true })
           .to(q(this.$refs[`cardFront${i}`]), { duration: 1, rotationY: 180 })
           .to(q(this.$refs[`cardBack${i}`]), { duration: 1, rotationY: 0 }, 0)
           .to(this.$refs[`card${i}`], { z: 50 }, 0)
-          .to(this.$refs[`card${i}`], { z: 0 }, 0.5);
-      });
+          .to(this.$refs[`card${i}`], { z: 0 }, 0.5)
+      })
     },
-    playCard(target) {
-      this.cards[target].flipCard.play();
+    playCard (target) {
+      this.cards[target].flipCard.play()
     },
-    reverseCard(target) {
-      this.cards[target].flipCard.reverse();
-    },
+    reverseCard (target) {
+      this.cards[target].flipCard.reverse()
+    }
   },
-  mounted() {
-    this.gsapMoveCards();
-    this.gsapFlipCards();
+  mounted () {
+    this.gsapMoveCards()
+    this.gsapFlipCards()
   },
   components: {
     Swiper,
-    SwiperSlide,
-  },
-};
+    SwiperSlide
+  }
+}
 </script>
 
 <style>

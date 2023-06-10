@@ -294,101 +294,101 @@
 </template>
 
 <script>
-import UserFavoriteModal from "@/components/modal/UserFavoriteModal.vue";
+import UserFavoriteModal from '@/components/modal/UserFavoriteModal.vue'
 
-import loadingStore from "@/stores/loadingStore.js";
-import cartStore from "@/stores/cartStore.js";
-import favoriteStore from "@/stores/favoriteStore.js";
-import { mapActions, mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import cartStore from '@/stores/cartStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
-      coupon: "",
-    };
+      coupon: ''
+    }
   },
   methods: {
-    deleteAlert(item, i) {
-      let spec = "";
+    deleteAlert (item, i) {
+      let spec = ''
       if (i >= 0) {
-        spec = `(${item.cart_spec[i].title})`;
+        spec = `(${item.cart_spec[i].title})`
       }
       this.$swal
         .fire({
-          title: "刪除購物車商品",
+          title: '刪除購物車商品',
           text: `確定要刪除 ${item.product.title} ${spec}？`,
-          icon: "warning",
-          confirmButtonColor: "#FE5F50",
-          confirmButtonText: "確定刪除",
-          backdrop: " rgba(0,0,0,0.8)",
+          icon: 'warning',
+          confirmButtonColor: '#FE5F50',
+          confirmButtonText: '確定刪除',
+          backdrop: ' rgba(0,0,0,0.8)',
           showCancelButton: true,
-          cancelButtonColor: "#6b7280",
+          cancelButtonColor: '#6b7280'
         })
         .then((result) => {
           if (result.isConfirmed) {
             if (i >= 0) {
-              this.deleteCartSpec(item, i);
+              this.deleteCartSpec(item, i)
             } else {
-              this.deleteCart(item.id);
+              this.deleteCart(item.id)
             }
           }
-        });
+        })
     },
-    async moveToFavorite(id, product) {
+    async moveToFavorite (id, product) {
       if (
         this.favorites.some((item) => {
-          return item.id === product.id;
+          return item.id === product.id
         })
       ) {
-        this.userToast("warning", "商品已在收藏清單");
+        this.userToast('warning', '商品已在收藏清單')
       } else {
-        await this.deleteCart(id);
-        this.updateFavorite(product);
+        await this.deleteCart(id)
+        this.updateFavorite(product)
       }
     },
-    addCoupon() {
+    addCoupon () {
       this.$http
         .post(`${VITE_API}/api/${VITE_PATH}/coupon`, {
           data: {
-            code: this.coupon,
-          },
+            code: this.coupon
+          }
         })
         .then((res) => {
           // console.log(res.data);
-          this.userToast("success", res.data.message);
-          this.getCart();
+          this.userToast('success', res.data.message)
+          this.getCart()
         })
         .catch((err) => {
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
     },
     ...mapActions(cartStore, [
-      "getCart",
-      "updateCart",
-      "updateCartSpec",
-      "deleteCart",
-      "deleteCartSpec",
+      'getCart',
+      'updateCart',
+      'updateCartSpec',
+      'deleteCart',
+      'deleteCartSpec'
     ]),
-    ...mapActions(favoriteStore, ["updateFavorite"]),
+    ...mapActions(favoriteStore, ['updateFavorite'])
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-    ...mapState(cartStore, ["cart", "cartLoading"]),
-    ...mapState(favoriteStore, ["favorites"]),
+    ...mapState(loadingStore, ['loadings']),
+    ...mapState(cartStore, ['cart', 'cartLoading']),
+    ...mapState(favoriteStore, ['favorites'])
   },
-  mounted() {
-    this.favoriteModal = this.$refs.favoriteModal;
+  mounted () {
+    this.favoriteModal = this.$refs.favoriteModal
     if (this.cart.carts?.length) {
-      this.coupon = this.cart.carts[0].coupon?.code || "";
+      this.coupon = this.cart.carts[0].coupon?.code || ''
     }
   },
   components: {
-    UserFavoriteModal,
-  },
-};
+    UserFavoriteModal
+  }
+}
 </script>

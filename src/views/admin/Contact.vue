@@ -64,80 +64,80 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import ContactModal from "@/components/modal/ContactModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import ContactModal from '@/components/modal/ContactModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       allContacts: [],
       contacts: [],
       pagination: {},
-      titleBranch: "",
-    };
+      titleBranch: ''
+    }
   },
   methods: {
-    getContacts(page = 1, process) {
-      this.loadings.fullLoading = true;
+    getContacts (page = 1, process) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_RENDER_API}/contacts`)
         .then((res) => {
-          this.allContacts = res.data.sort((a, b) => b.id - a.id);
-          this.filterContacts(page);
+          this.allContacts = res.data.sort((a, b) => b.id - a.id)
+          this.filterContacts(page)
 
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
 
-          if (process === "delete") {
+          if (process === 'delete') {
             // SWal
-            this.adminToast("success", "已刪除預約資料");
+            this.adminToast('success', '已刪除預約資料')
           }
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          this.userToast("error", err.message);
-        });
+          this.loadings.fullLoading = false
+          this.userToast('error', err.message)
+        })
     },
-    filterContacts(page = 1) {
+    filterContacts (page = 1) {
       this.contacts = this.allContacts.filter(
         (item, i) => Math.ceil((i + 1) / 10) == page
-      );
+      )
       // 頁碼物件處理
-      const totalPages = Math.ceil(this.allContacts.length / 10);
+      const totalPages = Math.ceil(this.allContacts.length / 10)
       this.pagination = {
         total_pages: totalPages,
         current_page: page,
-        has_pre: page === 1 ? false : true,
-        has_next: page === totalPages ? false : true,
-      };
+        has_pre: page !== 1,
+        has_next: page !== totalPages
+      }
       // 點擊頁碼後移動到上方
       window.scrollTo({
         top: 0,
-        behavior: "smooth",
-      });
-    },
+        behavior: 'smooth'
+      })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.contactModal = this.$refs.contactModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getContacts();
+  mounted () {
+    this.contactModal = this.$refs.contactModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getContacts()
   },
   components: {
     Pagination,
     ContactModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>

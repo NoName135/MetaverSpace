@@ -1,144 +1,144 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: () => import("../views/Home.vue"),
+    path: '/',
+    name: 'home',
+    component: () => import('../views/Home.vue'),
     children: [
       {
-        path: "/",
-        component: () => import("../views/front/Index.vue"),
+        path: '/',
+        component: () => import('../views/front/Index.vue')
       },
       {
-        path: "article",
-        component: () => import("../views/front/Articles.vue"),
+        path: 'article',
+        component: () => import('../views/front/Articles.vue'),
         children: [
           {
-            path: ":id",
-            name: "最新消息",
-            component: () => import("../views/front/Article.vue"),
-          },
-        ],
+            path: ':id',
+            name: '最新消息',
+            component: () => import('../views/front/Article.vue')
+          }
+        ]
       },
       {
-        path: "products",
-        name: "商品列表",
-        component: () => import("../views/front/Products.vue"),
+        path: 'products',
+        name: '商品列表',
+        component: () => import('../views/front/Products.vue')
       },
       {
-        path: "product/:id",
-        component: () => import("../views/front/Product.vue"),
+        path: 'product/:id',
+        component: () => import('../views/front/Product.vue')
       },
       {
-        path: "favorite",
-        name: "收藏清單",
-        component: () => import("../views/front/Favorite.vue"),
+        path: 'favorite',
+        name: '收藏清單',
+        component: () => import('../views/front/Favorite.vue')
       },
       {
-        path: "cart",
-        name: "購物車",
-        component: () => import("../views/front/Cart.vue"),
+        path: 'cart',
+        name: '購物車',
+        component: () => import('../views/front/Cart.vue')
       },
       {
-        path: "order",
-        name: "交易紀錄",
-        component: () => import("../views/front/Order.vue"),
+        path: 'order',
+        name: '交易紀錄',
+        component: () => import('../views/front/Order.vue')
       },
       {
-        path: "checkout",
-        component: () => import("../views/front/Checkout.vue"),
+        path: 'checkout',
+        component: () => import('../views/front/Checkout.vue'),
         children: [
           {
-            path: "information",
-            name: "結帳",
-            component: () => import("../views/front/checkout/Information.vue"),
+            path: 'information',
+            name: '結帳',
+            component: () => import('../views/front/checkout/Information.vue')
           },
           {
-            path: "check/:id",
-            component: () => import("../views/front/checkout/Check.vue"),
+            path: 'check/:id',
+            component: () => import('../views/front/checkout/Check.vue')
           },
           {
-            path: "send/:id",
-            component: () => import("../views/front/checkout/Send.vue"),
-          },
-        ],
+            path: 'send/:id',
+            component: () => import('../views/front/checkout/Send.vue')
+          }
+        ]
       },
       {
-        path: "reserve",
-        name: "預約體驗",
-        component: () => import("../views/front/Reserve.vue"),
+        path: 'reserve',
+        name: '預約體驗',
+        component: () => import('../views/front/Reserve.vue')
       },
       {
-        path: "ReserveHistory",
-        name: "預約紀錄",
-        component: () => import("../views/front/ReserveHistory.vue"),
+        path: 'ReserveHistory',
+        name: '預約紀錄',
+        component: () => import('../views/front/ReserveHistory.vue')
       },
       {
-        path: "contact",
-        name: "聯絡我們",
-        component: () => import("../views/front/Contact.vue"),
-      },
-    ],
+        path: 'contact',
+        name: '聯絡我們',
+        component: () => import('../views/front/Contact.vue')
+      }
+    ]
   },
   {
-    path: "/login",
-    component: () => import("../views/Login.vue"),
+    path: '/login',
+    component: () => import('../views/Login.vue')
   },
   {
-    path: "/admin",
-    component: () => import("../views/Dashboard.vue"),
+    path: '/admin',
+    component: () => import('../views/Dashboard.vue'),
     children: [
       {
-        path: "products",
-        component: () => import("../views/admin/Products.vue"),
+        path: 'products',
+        component: () => import('../views/admin/Products.vue')
       },
       {
-        path: "order",
-        component: () => import("../views/admin/Order.vue"),
+        path: 'order',
+        component: () => import('../views/admin/Order.vue')
       },
       {
-        path: "article",
-        component: () => import("../views/admin/Article.vue"),
+        path: 'article',
+        component: () => import('../views/admin/Article.vue')
       },
       {
-        path: "reserve",
-        component: () => import("../views/admin/Reserve.vue"),
+        path: 'reserve',
+        component: () => import('../views/admin/Reserve.vue')
       },
       {
-        path: "coupon",
-        component: () => import("../views/admin/Coupon.vue"),
+        path: 'coupon',
+        component: () => import('../views/admin/Coupon.vue')
       },
       {
-        path: "contact",
-        component: () => import("../views/admin/Contact.vue"),
-      },
-    ],
+        path: 'contact',
+        component: () => import('../views/admin/Contact.vue')
+      }
+    ]
   },
   {
-    path: "/:pathMatch(.*)*",
-    component: () => import("../views/NotFound.vue"),
-  },
-];
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue')
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
-  linkActiveClass: "active",
-  scrollBehavior() {
+  linkActiveClass: 'active',
+  scrollBehavior () {
     return {
-      top: 0,
-    };
-  },
-});
+      top: 0
+    }
+  }
+})
 
 // 判斷切換頁面時 scrollTop 按鈕是否存在，有就移除此 HTML 區塊避免複製
 router.beforeEach((to, from, next) => {
-  const scrollTopBtn = document.querySelector("#scrollTop");
+  const scrollTopBtn = document.querySelector('#scrollTop')
   if (scrollTopBtn) {
-    scrollTopBtn.remove(scrollTopBtn);
+    scrollTopBtn.remove(scrollTopBtn)
   }
-  next();
-});
+  next()
+})
 
-export default router;
+export default router

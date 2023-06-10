@@ -231,147 +231,147 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import ProductModal from "@/components/modal/ProductModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import ProductModal from '@/components/modal/ProductModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
-const { VITE_API, VITE_PATH } = import.meta.env;
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       ascending: false,
-      sortBy: "",
+      sortBy: '',
       allProducts: [],
       products: [],
       pagination: {},
       showAccessory: true,
       accessories: [],
-      productLoading: [],
-    };
+      productLoading: []
+    }
   },
   methods: {
-    getProducts(page = 1, process) {
-      this.accessories = [];
-      this.loadings.fullLoading = true;
+    getProducts (page = 1, process) {
+      this.accessories = []
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/admin/products/all`)
         .then((res) => {
           // 反轉產品順序由新到舊
-          this.allProducts = Object.values(res.data.products).reverse();
+          this.allProducts = Object.values(res.data.products).reverse()
           // 判斷是否顯示配件
           if (!this.showAccessory) {
             this.allProducts = this.allProducts.filter(
-              (item) => item.category !== "配件"
-            );
+              (item) => item.category !== '配件'
+            )
           }
           // 根據頁碼顯示商品
           this.products = this.allProducts.filter(
             (item, i) => Math.ceil((i + 1) / 10) == page
-          );
+          )
           // 從全部商品找出 category 為配件商品
           this.accessories = Object.values(res.data.products).filter(
-            (item) => item.category === "配件"
-          );
+            (item) => item.category === '配件'
+          )
           // 頁碼物件處理
           const totalPages = Math.ceil(
             Object.keys(this.allProducts).length / 10
-          );
+          )
           this.pagination = {
             total_pages: totalPages,
             current_page: page,
-            has_pre: page === 1 ? false : true,
-            has_next: page === totalPages ? false : true,
-          };
+            has_pre: page !== 1,
+            has_next: page !== totalPages
+          }
 
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
 
-          if (process === "update") {
+          if (process === 'update') {
             // Swal
-            this.adminToast("success", "已更新商品資料");
-          } else if (process === "delete") {
+            this.adminToast('success', '已更新商品資料')
+          } else if (process === 'delete') {
             // SWal
-            this.adminToast("success", `已刪除商品資料`);
+            this.adminToast('success', '已刪除商品資料')
           }
         })
         .catch((err) => {
           // console.log(err);
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    changePages(page = 1) {
+    changePages (page = 1) {
       this.products = Object.values(this.allProducts).filter(
         (item, i) => Math.ceil((i + 1) / 10) == page
-      );
+      )
 
-      this.pagination.current_page = page;
-      this.pagination.has_pre = page === 1 ? false : true;
+      this.pagination.current_page = page
+      this.pagination.has_pre = page !== 1
       this.pagination.has_next =
-        page === this.pagination.total_pages ? false : true;
+        page !== this.pagination.total_pages
       // 點擊頁碼後移動到上方
       window.scrollTo({
         top: 0,
-        behavior: "smooth",
-      });
+        behavior: 'smooth'
+      })
     },
-    updateEnable(product) {
-      this.productLoading.push(product.id);
+    updateEnable (product) {
+      this.productLoading.push(product.id)
       this.$http
         .put(`${VITE_API}/api/${VITE_PATH}/admin/product/${product.id}`, {
-          data: product,
+          data: product
         })
         .then(() => {
           // console.log(res.data);
-          this.productLoading.shift();
+          this.productLoading.shift()
           // Swal
-          this.adminToast("success", "已更新啟用狀態");
+          this.adminToast('success', '已更新啟用狀態')
         })
         .catch((err) => {
           // console.log(err);
-          this.productLoading.shift();
+          this.productLoading.shift()
           // Swal
-          this.adminToast("error", err.response.data.message);
-          this.getProducts(this.page.current_page);
-        });
-    },
+          this.adminToast('error', err.response.data.message)
+          this.getProducts(this.page.current_page)
+        })
+    }
   },
-  mounted() {
-    this.productModal = this.$refs.productModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getProducts();
+  mounted () {
+    this.productModal = this.$refs.productModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getProducts()
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings']),
 
-    sortProducts() {
-      if (this.sortBy === "category" || this.sortBy === "brand") {
+    sortProducts () {
+      if (this.sortBy === 'category' || this.sortBy === 'brand') {
         return [...this.products].sort((a, b) => {
           return this.ascending
-            ? a[this.sortBy].localeCompare(b[this.sortBy], "zh-hant")
-            : b[this.sortBy].localeCompare(a[this.sortBy], "zh-hant");
-        });
+            ? a[this.sortBy].localeCompare(b[this.sortBy], 'zh-hant')
+            : b[this.sortBy].localeCompare(a[this.sortBy], 'zh-hant')
+        })
       } else if (this.sortBy) {
         return [...this.products].sort((a, b) => {
           return this.ascending
             ? a[this.sortBy] - b[this.sortBy]
-            : b[this.sortBy] - a[this.sortBy];
-        });
+            : b[this.sortBy] - a[this.sortBy]
+        })
       } else {
-        return this.products;
+        return this.products
       }
-    },
+    }
   },
   components: {
     Pagination,
     ProductModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>

@@ -13,39 +13,39 @@
 </template>
 
 <script>
-import gsapMixin from "@/mixins/gsap.js";
+import gsapMixin from '@/mixins/gsap.js'
 
 export default {
   mixins: [gsapMixin],
-  props: ["scrollId"],
-  data() {
+  props: ['scrollId'],
+  data () {
     return {
-      showContent: true,
-    };
+      showContent: true
+    }
   },
-  beforeUnmount() {
+  beforeUnmount () {
     // Set showContent to false to remove the HTML block from the DOM
-    this.showContent = false;
+    this.showContent = false
   },
   methods: {
-    gsapScroll() {
+    gsapScroll () {
       this.gsap.from(this.$refs.scrollTop, {
         scrollTrigger: {
-          start: "top -500px",
-          toggleActions: "play none none reverse",
+          start: 'top -500px',
+          toggleActions: 'play none none reverse'
           // markers: true,
         },
         y: -1300,
-        ease: "expo",
-        duration: 0.5,
-      });
+        ease: 'expo',
+        duration: 0.5
+      })
     },
-    gsapScrollTop() {
-      this.gsap.to(window, { duration: 1, scrollTo: 0 });
-    },
+    gsapScrollTop () {
+      this.gsap.to(window, { duration: 1, scrollTo: 0 })
+    }
   },
-  mounted() {
-    this.gsapScroll();
-  },
-};
+  mounted () {
+    this.gsapScroll()
+  }
+}
 </script>

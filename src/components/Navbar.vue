@@ -409,103 +409,103 @@
 </template>
 
 <script>
-import { Collapse } from "flowbite";
+import { Collapse } from 'flowbite'
 
-import cartStore from "@/stores/cartStore.js";
-import favoriteStore from "@/stores/favoriteStore.js";
-import { mapActions, mapState } from "pinia";
+import cartStore from '@/stores/cartStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
+import { mapActions, mapState } from 'pinia'
 
 export default {
-  data() {
+  data () {
     return {
       windowTop: 0,
       navToggled: false,
-      navCollapse: "",
-      cartCollapse: "",
-      favCollapse: "",
-      targetLink: "",
-    };
+      navCollapse: '',
+      cartCollapse: '',
+      favCollapse: '',
+      targetLink: ''
+    }
   },
   methods: {
-    onScroll(e) {
-      this.windowTop = e.target.documentElement.scrollTop;
+    onScroll (e) {
+      this.windowTop = e.target.documentElement.scrollTop
     },
-    hideCollapse() {
-      this.navCollapse.collapse();
-      this.cartCollapse.collapse();
-      this.favCollapse.collapse();
+    hideCollapse () {
+      this.navCollapse.collapse()
+      this.cartCollapse.collapse()
+      this.favCollapse.collapse()
     },
-    toggleNav() {
-      this.cartCollapse.collapse();
-      this.favCollapse.collapse();
+    toggleNav () {
+      this.cartCollapse.collapse()
+      this.favCollapse.collapse()
     },
-    toggleCart() {
-      this.navCollapse.collapse();
-      this.favCollapse.collapse();
+    toggleCart () {
+      this.navCollapse.collapse()
+      this.favCollapse.collapse()
     },
-    toggleFav() {
-      this.navCollapse.collapse();
-      this.cartCollapse.collapse();
+    toggleFav () {
+      this.navCollapse.collapse()
+      this.cartCollapse.collapse()
     },
     ...mapActions(cartStore, [
-      "getCart",
-      "updateCart",
-      "deleteCart",
-      "deleteCartSpec",
+      'getCart',
+      'updateCart',
+      'deleteCart',
+      'deleteCartSpec'
     ]),
-    ...mapActions(favoriteStore, ["getFavorite", "updateFavorite"]),
+    ...mapActions(favoriteStore, ['getFavorite', 'updateFavorite'])
   },
   computed: {
-    ...mapState(cartStore, ["cart", "cartLoading"]),
-    ...mapState(favoriteStore, ["favorites"]),
+    ...mapState(cartStore, ['cart', 'cartLoading']),
+    ...mapState(favoriteStore, ['favorites'])
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       if (to.fullPath !== from.fullPath) {
-        if (this.$route.fullPath === "/reserve") {
-          this.targetLink = "reserve";
-        } else if (this.$route.fullPath === "/order") {
-          this.targetLink = "order";
-        } else if (this.$route.fullPath.includes("/products")) {
-          this.targetLink = "products";
+        if (this.$route.fullPath === '/reserve') {
+          this.targetLink = 'reserve'
+        } else if (this.$route.fullPath === '/order') {
+          this.targetLink = 'order'
+        } else if (this.$route.fullPath.includes('/products')) {
+          this.targetLink = 'products'
         } else {
-          this.targetLink = "";
+          this.targetLink = ''
         }
       }
-    },
+    }
   },
-  mounted() {
-    window.addEventListener("scroll", this.onScroll);
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
     const { navMenu, navBtn, navCart, navCartBtn, navFav, navFavBtn } =
-      this.$refs;
+      this.$refs
     const navOptions = {
       onExpand: () => {
-        this.navToggled = true;
+        this.navToggled = true
       },
       onCollapse: () => {
-        this.navToggled = false;
-      },
-    };
-    this.navCollapse = new Collapse(navMenu, navBtn, navOptions);
-    this.cartCollapse = new Collapse(navCart, navCartBtn);
-    this.favCollapse = new Collapse(navFav, navFavBtn);
-    // 判斷目前開啟的頁面
-    if (this.$route.fullPath === "/reserve") {
-      this.targetLink = "reserve";
-    } else if (this.$route.fullPath === "/order") {
-      this.targetLink = "order";
-    } else if (this.$route.fullPath.includes("/products")) {
-      this.targetLink = "products";
-    } else {
-      this.targetLink = "";
+        this.navToggled = false
+      }
     }
-    this.getCart();
-    this.getFavorite();
+    this.navCollapse = new Collapse(navMenu, navBtn, navOptions)
+    this.cartCollapse = new Collapse(navCart, navCartBtn)
+    this.favCollapse = new Collapse(navFav, navFavBtn)
+    // 判斷目前開啟的頁面
+    if (this.$route.fullPath === '/reserve') {
+      this.targetLink = 'reserve'
+    } else if (this.$route.fullPath === '/order') {
+      this.targetLink = 'order'
+    } else if (this.$route.fullPath.includes('/products')) {
+      this.targetLink = 'products'
+    } else {
+      this.targetLink = ''
+    }
+    this.getCart()
+    this.getFavorite()
   },
-  beforeUnmount() {
-    window.removeEventListener("scroll", this.onScroll);
-  },
-};
+  beforeUnmount () {
+    window.removeEventListener('scroll', this.onScroll)
+  }
+}
 </script>
 
 <style>

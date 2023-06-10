@@ -265,36 +265,36 @@
 </template>
 
 <script>
-import { Dropdown, Accordion } from "flowbite";
+import { Dropdown, Accordion } from 'flowbite'
 
 export default {
-  props: ["orders"],
-  data() {
+  props: ['orders'],
+  data () {
     return {
       filter: {
         day: 30,
-        title: "",
+        title: ''
       },
-      filterOrders: [],
-    };
+      filterOrders: []
+    }
   },
   methods: {
-    payLink(id, paid) {
-      let route;
+    payLink (id, paid) {
+      let route
       paid
         ? (route = this.$router.resolve(`/checkout/send/${id}`))
-        : (route = this.$router.resolve(`/checkout/check/${id}`));
-      window.open(route.href);
+        : (route = this.$router.resolve(`/checkout/check/${id}`))
+      window.open(route.href)
     },
-    getFilterOrders() {
-      this.filterOrders = [];
+    getFilterOrders () {
+      this.filterOrders = []
       for (let i = 0; i < this.orders.length; i++) {
         // 判斷title有包含搜尋的文字和建立訂單日期大於指定日期
         if (
           Object.values(this.orders[i].products).some((data) => {
             return data.product.title
               .toLowerCase()
-              .includes(this.filter.title.toLocaleLowerCase().trim());
+              .includes(this.filter.title.toLocaleLowerCase().trim())
           }) &&
           this.orders[i].create_at >=
             new Date(
@@ -302,11 +302,11 @@ export default {
             ).getTime() /
               1000
         ) {
-          this.filterOrders.push(this.orders[i]);
+          this.filterOrders.push(this.orders[i])
         }
       }
     },
-    getAccordion() {
+    getAccordion () {
       // 畫面渲染後才執行
       this.$nextTick(() => {
         const detailAccordionItems = this.filterOrders.map((item) => {
@@ -314,67 +314,67 @@ export default {
             id: item.id,
             triggerEl: this.$refs[`detailAccordionBtn${item.id}`][0],
             targetEl: this.$refs[`detailAccordionTable${item.id}`][0],
-            active: false,
-          };
-        });
+            active: false
+          }
+        })
         const detailAccordionOptions = {
-          activeClasses: "bg-secondary text-white",
-          inactiveClasses: "bg-secondary2 text-gray-400",
+          activeClasses: 'bg-secondary text-white',
+          inactiveClasses: 'bg-secondary2 text-gray-400',
           onToggle: function (item) {
             item._items.forEach((data) => {
               if (data.active) {
                 data.triggerEl
-                  .querySelector("[data-accordion-icon]")
-                  .classList.add("-rotate-180");
+                  .querySelector('[data-accordion-icon]')
+                  .classList.add('-rotate-180')
               } else {
                 data.triggerEl
-                  .querySelector("[data-accordion-icon]")
-                  .classList.remove("-rotate-180");
+                  .querySelector('[data-accordion-icon]')
+                  .classList.remove('-rotate-180')
               }
-            });
-          },
-        };
+            })
+          }
+        }
         this.detailAccordion = new Accordion(
           detailAccordionItems,
           detailAccordionOptions
-        );
-      });
-    },
+        )
+      })
+    }
   },
-  mounted() {
+  mounted () {
     const dropDownOptions = {
-      placement: "bottom",
-      triggerType: "click",
+      placement: 'bottom',
+      triggerType: 'click',
       offsetSkidding: 28,
       offsetDistance: 10,
-      delay: 300,
-    };
+      delay: 300
+    }
     this.daysDropdown = new Dropdown(
       this.$refs.dropdownDaysMenu,
       this.$refs.dropdownDaysBtn,
       dropDownOptions
-    );
+    )
   },
   watch: {
     orders: {
-      handler() {
-        this.filter.title = "";
-        this.getFilterOrders();
-        this.getAccordion();
+      handler () {
+        this.filter.title = ''
+        this.getFilterOrders()
+        this.getAccordion()
       },
-      immediate: true, // mounted 之後立即執行
+      immediate: true // mounted 之後立即執行
     },
     filter: {
-      handler() {
+      handler () {
         // 篩選時將全部明細收起
         this.filterOrders.forEach((item) => {
-          this.detailAccordion.close(item.id);
-        });
-        this.getFilterOrders();
-        this.getAccordion();
+          this.detailAccordion.close(item.id)
+        })
+        this.getFilterOrders()
+        this.getAccordion()
       },
-      deep: true,
-    },
-  },
-};
+      deep: true
+    }
+  }
+}
 </script>

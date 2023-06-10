@@ -163,208 +163,208 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import OrderModal from "@/components/modal/OrderModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import OrderModal from '@/components/modal/OrderModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
-const { VITE_API, VITE_PATH } = import.meta.env;
-import c3 from "c3";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
+import c3 from 'c3'
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       allOrders: [],
       productQty: 0,
       ordersTotal: 0,
       orders: [],
-      pagination: {},
-    };
+      pagination: {}
+    }
   },
   methods: {
-    async getAllOrders(page = 1, process) {
-      this.loadings.fullLoading = true;
+    async getAllOrders (page = 1, process) {
+      this.loadings.fullLoading = true
       await Promise.all([
         this.$http.get(`${VITE_API}/api/${VITE_PATH}/admin/orders`),
         this.$http.get(
           `${VITE_API}/api/${VITE_PATH}/admin/orders?page=${page}`
-        ),
+        )
       ])
         .then((res) => {
           // console.log(res);
-          const [a, b] = res;
+          const [a, b] = res
 
-          this.allOrders = a.data.orders;
+          this.allOrders = a.data.orders
           this.ordersTotal = this.allOrders.reduce((acc, cur) => {
-            return acc + cur.total;
-          }, 0);
-          this.updateChart("category");
+            return acc + cur.total
+          }, 0)
+          this.updateChart('category')
 
-          this.orders = b.data.orders;
-          this.pagination = b.data.pagination;
-          this.loadings.fullLoading = false;
+          this.orders = b.data.orders
+          this.pagination = b.data.pagination
+          this.loadings.fullLoading = false
 
-          if (process === "delete") {
+          if (process === 'delete') {
             // SWal
-            this.adminToast("success", `已刪除訂單資料`);
+            this.adminToast('success', '已刪除訂單資料')
           }
         })
         .catch((err) => {
           // console.log(err);
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    getOrders(page = 1) {
-      this.loadings.fullLoading = true;
+    getOrders (page = 1) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/admin/orders?page=${page}`)
         .then((res) => {
           // console.log(res.data);
-          const { orders, pagination } = res.data;
-          this.orders = orders;
-          this.pagination = pagination;
-          this.loadings.fullLoading = false;
+          const { orders, pagination } = res.data
+          this.orders = orders
+          this.pagination = pagination
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("success", "已更新訂單資料");
+          this.adminToast('success', '已更新訂單資料')
           // 點擊頁碼後移動到上方
           window.scrollTo({
             top: 700,
-            behavior: "smooth",
-          });
+            behavior: 'smooth'
+          })
         })
         .catch((err) => {
           // console.log(err);
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    updateChart(target = "category", switchChart) {
-      const { chartColumns, titleChartCols } = this.switchChart(target);
+    updateChart (target = 'category', switchChart) {
+      const { chartColumns, titleChartCols } = this.switchChart(target)
       // 訂單類別圖表切換及重新整理
       this.categoryChart.unload({
-        columns: chartColumns,
-      });
+        columns: chartColumns
+      })
       if (!switchChart) {
         this.soldChart.unload({
-          columns: titleChartCols,
-        });
+          columns: titleChartCols
+        })
       }
       setTimeout(() => {
         this.categoryChart.load({
-          columns: chartColumns,
-        });
+          columns: chartColumns
+        })
         if (!switchChart) {
           this.soldChart.load({
-            columns: titleChartCols,
-          });
+            columns: titleChartCols
+          })
         }
-      }, 300);
+      }, 300)
     },
-    switchChart(target) {
-      const chartColumns = [];
-      const titleChart = [];
-      this.productQty = 0;
+    switchChart (target) {
+      const chartColumns = []
+      const titleChart = []
+      this.productQty = 0
       // 將訂單所有類別數量匯入 chartColumns
       for (let i = 0; i < this.allOrders.length; i++) {
-        const productObj = this.allOrders[i].products;
+        const productObj = this.allOrders[i].products
         // 取出訂單全部 products 資料
         Object.values(productObj).forEach((item) => {
           // 計算商品總數 (含配件)
-          this.productQty += item.qty;
+          this.productQty += item.qty
           // 圖表計算 (不含配件)
-          if (item.product.category !== "配件") {
-            let newCategory = true;
-            let newTitle = true;
+          if (item.product.category !== '配件') {
+            let newCategory = true
+            let newTitle = true
             // 尋找 Columns 是否有重複出現
             for (let j = 0; j < chartColumns.length; j++) {
               if (chartColumns[j][0] === item.product[target]) {
-                chartColumns[j][1] += item.qty;
-                newCategory = false;
+                chartColumns[j][1] += item.qty
+                newCategory = false
               }
             }
             if (newCategory) {
-              chartColumns.push([item.product[target], item.qty]);
+              chartColumns.push([item.product[target], item.qty])
             }
             // 尋找 chart 是否有重複出現
             for (let k = 0; k < titleChart.length; k++) {
               if (titleChart[k][0] === item.product.title) {
-                titleChart[k][1] += item.qty;
-                newTitle = false;
+                titleChart[k][1] += item.qty
+                newTitle = false
               }
             }
             if (newTitle) {
-              titleChart.push([item.product.title, item.qty]);
+              titleChart.push([item.product.title, item.qty])
             }
           }
-        });
+        })
       }
       // 將 titleChart 排序並將第 5 筆後的商品改成其他
-      titleChart.sort((a, b) => b[1] - a[1]);
+      titleChart.sort((a, b) => b[1] - a[1])
       if (titleChart.length > 4) {
-        titleChart.splice(4, 0, ["其他", 0]);
+        titleChart.splice(4, 0, ['其他', 0])
         titleChart.forEach((item, i) => {
           if (i > 4) {
-            titleChart[4][1] += item[1];
+            titleChart[4][1] += item[1]
           }
-        });
+        })
       }
-      const titleChartCols = titleChart.filter((item, i) => i <= 4);
-      return { chartColumns, titleChartCols };
-    },
+      const titleChartCols = titleChart.filter((item, i) => i <= 4)
+      return { chartColumns, titleChartCols }
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // c3 charts
     // 品牌類別圖表
     this.categoryChart = c3.generate({
       bindto: this.$refs.categoryChart,
       data: {
         columns: [],
-        type: "bar",
+        type: 'bar'
       },
       axis: {
         x: {
-          type: "category",
-          categories: [""],
-        },
-      },
-    });
+          type: 'category',
+          categories: ['']
+        }
+      }
+    })
     // 銷售圖表
     this.soldChart = c3.generate({
       bindto: this.$refs.soldChart,
       data: {
         columns: [],
-        type: "donut",
+        type: 'donut'
       },
       donut: {
-        title: "商品營收比重",
-      },
-    });
+        title: '商品營收比重'
+      }
+    })
 
-    this.orderModal = this.$refs.orderModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getAllOrders();
+    this.orderModal = this.$refs.orderModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getAllOrders()
   },
-  beforeUnmount() {
+  beforeUnmount () {
     if (this.categoryChart) {
-      this.categoryChart.destroy();
+      this.categoryChart.destroy()
     }
   },
   components: {
     Pagination,
     OrderModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>
 
 <style src="c3/c3.css"></style>

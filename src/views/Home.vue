@@ -104,24 +104,24 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
+import Navbar from '../components/Navbar.vue'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
 export default {
   methods: {
-    hideNavCollapse() {
-      this.$refs.navbar.hideCollapse();
-    },
+    hideNavCollapse () {
+      this.$refs.navbar.hideCollapse()
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
   components: {
-    Navbar,
-  },
-};
+    Navbar
+  }
+}
 </script>
 
 <style>

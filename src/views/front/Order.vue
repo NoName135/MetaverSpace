@@ -99,49 +99,49 @@
 </template>
 
 <script>
-import OrderDetail from "@/components/OrderDetail.vue";
+import OrderDetail from '@/components/OrderDetail.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       searchLoading: false,
       orders: {},
-      filterOrders: {},
-    };
+      filterOrders: {}
+    }
   },
   methods: {
-    getOrders(values) {
-      const name = values["姓名"].trim();
-      const info = values["電話或Email"].trim();
+    getOrders (values) {
+      const name = values['姓名'].trim()
+      const info = values['電話或Email'].trim()
 
-      this.searchLoading = true;
+      this.searchLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/orders`)
         .then((res) => {
           // console.log(res.data);
-          this.orders = res.data.orders;
+          this.orders = res.data.orders
           this.filterOrders = this.orders.filter((item) => {
             return (
               item.user.name === name &&
               (item.user.email === info || item.user.tel === info)
-            );
-          });
-          this.searchLoading = false;
+            )
+          })
+          this.searchLoading = false
         })
         .catch((err) => {
-          this.searchLoading = false;
-          //Swal
-          this.userToast("error", err.response.data.message);
-        });
-    },
+          this.searchLoading = false
+          // Swal
+          this.userToast('error', err.response.data.message)
+        })
+    }
   },
   components: {
-    OrderDetail,
-  },
-};
+    OrderDetail
+  }
+}
 </script>

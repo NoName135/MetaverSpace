@@ -46,52 +46,52 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
-import { mapState } from "pinia";
+import swalMixin from '@/mixins/swal.js'
+import { mapState } from 'pinia'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
-      article: { id: "", index: null },
+      article: { id: '', index: null },
       articles: [],
-      pagePrev: "",
-      pageNext: "",
-    };
+      pagePrev: '',
+      pageNext: ''
+    }
   },
   methods: {
-    getArticles() {
+    getArticles () {
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/articles`)
         .then((res) => {
           // console.log(res.data);
-          this.articles = res.data.articles;
-          this.getPageLink(this.article.id);
+          this.articles = res.data.articles
+          this.getPageLink(this.article.id)
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // console.log(err);
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
     },
-    getPageLink(id) {
-      this.article.id = id;
+    getPageLink (id) {
+      this.article.id = id
       if (this.articles.length > 0) {
         this.article.index = this.articles.findIndex((item) => {
-          return item.id === id;
-        });
+          return item.id === id
+        })
       } else {
-        this.getArticles();
+        this.getArticles()
       }
-    },
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

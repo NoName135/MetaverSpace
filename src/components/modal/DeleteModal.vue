@@ -74,89 +74,89 @@
 </template>
 
 <script>
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH, VITE_RENDER_API } = import.meta.env;
+const { VITE_API, VITE_PATH, VITE_RENDER_API } = import.meta.env
 
 export default {
-  props: ["page"],
+  props: ['page'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
-      target: "",
-      tempItem: {},
-    };
+      target: '',
+      tempItem: {}
+    }
   },
   methods: {
-    openModal(target, tempItem) {
-      this.target = target;
-      this.tempItem = tempItem;
-      this.deleteModal.show();
+    openModal (target, tempItem) {
+      this.target = target
+      this.tempItem = tempItem
+      this.deleteModal.show()
     },
-    deleteItem() {
-      let url = "";
-      if (this.target == "商品") {
-        url = `${VITE_API}/api/${VITE_PATH}/admin/product/${this.tempItem.id}`;
-      } else if (this.target == "訂單") {
-        url = `${VITE_API}/api/${VITE_PATH}/admin/order/${this.tempItem.id}`;
-      } else if (this.target == "優惠券") {
-        url = `${VITE_API}/api/${VITE_PATH}/admin/coupon/${this.tempItem.id}`;
-      } else if (this.target == "文章") {
-        url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempItem.id}`;
-      } else if (this.target == "預約") {
-        url = `${VITE_RENDER_API}/reserves/${this.tempItem.id}`;
-      } else if (this.target == "留言") {
-        url = `${VITE_RENDER_API}/contacts/${this.tempItem.id}`;
+    deleteItem () {
+      let url = ''
+      if (this.target === '商品') {
+        url = `${VITE_API}/api/${VITE_PATH}/admin/product/${this.tempItem.id}`
+      } else if (this.target === '訂單') {
+        url = `${VITE_API}/api/${VITE_PATH}/admin/order/${this.tempItem.id}`
+      } else if (this.target === '優惠券') {
+        url = `${VITE_API}/api/${VITE_PATH}/admin/coupon/${this.tempItem.id}`
+      } else if (this.target === '文章') {
+        url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempItem.id}`
+      } else if (this.target === '預約') {
+        url = `${VITE_RENDER_API}/reserves/${this.tempItem.id}`
+      } else if (this.target === '留言') {
+        url = `${VITE_RENDER_API}/contacts/${this.tempItem.id}`
       }
 
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       this.$http
         .delete(url)
         .then(() => {
           // console.log(res.data);
-          if (this.target == "商品") {
-            this.$emit("updateProducts", this.page, "delete");
-          } else if (this.target == "訂單") {
-            this.$emit("updateOrders", this.page, "delete");
-          } else if (this.target == "優惠券") {
-            this.$emit("updateCoupons", this.page, "delete");
-          } else if (this.target == "文章") {
-            this.$emit("updateArticles", this.page, "delete");
-          } else if (this.target == "預約") {
-            this.$emit("updateReserves", this.page, "delete");
-          } else if (this.target == "留言") {
-            this.$emit("updateContacts", this.page, "delete");
+          if (this.target === '商品') {
+            this.$emit('updateProducts', this.page, 'delete')
+          } else if (this.target === '訂單') {
+            this.$emit('updateOrders', this.page, 'delete')
+          } else if (this.target === '優惠券') {
+            this.$emit('updateCoupons', this.page, 'delete')
+          } else if (this.target === '文章') {
+            this.$emit('updateArticles', this.page, 'delete')
+          } else if (this.target === '預約') {
+            this.$emit('updateReserves', this.page, 'delete')
+          } else if (this.target === '留言') {
+            this.$emit('updateContacts', this.page, 'delete')
           }
-          this.deleteModal.hide();
+          this.deleteModal.hide()
         })
         .catch((err) => {
           // console.log(err);
           // SWal
-          if (this.target === "預約" || this.target === "留言") {
-            this.adminToast("error", err.message);
+          if (this.target === '預約' || this.target === '留言') {
+            this.adminToast('error', err.message)
           } else {
-            this.adminToast("error", err.response.data.message);
+            this.adminToast('error', err.response.data.message)
           }
-        });
-    },
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // modal options
     const deleteModalOptions = {
-      placement: "top-center",
-      backdrop: "dynamic",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.deleteModal = new Modal(this.$refs.deleteModal, deleteModalOptions);
-  },
-};
+      placement: 'top-center',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.deleteModal = new Modal(this.$refs.deleteModal, deleteModalOptions)
+  }
+}
 </script>

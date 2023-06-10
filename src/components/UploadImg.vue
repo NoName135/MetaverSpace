@@ -50,45 +50,45 @@
 </template>
 
 <script>
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  props: ["index"],
-  emits: ["changeImg"],
+  props: ['index'],
+  emits: ['changeImg'],
   mixins: [swalMixin],
   methods: {
     // 上傳圖片
-    handleFile(event, target, index) {
+    handleFile (event, target, index) {
       // console.log(event, target, index);
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file-to-upload", file);
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', file)
       if (file) {
-        this.loadings.fullLoading = true;
+        this.loadings.fullLoading = true
         this.$http
           .post(`${VITE_API}/api/${VITE_PATH}/admin/upload`, formData)
           .then((res) => {
             // console.log(res.data);
-            this.loadings.fullLoading = false;
-            const imgUrl = res.data.imageUrl;
-            this.$emit("changeImg", index, target, imgUrl);
+            this.loadings.fullLoading = false
+            const imgUrl = res.data.imageUrl
+            this.$emit('changeImg', index, target, imgUrl)
           })
           .catch((err) => {
             // console.log(err);
-            this.loadings.fullLoading = false;
+            this.loadings.fullLoading = false
             // Swal
-            this.adminAlert("error", "圖片上傳失敗", err.response.data.message);
-          });
+            this.adminAlert('error', '圖片上傳失敗', err.response.data.message)
+          })
       }
-    },
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

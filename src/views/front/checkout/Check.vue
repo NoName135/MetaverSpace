@@ -144,91 +144,91 @@
 </template>
 
 <script>
-import { Collapse } from "flowbite";
-import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import { Collapse } from 'flowbite'
+import loadingStore from '@/stores/loadingStore.js'
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  emits: ["emit-step"],
+  emits: ['emit-step'],
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       order: {},
       discount: 0,
-      payLoading: false,
-    };
+      payLoading: false
+    }
   },
   methods: {
-    getOrder() {
-      this.loadings.fullLoading = true;
+    getOrder () {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/order/${this.$route.params.id}`)
         .then((res) => {
           // console.log(res.data);
-          this.loadings.fullLoading = false;
-          this.order = res.data.order;
+          this.loadings.fullLoading = false
+          this.order = res.data.order
           this.discount = Object.values(this.order.products).reduce(
             (acc, cur) => {
-              return acc + (cur.total - cur.final_total);
+              return acc + (cur.total - cur.final_total)
             },
             0
-          );
+          )
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          //Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.loadings.fullLoading = false
+          // Swal
+          this.userToast('error', err.response.data.message)
+        })
     },
-    payOrder() {
-      this.payLoading = true;
+    payOrder () {
+      this.payLoading = true
       this.$http
         .post(`${VITE_API}/api/${VITE_PATH}/pay/${this.$route.params.id}`)
         .then((res) => {
           // console.log(res.data);
-          this.payLoading = false;
-          //Swal
-          this.userToast("success", res.data.message);
-          this.$router.replace(`/checkout/send/${this.$route.params.id}`);
+          this.payLoading = false
+          // Swal
+          this.userToast('success', res.data.message)
+          this.$router.replace(`/checkout/send/${this.$route.params.id}`)
         })
         .catch((err) => {
-          this.payLoading = false;
-          //Swal
-          this.userToast("error", err.response.data.message);
-        });
-    },
+          this.payLoading = false
+          // Swal
+          this.userToast('error', err.response.data.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.$emit("emit-step", 2);
+  mounted () {
+    this.$emit('emit-step', 2)
 
     const detailCollapseOptions = {
       onToggle: function (item) {
         if (item._visible) {
           item._triggerEl
-            .querySelector("[data-accordion-icon]")
-            .classList.add("-rotate-180");
+            .querySelector('[data-accordion-icon]')
+            .classList.add('-rotate-180')
         } else {
           item._triggerEl
-            .querySelector("[data-accordion-icon]")
-            .classList.remove("-rotate-180");
+            .querySelector('[data-accordion-icon]')
+            .classList.remove('-rotate-180')
         }
-      },
-    };
+      }
+    }
     this.detailCollapse = new Collapse(
       this.$refs.detailCollapseMenu,
       this.$refs.detailCollapseBtn,
       detailCollapseOptions
-    );
-    this.detailCollapse.collapse();
+    )
+    this.detailCollapse.collapse()
 
-    this.getOrder();
-  },
-};
+    this.getOrder()
+  }
+}
 </script>

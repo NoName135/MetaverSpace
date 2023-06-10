@@ -103,84 +103,84 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import ReserveModal from "@/components/modal/ReserveModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import ReserveModal from '@/components/modal/ReserveModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       allReserves: [],
       reserves: [],
       pagination: {},
-      titleBranch: "",
-    };
+      titleBranch: ''
+    }
   },
   methods: {
-    getReserves(page = 1, process) {
-      this.loadings.fullLoading = true;
+    getReserves (page = 1, process) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_RENDER_API}/reserves`)
         .then((res) => {
           // console.log(res.data);
-          this.allReserves = res.data.sort((a, b) => b.id - a.id);
-          this.filterReserves(page);
+          this.allReserves = res.data.sort((a, b) => b.id - a.id)
+          this.filterReserves(page)
 
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
 
-          if (process === "update") {
+          if (process === 'update') {
             // Swal
-            this.adminToast("success", "已更新預約資料");
-          } else if (process === "delete") {
+            this.adminToast('success', '已更新預約資料')
+          } else if (process === 'delete') {
             // SWal
-            this.adminToast("success", "已刪除預約資料");
+            this.adminToast('success', '已刪除預約資料')
           }
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          this.userToast("error", err.message);
-        });
+          this.loadings.fullLoading = false
+          this.userToast('error', err.message)
+        })
     },
-    filterReserves(page = 1) {
+    filterReserves (page = 1) {
       this.reserves = this.allReserves
         .filter((item) => !this.titleBranch || item.title === this.titleBranch)
-        .filter((item, i) => Math.ceil((i + 1) / 10) == page);
+        .filter((item, i) => Math.ceil((i + 1) / 10) == page)
       // 頁碼物件處理
-      const totalPages = Math.ceil(this.allReserves.length / 10);
+      const totalPages = Math.ceil(this.allReserves.length / 10)
       this.pagination = {
         total_pages: totalPages,
         current_page: page,
-        has_pre: page === 1 ? false : true,
-        has_next: page === totalPages ? false : true,
-      };
+        has_pre: page !== 1,
+        has_next: page !== totalPages
+      }
       // 點擊頁碼後移動到上方
       window.scrollTo({
         top: 0,
-        behavior: "smooth",
-      });
-    },
+        behavior: 'smooth'
+      })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.reserveModal = this.$refs.reserveModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getReserves();
+  mounted () {
+    this.reserveModal = this.$refs.reserveModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getReserves()
   },
   components: {
     Pagination,
     ReserveModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>

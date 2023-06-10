@@ -62,40 +62,40 @@
 </template>
 
 <script>
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import { mapState } from 'pinia'
 
-const { VITE_API } = import.meta.env;
+const { VITE_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
-      user: {},
-    };
+      user: {}
+    }
   },
   methods: {
-    login() {
-      const api = `${VITE_API}/admin/signin`;
-      this.loadings.fullLoading = true;
+    login () {
+      const api = `${VITE_API}/admin/signin`
+      this.loadings.fullLoading = true
       this.$http
         .post(api, this.user)
         .then((res) => {
-          const { token, expired } = res.data;
-          document.cookie = `loginToken=${token};expires=${new Date(expired)};`;
-          this.$router.push("/admin/products");
+          const { token, expired } = res.data
+          document.cookie = `loginToken=${token};expires=${new Date(expired)};`
+          this.$router.push('/admin/products')
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          //Swal
-          this.adminToast("error", err.response.data.message);
-        });
-    },
+          this.loadings.fullLoading = false
+          // Swal
+          this.adminToast('error', err.response.data.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

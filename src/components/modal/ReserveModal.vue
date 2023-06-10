@@ -182,76 +182,76 @@
 </template>
 
 <script>
-import { Modal } from "flowbite";
+import { Modal } from 'flowbite'
 
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       tempReserve: {},
-      dateTime: "",
-    };
+      dateTime: ''
+    }
   },
   methods: {
-    openModal(reserve) {
-      this.tempReserve = { ...reserve };
+    openModal (reserve) {
+      this.tempReserve = { ...reserve }
       this.dateTime = new Date(reserve.reserve_time)
-        .toLocaleString("zh-TW", {
+        .toLocaleString('zh-TW', {
           hour12: false,
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
         })
-        .replace(/\//g, "-")
-        .replace(" ", "T");
+        .replace(/\//g, '-')
+        .replace(' ', 'T')
 
-      this.reserveModal.show();
+      this.reserveModal.show()
     },
-    updateReserve() {
-      this.loadings.fullLoading = true;
+    updateReserve () {
+      this.loadings.fullLoading = true
       this.$http
         .put(`${VITE_RENDER_API}/reserves/${this.tempReserve.id}`, {
-          ...this.tempReserve,
+          ...this.tempReserve
         })
         .then(() => {
           // console.log(res.data);
-          this.$emit("updateReserves", this.page, "update");
-          this.reserveModal.hide();
+          this.$emit('updateReserves', this.page, 'update')
+          this.reserveModal.hide()
         })
         .catch((err) => {
           // console.log(err);
           // Swal
-          this.adminToast("error", err.message);
-        });
-    },
+          this.adminToast('error', err.message)
+        })
+    }
   },
   watch: {
-    dateTime() {
-      this.tempReserve.reserve_time = Date.parse(this.dateTime);
-    },
+    dateTime () {
+      this.tempReserve.reserve_time = Date.parse(this.dateTime)
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // modal options
     const modalOptions = {
-      placement: "center",
-      backdrop: "static",
-      backdropClasses: "bg-black bg-opacity-80 fixed inset-0 z-30",
-      closable: true,
-    };
-    this.reserveModal = new Modal(this.$refs.reserveModal, modalOptions);
-  },
-};
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-black bg-opacity-80 fixed inset-0 z-30',
+      closable: true
+    }
+    this.reserveModal = new Modal(this.$refs.reserveModal, modalOptions)
+  }
+}
 </script>

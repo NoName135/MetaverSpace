@@ -420,155 +420,155 @@
 
 <script>
 // import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue'
 // import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
 // import Swiper required modules
-import { Navigation } from "swiper";
+import { Navigation } from 'swiper'
 
-import loadingStore from "@/stores/loadingStore.js";
-import cartStore from "@/stores/cartStore.js";
-import favoriteStore from "@/stores/favoriteStore.js";
-import { mapActions, mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import cartStore from '@/stores/cartStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
+import { mapActions, mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       product: {},
       otherProducts: [],
       accessories: [],
-      cartSpec: "",
+      cartSpec: '',
       qty: 1,
       cart_specs: [],
       productModules: [Navigation],
-      targetImage: "",
-    };
+      targetImage: ''
+    }
   },
   methods: {
-    getProduct(id) {
-      this.loadings.fullLoading = true;
+    getProduct (id) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/product/${id}`)
         .then((res) => {
           // console.log(res.data);
-          this.product = res.data.product;
-          this.targetImage = this.product.imageUrl;
+          this.product = res.data.product
+          this.targetImage = this.product.imageUrl
           // 取得其他產品
-          this.getOtherProducts();
+          this.getOtherProducts()
           // 有配件的商品執行 getAccessory
           if (this.product.accessory) {
-            this.getAccessory();
+            this.getAccessory()
           } else {
-            this.loadings.fullLoading = false;
+            this.loadings.fullLoading = false
           }
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // console.log(err);
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
     },
-    async getOtherProducts() {
-      this.otherProducts = [];
-      if (this.product.category === "配件") {
+    async getOtherProducts () {
+      this.otherProducts = []
+      if (this.product.category === '配件') {
         try {
           const res = await this.$http.get(
             `${VITE_API}/api/${VITE_PATH}/products?category=配件`
-          );
-          this.otherProducts = res.data.products;
+          )
+          this.otherProducts = res.data.products
         } catch (err) {
           // Swal
-          this.userToast("error", err.response.data.message);
+          this.userToast('error', err.response.data.message)
         }
       } else {
-        const categories = ["AR", "VR", "MR", "XR"];
+        const categories = ['AR', 'VR', 'MR', 'XR']
         try {
           await Promise.all(
             categories.map(async (category) => {
               const res = await this.$http.get(
                 `${VITE_API}/api/${VITE_PATH}/products?category=${category}`
-              );
-              this.otherProducts.push(...res.data.products);
+              )
+              this.otherProducts.push(...res.data.products)
             })
-          );
+          )
         } catch (err) {
           // Swal
-          this.userToast("error", err.message);
+          this.userToast('error', err.message)
         }
       }
       // 移除相同的商品
       this.otherProducts.forEach((item, i) => {
         if (item.id === this.product.id) {
-          this.otherProducts.splice(i, 1);
+          this.otherProducts.splice(i, 1)
         }
-      });
+      })
     },
-    async getAccessory() {
+    async getAccessory () {
       const getAccessoryApi = this.product.accessory.map((item) =>
         this.$http.get(`${VITE_API}/api/${VITE_PATH}/product/${item.id}`)
-      );
+      )
       try {
-        const data = await Promise.allSettled(getAccessoryApi);
+        const data = await Promise.allSettled(getAccessoryApi)
         // console.log(data);
         this.accessories = data
-          .filter((item) => item.status === "fulfilled")
-          .map((item) => item.value.data.product);
+          .filter((item) => item.status === 'fulfilled')
+          .map((item) => item.value.data.product)
         // 商品配件的spec預設空值
         this.cart_specs = this.accessories.map((item) => {
-          return { id: item.id, spec: "", qty: 1, check: false };
-        });
-        this.loadings.fullLoading = false;
+          return { id: item.id, spec: '', qty: 1, check: false }
+        })
+        this.loadings.fullLoading = false
       } catch (err) {
-        this.loadings.fullLoading = false;
+        this.loadings.fullLoading = false
         // console.log(err);
         // Swal
-        this.userToast("error", err.response.data.message);
+        this.userToast('error', err.response.data.message)
       }
 
-      this.loadings.fullLoading = false;
+      this.loadings.fullLoading = false
     },
-    changeImg(img) {
-      this.targetImage = img;
+    changeImg (img) {
+      this.targetImage = img
     },
-    ...mapActions(cartStore, ["getCart", "addCart"]),
-    ...mapActions(favoriteStore, ["updateFavorite"]),
+    ...mapActions(cartStore, ['getCart', 'addCart']),
+    ...mapActions(favoriteStore, ['updateFavorite'])
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-    ...mapState(cartStore, ["cart", "cartLoading"]),
-    ...mapState(favoriteStore, ["favorites"]),
+    ...mapState(loadingStore, ['loadings']),
+    ...mapState(cartStore, ['cart', 'cartLoading']),
+    ...mapState(favoriteStore, ['favorites'])
   },
   watch: {
-    qty() {
+    qty () {
       if (this.qty < 1) {
-        this.qty = 1;
+        this.qty = 1
       }
       if (this.qty > 99) {
-        this.qty = 99;
+        this.qty = 99
       }
     },
     // 點擊其他商品時判斷是否有改變參數
-    "$route.params.id"() {
-      if (this.$route.fullPath.includes("/product/")) {
-        this.getProduct(this.$route.params.id);
+    '$route.params.id' () {
+      if (this.$route.fullPath.includes('/product/')) {
+        this.getProduct(this.$route.params.id)
       }
-    },
+    }
   },
-  mounted() {
-    this.getProduct(this.$route.params.id);
+  mounted () {
+    this.getProduct(this.$route.params.id)
   },
   components: {
     Swiper,
-    SwiperSlide,
-  },
-};
+    SwiperSlide
+  }
+}
 </script>
 
 <style>

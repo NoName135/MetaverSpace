@@ -129,86 +129,86 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
-      images: [],
-    };
+      images: []
+    }
   },
   methods: {
-    sendQuest(values) {
-      console.log(values);
-      this.loadings.fullLoading = true;
+    sendQuest (values) {
+      console.log(values)
+      this.loadings.fullLoading = true
       this.$http
         .post(`${VITE_RENDER_API}/contacts`, {
-          name: values["姓名"].trim(),
-          tel: values["電話"],
-          email: values["email"],
+          name: values['姓名'].trim(),
+          tel: values['電話'],
+          email: values.email,
           images: this.images,
-          content: values["遇到的問題"],
+          content: values['遇到的問題']
         })
         .then(() => {
           // console.log(res.data)
-          this.$refs.form.resetForm();
-          this.images = [];
-          this.loadings.fullLoading = false;
-          //Swal
-          this.userToast("success", "成功提交問題");
+          this.$refs.form.resetForm()
+          this.images = []
+          this.loadings.fullLoading = false
+          // Swal
+          this.userToast('success', '成功提交問題')
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          //Swal
-          this.userToast("error", err.message);
-        });
+          this.loadings.fullLoading = false
+          // Swal
+          this.userToast('error', err.message)
+        })
     },
-    handleFile(event) {
+    handleFile (event) {
       // 上傳圖片到 Imgur
       // 在 Localhost 執行的話 index.html需加入 <meta name="referrer" content="no-referrer">
-      console.log(event.target.files[0]);
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("image", file);
+      console.log(event.target.files[0])
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('image', file)
       if (file.size > 2 * 1024 * 1024) {
-        this.userAlert("warning", "圖片上傳失敗", "圖片需小於 2MB");
-        return;
+        this.userAlert('warning', '圖片上傳失敗', '圖片需小於 2MB')
+        return
       }
       if (file) {
-        this.loadings.fullLoading = true;
+        this.loadings.fullLoading = true
         this.$http
-          .post("https://api.imgur.com/3/image", formData, {
+          .post('https://api.imgur.com/3/image', formData, {
             headers: {
-              Authorization: "Client-ID " + "0361c3fa7d90333",
+              Authorization: 'Client-ID ' + '0361c3fa7d90333'
             },
-            mimeType: "multipart/form-data",
+            mimeType: 'multipart/form-data'
           })
           .then((res) => {
             // console.log(res.data);
-            this.images.push({ name: file.name, src: res.data.data.link });
-            this.loadings.fullLoading = false;
-            this.userToast("success", "圖片上傳成功");
+            this.images.push({ name: file.name, src: res.data.data.link })
+            this.loadings.fullLoading = false
+            this.userToast('success', '圖片上傳成功')
           })
           .catch((err) => {
-            this.loadings.fullLoading = false;
+            this.loadings.fullLoading = false
             // Swal
             this.userAlert(
-              "error",
-              "圖片上傳失敗",
+              'error',
+              '圖片上傳失敗',
               err.response.data.data.error
-            );
-          });
+            )
+          })
       }
-    },
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

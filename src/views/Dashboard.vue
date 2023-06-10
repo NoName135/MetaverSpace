@@ -226,82 +226,82 @@
 </template>
 
 <script>
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import loadingStore from "@/stores/loadingStore.js";
-import { mapState } from "pinia";
+import loadingStore from '@/stores/loadingStore.js'
+import { mapState } from 'pinia'
 
-const { VITE_API } = import.meta.env;
+const { VITE_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       checkLogin: false,
       sidebarHide: false,
-      target: "",
-    };
+      target: ''
+    }
   },
   methods: {
-    logout() {
-      const api = `${VITE_API}/logout`;
-      this.loadings.fullLoading = true;
+    logout () {
+      const api = `${VITE_API}/logout`
+      this.loadings.fullLoading = true
       this.$http
         .post(api)
         .then(() => {
-          document.cookie = `loginToken=;expires=${new Date()}`;
-          this.loadings.fullLoading = false;
-          this.$router.push("/login");
+          document.cookie = `loginToken=;expires=${new Date()}`
+          this.loadings.fullLoading = false
+          this.$router.push('/login')
           // Swal
-          this.adminToast("success", "已登出");
+          this.adminToast('success', '已登出')
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // SWal
-          this.adminToast("error", err.response.data.message);
-        });
-    },
+          this.adminToast('error', err.response.data.message)
+        })
+    }
   },
-  mounted() {
+  mounted () {
     const token = document.cookie.replace(
       /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common.Authorization = `${token}`;
-    const api = `${VITE_API}/api/user/check`;
+      '$1'
+    )
+    this.$http.defaults.headers.common.Authorization = `${token}`
+    const api = `${VITE_API}/api/user/check`
 
-    this.loadings.fullLoading = true;
+    this.loadings.fullLoading = true
     this.$http
       .post(api)
       .then(() => {
-        if (this.$route.fullPath === "/admin/products") {
-          this.target = "products";
-        } else if (this.$route.fullPath === "/admin/order") {
-          this.target = "order";
-        } else if (this.$route.fullPath === "/admin/article") {
-          this.target = "article";
-        } else if (this.$route.fullPath === "/admin/reserve") {
-          this.target = "reserve";
-        } else if (this.$route.fullPath === "/admin/coupon") {
-          this.target = "coupon";
-        } else if (this.$route.fullPath === "/admin/contact") {
-          this.target = "contact";
+        if (this.$route.fullPath === '/admin/products') {
+          this.target = 'products'
+        } else if (this.$route.fullPath === '/admin/order') {
+          this.target = 'order'
+        } else if (this.$route.fullPath === '/admin/article') {
+          this.target = 'article'
+        } else if (this.$route.fullPath === '/admin/reserve') {
+          this.target = 'reserve'
+        } else if (this.$route.fullPath === '/admin/coupon') {
+          this.target = 'coupon'
+        } else if (this.$route.fullPath === '/admin/contact') {
+          this.target = 'contact'
         }
 
-        this.loadings.fullLoading = false;
-        this.checkLogin = true;
-        //Swal
-        this.adminToast("success", "登入成功");
+        this.loadings.fullLoading = false
+        this.checkLogin = true
+        // Swal
+        this.adminToast('success', '登入成功')
       })
       .catch((err) => {
-        this.loadings.fullLoading = false;
-        this.$router.push("/login");
-        //Swal
-        this.adminToast("error", err.response.data.message);
-      });
+        this.loadings.fullLoading = false
+        this.$router.push('/login')
+        // Swal
+        this.adminToast('error', err.response.data.message)
+      })
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
-  },
-};
+    ...mapState(loadingStore, ['loadings'])
+  }
+}
 </script>

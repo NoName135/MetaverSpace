@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import VueLoading from "@/components/Loading.vue";
+import VueLoading from '@/components/Loading.vue'
 
 export default {
   components: {
-    VueLoading,
-  },
-};
+    VueLoading
+  }
+}
 </script>
 
 <style>

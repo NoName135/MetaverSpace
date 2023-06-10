@@ -267,92 +267,92 @@
 </template>
 
 <script>
-import loadingStore from "@/stores/loadingStore.js";
+import loadingStore from '@/stores/loadingStore.js'
 
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_RENDER_API } = import.meta.env;
+const { VITE_RENDER_API } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       branches: [],
       branch: {},
-      branchTitle: "台北館",
+      branchTitle: '台北館',
       date: null,
       num: 1,
-      allowDates: [],
-    };
+      allowDates: []
+    }
   },
   methods: {
-    getBranches() {
-      this.loadings.fullLoading = true;
+    getBranches () {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_RENDER_API}/branches`)
         .then((res) => {
           // console.log(res.data);
-          this.branches = res.data;
-          this.branch = res.data[0];
-          this.loadings.fullLoading = false;
+          this.branches = res.data
+          this.branch = res.data[0]
+          this.loadings.fullLoading = false
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          this.userToast("error", err.message);
-        });
+          this.loadings.fullLoading = false
+          this.userToast('error', err.message)
+        })
     },
-    getBranch() {
+    getBranch () {
       this.branches.forEach((item) => {
         if (item.title === this.branchTitle) {
-          this.branch = item;
+          this.branch = item
         }
-      });
+      })
     },
-    createReserve(values) {
+    createReserve (values) {
       // console.log(values);
-      this.loadings.fullLoading = true;
+      this.loadings.fullLoading = true
       this.$http
         .post(`${VITE_RENDER_API}/reserves`, {
           title: this.branchTitle,
           reserve_time: Date.parse(this.date),
           num: this.num,
-          name: values["姓名"].trim(),
-          tel: values["電話"],
-          email: values["email"],
-          message: values["備註"],
-          is_reserve: false,
+          name: values['姓名'].trim(),
+          tel: values['電話'],
+          email: values.email,
+          message: values['備註'],
+          is_reserve: false
         })
         .then(() => {
-          this.userToast("success", "預約成功");
-          this.num = 1;
-          this.$refs.form.resetForm();
-          this.loadings.fullLoading = false;
+          this.userToast('success', '預約成功')
+          this.num = 1
+          this.$refs.form.resetForm()
+          this.loadings.fullLoading = false
         })
         .catch((err) => {
-          this.loadings.fullLoading = false;
-          this.userToast("error", err.message);
-        });
-    },
+          this.loadings.fullLoading = false
+          this.userToast('error', err.message)
+        })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
+  mounted () {
     // 日期預設為 2 天後的 10:00
     this.date = new Date(
       new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).setHours(10, 0, 0, 0)
-    );
+    )
     // Vue-datepicker 可選擇的日期
     this.allowDates = Array.from(
       { length: 14 },
       (_, index) => new Date(Date.now() + (index + 2) * 24 * 60 * 60 * 1000)
-    );
+    )
 
-    this.getBranches();
-  },
-};
+    this.getBranches()
+  }
+}
 </script>
 
 <style>

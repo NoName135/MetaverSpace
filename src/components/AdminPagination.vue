@@ -74,11 +74,11 @@
 <script>
 export default {
   props: { pageObj: Object },
-  emits: ["emitPage"],
+  emits: ['emitPage'],
   methods: {
-    changePage(page) {
-      this.$emit("emitPage", page);
-    },
-  },
-};
+    changePage (page) {
+      this.$emit('emitPage', page)
+    }
+  }
+}
 </script>

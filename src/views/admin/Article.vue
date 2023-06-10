@@ -125,97 +125,97 @@
 </template>
 
 <script>
-import Pagination from "@/components/AdminPagination.vue";
-import ArticleModal from "@/components/modal/ArticleModal.vue";
-import DeleteModal from "@/components/modal/DeleteModal.vue";
+import Pagination from '@/components/AdminPagination.vue'
+import ArticleModal from '@/components/modal/ArticleModal.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
 
-import swalMixin from "@/mixins/swal.js";
+import swalMixin from '@/mixins/swal.js'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
-const { VITE_API, VITE_PATH } = import.meta.env;
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
   mixins: [swalMixin],
-  data() {
+  data () {
     return {
       articles: [],
       pagination: {},
-      articleLoading: [],
-    };
+      articleLoading: []
+    }
   },
   methods: {
-    getArticles(page = 1, process) {
-      this.loadings.fullLoading = true;
+    getArticles (page = 1, process) {
+      this.loadings.fullLoading = true
       this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/admin/articles?page=${page}`)
         .then((res) => {
-          console.log(res.data);
-          const { articles, pagination } = res.data;
-          this.articles = articles;
-          this.pagination = pagination;
-          this.loadings.fullLoading = false;
+          console.log(res.data)
+          const { articles, pagination } = res.data
+          this.articles = articles
+          this.pagination = pagination
+          this.loadings.fullLoading = false
 
-          if (process === "update") {
+          if (process === 'update') {
             // Swal
-            this.adminToast("success", "已更新貼文資料");
-          } else if (process === "delete") {
+            this.adminToast('success', '已更新貼文資料')
+          } else if (process === 'delete') {
             // SWal
-            this.adminToast("success", `已刪除貼文資料`);
+            this.adminToast('success', '已刪除貼文資料')
           }
           // 點擊頁碼後移動到上方
           window.scrollTo({
             top: 0,
-            behavior: "smooth",
-          });
+            behavior: 'smooth'
+          })
         })
         .catch((err) => {
           // console.log(err);
-          this.loadings.fullLoading = false;
+          this.loadings.fullLoading = false
           // Swal
-          this.adminToast("error", err.response.data.message);
-        });
+          this.adminToast('error', err.response.data.message)
+        })
     },
-    async updateEnable(article) {
+    async updateEnable (article) {
       // content 屬性要使用 article/{id} 的 API 才會出現
       try {
-        this.articleLoading.push(article.id);
+        this.articleLoading.push(article.id)
         const { data } = await this.$http.get(
           `${VITE_API}/api/${VITE_PATH}/admin/article/${article.id}`
-        );
+        )
         // console.log(data);
-        const content = data.article.content;
+        const content = data.article.content
         await this.$http.put(
           `${VITE_API}/api/${VITE_PATH}/admin/article/${article.id}`,
           {
-            data: { ...article, content },
+            data: { ...article, content }
           }
-        );
+        )
 
-        this.articleLoading.shift();
-        this.adminToast("success", "已更新發布狀態");
+        this.articleLoading.shift()
+        this.adminToast('success', '已更新發布狀態')
       } catch (err) {
         // console.log(err);
-        this.articleLoading.shift();
-        this.adminToast("error", err.response.data.message);
-        this.getArticles(this.page.current_page);
+        this.articleLoading.shift()
+        this.adminToast('error', err.response.data.message)
+        this.getArticles(this.page.current_page)
       }
-    },
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.articleModal = this.$refs.articleModal;
-    this.deleteModal = this.$refs.deleteModal;
-    this.getArticles();
+  mounted () {
+    this.articleModal = this.$refs.articleModal
+    this.deleteModal = this.$refs.deleteModal
+    this.getArticles()
   },
   components: {
     Pagination,
     ArticleModal,
-    DeleteModal,
-  },
-};
+    DeleteModal
+  }
+}
 </script>
 
 <style>

@@ -101,15 +101,15 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      step: 1,
-    };
+      step: 1
+    }
   },
   methods: {
-    changeStep(num) {
-      this.step = num;
-    },
-  },
-};
+    changeStep (num) {
+      this.step = num
+    }
+  }
+}
 </script>

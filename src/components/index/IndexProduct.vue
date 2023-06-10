@@ -209,224 +209,224 @@
 </template>
 
 <script>
-import reserve from "@/assets/images/reserve.jpg";
-import subscribe from "@/assets/images/subscribe.jpg";
+import reserve from '@/assets/images/reserve.jpg'
+import subscribe from '@/assets/images/subscribe.jpg'
 
 // Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue'
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 // import required modules
-import { Navigation, Pagination, Autoplay } from "swiper";
+import { Navigation, Pagination, Autoplay } from 'swiper'
 
-import { mapState } from "pinia";
-import loadingStore from "@/stores/loadingStore.js";
+import { mapState } from 'pinia'
+import loadingStore from '@/stores/loadingStore.js'
 
-import gsapMixin from "@/mixins/gsap.js";
-import swalMixin from "@/mixins/swal.js";
+import gsapMixin from '@/mixins/gsap.js'
+import swalMixin from '@/mixins/swal.js'
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH } = import.meta.env
 
 export default {
-  emits: ["loading"],
+  emits: ['loading'],
   mixins: [gsapMixin, swalMixin],
-  data() {
+  data () {
     return {
       allOrders: [],
       hotProducts: [],
       productModules: [Navigation, Pagination, Autoplay],
-      reserve: reserve,
-      subscribe: subscribe,
-    };
+      reserve,
+      subscribe
+    }
   },
   methods: {
-    async getProducts() {
+    async getProducts () {
       // 首頁 loading 樣式
-      this.loadings.opacity = 1;
-      this.loadings.fullLoading = true;
-      this.loadings.progress = 0;
+      this.loadings.opacity = 1
+      this.loadings.fullLoading = true
+      this.loadings.progress = 0
 
       await this.$http
         .get(`${VITE_API}/api/${VITE_PATH}/orders`)
         .then((res) => {
-          this.allOrders = res.data.orders;
-          this.loadings.progress = Math.ceil(100 / 9);
+          this.allOrders = res.data.orders
+          this.loadings.progress = Math.ceil(100 / 9)
         })
         .catch((err) => {
           // Swal
-          this.userToast("error", err.response.data.message);
-        });
+          this.userToast('error', err.response.data.message)
+        })
 
-      const soldProducts = [];
+      const soldProducts = []
       // 將訂單所有類別數量匯入 soldProducts
       for (let i = 0; i < this.allOrders.length; i++) {
-        const productObj = this.allOrders[i].products;
+        const productObj = this.allOrders[i].products
         // 取出訂單全部 products 資料
         Object.values(productObj).forEach((item) => {
           // 圖表計算 (不含配件)
-          if (item.product.category !== "配件") {
-            let newProduct = true;
+          if (item.product.category !== '配件') {
+            let newProduct = true
             // 尋找 Columns 是否有重複出現
             for (let j = 0; j < soldProducts.length; j++) {
               if (soldProducts[j].id === item.product.id) {
-                soldProducts[j].qty += item.qty;
-                newProduct = false;
+                soldProducts[j].qty += item.qty
+                newProduct = false
               }
             }
             if (newProduct) {
-              soldProducts.push({ id: item.product.id, qty: item.qty });
+              soldProducts.push({ id: item.product.id, qty: item.qty })
             }
           }
-        });
+        })
       }
       // 已售出商品由多到少排序
-      soldProducts.sort((a, b) => b.qty - a.qty);
+      soldProducts.sort((a, b) => b.qty - a.qty)
       // 依序匯入 soldProducts
       try {
-        const productsArray = [];
+        const productsArray = []
         for (let i = 0; i < 8; i++) {
           const { data } = await this.$http.get(
             `${VITE_API}/api/${VITE_PATH}/product/${soldProducts[i].id}`
-          );
+          )
 
-          productsArray.push(data.product);
-          this.loadings.progress = Math.ceil((100 / 9) * (i + 2));
+          productsArray.push(data.product)
+          this.loadings.progress = Math.ceil((100 / 9) * (i + 2))
         }
-        this.hotProducts = productsArray;
+        this.hotProducts = productsArray
         await setTimeout(() => {
-          this.loadings.fullLoading = false;
-          this.$emit("loading", false);
+          this.loadings.fullLoading = false
+          this.$emit('loading', false)
           // 變回其他 loading 樣式
-          this.loadings.opacity = 0.8;
-        }, 300);
+          this.loadings.opacity = 0.8
+        }, 300)
       } catch (err) {
-        this.loadings.fullLoading = false;
-        this.$emit("loading", false);
+        this.loadings.fullLoading = false
+        this.$emit('loading', false)
         // 變回其他 loading 樣式
-        this.loadings.opacity = 0.8;
+        this.loadings.opacity = 0.8
         // Swal
-        this.userToast("error", err);
+        this.userToast('error', err)
       }
     },
     // 熱銷產品 GSAP
-    gsapProducts() {
+    gsapProducts () {
       this.gsap.from(this.$refs.products, {
         scrollTrigger: {
           trigger: this.$refs.products,
-          start: "top 75%",
-          toggleActions: "play none none none",
+          start: 'top 75%',
+          toggleActions: 'play none none none'
           // markers: true,
         },
         y: 100,
         opacity: 0,
         scale: 0.5,
-        ease: "back",
-        duration: 0.8,
-      });
+        ease: 'back',
+        duration: 0.8
+      })
     },
     // 服務項目 GSAP
-    gsapService() {
+    gsapService () {
       this.gsap
         .timeline({
           scrollTrigger: {
             trigger: this.$refs.service,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
             // markers: true,
-          },
+          }
         })
         .from(this.$refs.service1, {
           y: 100,
           opacity: 0,
-          ease: "back",
-          duration: 0.8,
+          ease: 'back',
+          duration: 0.8
         })
         .from(
           this.$refs.service2,
-          { y: 100, opacity: 0, ease: "back", duration: 0.8, delay: 0.3 },
-          "<"
+          { y: 100, opacity: 0, ease: 'back', duration: 0.8, delay: 0.3 },
+          '<'
         )
         .from(
           this.$refs.service3,
-          { y: 100, opacity: 0, ease: "back", duration: 0.8, delay: 0.3 },
-          "<"
-        );
+          { y: 100, opacity: 0, ease: 'back', duration: 0.8, delay: 0.3 },
+          '<'
+        )
     },
     // 預約及訂閱 GSAP
-    gsapOther() {
+    gsapOther () {
       this.ScrollTrigger.matchMedia({
-        "(max-width: 767px)": () => {
+        '(max-width: 767px)': () => {
           this.gsap
             .timeline({
               scrollTrigger: {
                 trigger: this.$refs.other,
-                start: "top 45%",
-                toggleActions: "play none none reverse",
+                start: 'top 45%',
+                toggleActions: 'play none none reverse'
                 // markers: true,
-              },
+              }
             })
             .from(this.$refs.other1, {
               y: 100,
               opacity: 0,
-              ease: "expo",
-              duration: 1,
+              ease: 'expo',
+              duration: 1
             })
             .from(
               this.$refs.other2,
-              { y: 100, opacity: 0, ease: "expo", duration: 1, delay: 0.3 },
-              "<"
-            );
+              { y: 100, opacity: 0, ease: 'expo', duration: 1, delay: 0.3 },
+              '<'
+            )
         },
-        "(min-width: 768px)": () => {
+        '(min-width: 768px)': () => {
           this.gsap
             .timeline({
               scrollTrigger: {
                 trigger: this.$refs.other,
-                start: "top 70%",
-                toggleActions: "play none none reverse",
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
                 // markers: true,
-              },
+              }
             })
             .from(this.$refs.other1, {
               x: -100,
               opacity: 0,
-              ease: "expo",
-              duration: 1,
+              ease: 'expo',
+              duration: 1
             })
             .from(
               this.$refs.other2,
-              { x: 100, opacity: 0, ease: "expo", duration: 1 },
-              "<"
-            );
-        },
-      });
+              { x: 100, opacity: 0, ease: 'expo', duration: 1 },
+              '<'
+            )
+        }
+      })
     },
-    getCoupon() {
+    getCoupon () {
       this.$swal.fire({
-        title: "恭喜獲得優惠券",
-        text: "85 折優惠碼 subscribe，可於購物車使用",
-        icon: "info",
-        confirmButtonColor: "#39B7DF",
-        backdrop: " rgba(0,0,0,0.8)",
-      });
-    },
+        title: '恭喜獲得優惠券',
+        text: '85 折優惠碼 subscribe，可於購物車使用',
+        icon: 'info',
+        confirmButtonColor: '#39B7DF',
+        backdrop: ' rgba(0,0,0,0.8)'
+      })
+    }
   },
   computed: {
-    ...mapState(loadingStore, ["loadings"]),
+    ...mapState(loadingStore, ['loadings'])
   },
-  mounted() {
-    this.getProducts();
-    this.gsapProducts();
-    this.gsapService();
-    this.gsapOther();
+  mounted () {
+    this.getProducts()
+    this.gsapProducts()
+    this.gsapService()
+    this.gsapOther()
   },
   components: {
     Swiper,
-    SwiperSlide,
-  },
-};
+    SwiperSlide
+  }
+}
 </script>
 
 <style>
