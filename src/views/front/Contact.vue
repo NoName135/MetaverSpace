@@ -6,7 +6,7 @@
       >
         聯絡客服團隊
       </h1>
-      <V-form
+      <VForm
         ref="form"
         class="border px-4 py-8 rounded-b"
         v-slot="{ errors }"
@@ -16,7 +16,7 @@
           <label for="name" class="block mb-2 text-sm font-medium text-white"
             >您的姓名</label
           >
-          <V-field
+          <VField
             type="text"
             id="name"
             name="姓名"
@@ -32,7 +32,7 @@
             class="block mt-6 mb-2 text-sm font-medium text-white"
             >您的電話 (請輸入手機格式：09)</label
           >
-          <V-field
+          <VField
             type="tel"
             id="tel"
             name="電話"
@@ -48,7 +48,7 @@
             class="block mt-6 mb-2 text-sm font-medium text-white"
             >您的Email</label
           >
-          <V-field
+          <VField
             type="email"
             id="email"
             name="email"
@@ -64,7 +64,7 @@
             class="block mt-6 mb-2 text-sm font-medium text-white"
             >您遇到的問題</label
           >
-          <V-field
+          <VField
             id="message"
             name="遇到的問題"
             as="textarea"
@@ -74,7 +74,7 @@
             rules="required"
             placeholder="請詳述您的問題"
             required
-          ></V-field>
+          ></VField>
           <ErrorMessage
             name="遇到的問題"
             class="text-warm text-sm"
@@ -96,7 +96,7 @@
                 type="file"
                 accept="image/png, image/jpeg"
                 class="absolute top-0 w-0"
-                @change="(e) => handleFile(e)"
+                @change="handleFile"
                 :disabled="images.length === 5"
               />
             </div>
@@ -110,7 +110,7 @@
             :key="i"
           >
             <p>{{ image.name }}</p>
-            <font-awesome-icon
+            <FontAwesomeIcon
               :icon="['fas', 'xmark']"
               class="ml-4 cursor-pointer text-warm hover:text-warm2 text-lg"
               @click="images.splice(i, 1)"
@@ -123,7 +123,7 @@
         <div class="mt-6 w-full flex justify-end">
           <button type="submit" class="primary-button">提交問題</button>
         </div>
-      </V-form>
+      </VForm>
     </div>
   </div>
 </template>
@@ -133,6 +133,8 @@ import loadingStore from "@/stores/loadingStore.js";
 import { mapState } from "pinia";
 
 import swalMixin from "@/mixins/swal.js";
+
+const { VITE_RENDER_API } = import.meta.env;
 
 export default {
   mixins: [swalMixin],
@@ -146,7 +148,7 @@ export default {
       console.log(values);
       this.loadings.fullLoading = true;
       this.$http
-        .post("https://metarverspace-server.onrender.com/contacts", {
+        .post(`${VITE_RENDER_API}/contacts`, {
           name: values["姓名"].trim(),
           tel: values["電話"],
           email: values["email"],

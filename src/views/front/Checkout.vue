@@ -1,12 +1,17 @@
 <template>
   <div class="mt-nav container px-2 md:px-0">
     <ol
-      class="pt-8 flex items-center w-full mb-4 sm:mb-6 px-0 md:px-20 lg:px-32 xl:px-40 relative"
+      class="pt-12 flex items-center w-full mb-4 sm:mb-6 px-0 md:px-20 lg:px-32 xl:px-40 relative"
     >
       <li
-        class="z-10 flex w-full items-center after:content-[''] after:h-1.5 after:bg-primary2 after:transition-all after:duration-500"
+        class="z-10 flex w-full items-center after:content-[''] after:h-1.5 after:bg-primary2 after:transition-all after:duration-500 relative"
         :class="[step > 1 ? 'after:w-full' : 'after:w-0']"
       >
+        <p
+          class="absolute -top-6 md:-top-8 -left-1 md:-left-[7px] lg:-left-1.5 xl:-left-1 text-xs md:text-base font-medium whitespace-nowrap"
+        >
+          訂單資訊
+        </p>
         <div
           class="flex items-center justify-center rounded-full w-10 h-10 md:h-12 md:w-12 xl:w-14 xl:h-14 bg-primary shrink-0"
         >
@@ -26,9 +31,14 @@
         </div>
       </li>
       <li
-        class="z-10 flex w-full items-center after:content-[''] after:h-1.5 after:bg-primary2 after:transition-all after:duration-500"
+        class="z-10 flex w-full items-center after:content-[''] after:h-1.5 after:bg-primary2 after:transition-all after:duration-500 relative"
         :class="[step > 2 ? 'after:w-full' : ' after:w-0']"
       >
+        <p
+          class="absolute -top-6 md:-top-8 -left-1 md:-left-[7px] lg:-left-1.5 xl:-left-1 text-xs md:text-base font-medium whitespace-nowrap"
+        >
+          付款資訊
+        </p>
         <div
           class="flex items-center justify-center rounded-full w-10 h-10 md:h-12 md:w-12 xl:w-14 xl:h-14 shrink-0 transition-all duration-500"
           :class="[step > 1 ? 'bg-primary' : ' bg-gray-700']"
@@ -52,7 +62,12 @@
           </svg>
         </div>
       </li>
-      <li class="z-10 flex items-center">
+      <li class="z-10 flex items-center relative">
+        <p
+          class="absolute -top-6 md:-top-8 -left-1 md:-left-[7px] lg:-left-1.5 xl:-left-1 text-xs md:text-base font-medium whitespace-nowrap"
+        >
+          完成付款
+        </p>
         <div
           class="flex items-center justify-center rounded-full w-10 h-10 md:h-12 md:w-12 xl:w-14 xl:h-14 shrink-0 transition-all duration-500"
           :class="[step > 2 ? 'bg-primary' : ' bg-gray-700']"

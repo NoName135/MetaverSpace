@@ -5,7 +5,7 @@
         to="../products"
         class="cursor-pointer hover:text-primary text-xl mx-2 lg:mx-0 hover:underline"
       >
-        <font-awesome-icon :icon="['fas', 'arrow-left']" />
+        <FontAwesomeIcon :icon="['fas', 'arrow-left']" />
         返回商品列表
       </RouterLink>
 
@@ -17,12 +17,12 @@
           :to="`/article/${articles[article.index - 1]?.id}`"
           class="pr-4 cursor-pointer hover:text-primary text-xl lg:mx-0 hover:underline"
         >
-          <font-awesome-icon :icon="['fas', 'chevron-left']" />
+          <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
           上一篇
         </RouterLink>
         <p v-else>
           <span class="pr-4 cursor-not-allowed text-xl lg:mx-0 text-gray-400">
-            <font-awesome-icon :icon="['fas', 'chevron-left']" />
+            <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
             上一篇
           </span>
         </p>
@@ -32,12 +32,12 @@
           class="pl-4 cursor-pointer hover:text-primary text-xl lg:mx-0 hover:underline"
         >
           下一篇
-          <font-awesome-icon :icon="['fas', 'chevron-right']" />
+          <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
         </RouterLink>
         <p v-else>
           <span class="pr-4 cursor-not-allowed text-xl lg:mx-0 text-gray-400">
             下一篇
-            <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
           </span>
         </p>
       </div>

@@ -22,14 +22,15 @@
             <div class="flex justify-between items-center mb-4">
               <RouterLink
                 :to="`/product/${item.id}`"
-                class="mt-2 sm:mt-0 sm:mr-4 dark-solid-button py-2 relative whitespace-nowrap"
+                class="mt-2 sm:mt-0 sm:mr-4 dark-solid-button py-2 whitespace-nowrap"
               >
                 查看商品
-                <font-awesome-icon
+                <FontAwesomeIcon
                   :icon="['fas', 'arrow-up-right-from-square']"
-                  class="absolute top-1 right-1 text-sm lg:text-md"
-                ></font-awesome-icon> </RouterLink
-              ><font-awesome-icon
+                  class="ml-1 text-sm lg:text-md"
+                />
+              </RouterLink>
+              <FontAwesomeIcon
                 v-if="cartLoading.cartId !== item.id"
                 :icon="['fas', 'trash-can']"
                 class="text-xl lg:text-2xl hover:text-warm cursor-pointer"
@@ -60,7 +61,7 @@
             <div class="grid grid-cols-5 gap-6">
               <img
                 :src="item.imageUrl"
-                alt=""
+                :alt="item.title"
                 class="hidden md:flex self-center w-full h-28 lg:h-32 xl:h-40 object-cover rounded bg-white"
               />
               <div

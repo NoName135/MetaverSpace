@@ -81,7 +81,7 @@ import loadingStore from "@/stores/loadingStore.js";
 
 import swalMixin from "@/mixins/swal.js";
 
-const { VITE_API, VITE_PATH } = import.meta.env;
+const { VITE_API, VITE_PATH, VITE_RENDER_API } = import.meta.env;
 
 export default {
   props: ["page"],
@@ -109,9 +109,9 @@ export default {
       } else if (this.target == "文章") {
         url = `${VITE_API}/api/${VITE_PATH}/admin/article/${this.tempItem.id}`;
       } else if (this.target == "預約") {
-        url = `https://metarverspace-server.onrender.com/reserves/${this.tempItem.id}`;
+        url = `${VITE_RENDER_API}/reserves/${this.tempItem.id}`;
       } else if (this.target == "留言") {
-        url = `https://metarverspace-server.onrender.com/contacts/${this.tempItem.id}`;
+        url = `${VITE_RENDER_API}/contacts/${this.tempItem.id}`;
       }
 
       this.loadings.fullLoading = true;

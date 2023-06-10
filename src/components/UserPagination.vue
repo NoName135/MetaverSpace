@@ -33,8 +33,8 @@
         class="px-3 py-1.5 leading-tight border border-primary2"
         :class="[
           page === pageObj.current_page
-            ? 'pointer-events-none bg-primary text-white'
-            : 'bg-primary3 text-gray-400 hover:bg-primary2 hover:text-white',
+            ? 'pointer-events-none bg-primary text-dark'
+            : 'bg-primary3 text-white hover:bg-primary2',
         ]"
         @click.prevent="changePage(page)"
       >

@@ -31,11 +31,11 @@
       </div>
     </div>
     <div ref="scrollDown" class="absolute bottom-4 left-[calc(50%-56px)]">
-      <img :src="titleIcon" class="w-28" alt="" />
+      <img :src="titleIcon" class="w-28" alt="scrollDown" />
       <div
         class="absolute bottom-7 left-[calc(50%-12px)] bg-white rounded-full w-6 h-6 animate-bounce-0.5"
       >
-        <font-awesome-icon
+        <FontAwesomeIcon
           :icon="['fas', 'arrow-down']"
           class="text-primary text-lg font-bold mx-auto w-full"
         />
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import titleImg from "@/images/title.jpg";
-import titleIcon from "@/images/controller.png";
+import titleImg from "@/assets/images/title.jpg";
+import titleIcon from "@/assets/images/controller.png";
 
 import gsapMixin from "@/mixins/gsap.js";
 
@@ -90,7 +90,7 @@ export default {
       );
       indexTitle.from(
         this.$refs.scrollDown,
-        { y: 500, opacity: 0, ease: "bounce", duration: 1, delay: 0.8 },
+        { y: 500, opacity: 0, ease: "back", duration: 0.8, delay: 0.5 },
         "<"
       );
     },

@@ -9,17 +9,65 @@
         class="mt-4 md:mt-0 w-32 focus:outline-none focus:ring-4 font-medium rounded text-sm px-5 py-2.5 bg-secondary hover:bg-secondary2 focus:ring-secondary3"
       >
         預約查詢
-        <font-awesome-icon
+        <FontAwesomeIcon
           :icon="['fas', 'arrow-up-right-from-square']"
           class="ml-2"
         />
       </RouterLink>
     </div>
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-black/50 rounded p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h2 class="text-xl md:text-2xl mb-8 font-semibold">
+              MetaverSpace {{ branch.title }}
+            </h2>
+            <div class="space-y-6">
+              <h5 class="text-lg md:text-xl">
+                <FontAwesomeIcon :icon="['fas', 'location-dot']" class="ml-1" />
+                <span class="ml-4">{{ branch.address }}</span>
+              </h5>
+              <h5 class="text-lg md:text-xl">
+                <FontAwesomeIcon :icon="['fas', 'phone']" />
+                <span class="ml-4">{{ branch.tel }}</span>
+              </h5>
+              <h5 class="text-lg md:text-xl">
+                <FontAwesomeIcon :icon="['fas', 'clock']" />
+                <span class="ml-4">{{ branch.open_time }}</span>
+              </h5>
+              <h5 class="text-lg md:text-xl">
+                <FontAwesomeIcon :icon="['fas', 'dollar-sign']" class="ml-1" />
+                <span class="ml-5">{{ branch.price }}</span>
+              </h5>
+              <h5 class="text-lg md:text-xl">
+                <FontAwesomeIcon :icon="['fab', 'facebook']" />
+                <a
+                  :href="branch.facebook"
+                  target="_blank"
+                  class="ml-4 hover:underline hover:text-primary"
+                  >前往 Facebook</a
+                >
+              </h5>
+            </div>
+          </div>
+          <div>
+            <img
+              :src="branch.image"
+              class="w-full h-[420px] object-cover object-center"
+              :alt="branch.title"
+            />
+          </div>
+        </div>
+        <iframe
+          class="w-full h-[240px] sm:h-[360px] md:h-[480px] mx-auto border-0 rounded mt-8"
+          :src="branch.src"
+          loading="lazy"
+          allowfullscreen=""
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
       <div>
-        <h3
-          class="bg-white/20 text-gray-300 p-3 rounded text-lg md:text-xl font-medium"
-        >
+        <h3 class="text-gray-300 py-3 text-lg md:text-xl font-bold border-b-2">
           門市預約
         </h3>
         <div class="mt-6 space-y-6">
@@ -87,11 +135,11 @@
         </div>
         <div class="mt-10">
           <h3
-            class="bg-white/20 text-gray-300 p-3 rounded text-lg md:text-xl font-medium"
+            class="text-gray-300 py-3 text-lg md:text-xl font-bold border-b-2"
           >
             預約人資訊
           </h3>
-          <V-form
+          <VForm
             class="mt-6 space-y-6"
             ref="form"
             v-slot="{ errors }"
@@ -103,7 +151,7 @@
                 class="block mb-2 text-sm font-medium text-white"
                 >姓名</label
               >
-              <V-field
+              <VField
                 type="text"
                 name="姓名"
                 id="name"
@@ -124,7 +172,7 @@
                 class="block mb-2 text-sm font-medium text-white"
                 >電話 (請輸入手機格式：09)</label
               >
-              <V-field
+              <VField
                 type="tel"
                 name="電話"
                 id="name"
@@ -145,7 +193,7 @@
                 class="block mb-2 text-sm font-medium text-white"
                 >Email</label
               >
-              <V-field
+              <VField
                 type="tel"
                 name="email"
                 id="name"
@@ -166,18 +214,18 @@
                 class="block mb-2 text-sm font-medium text-white"
                 >備註</label
               >
-              <V-field
+              <VField
                 id="message"
                 as="textarea"
                 name="備註"
                 rows="4"
                 class="block p-2.5 w-full text-sm bg-gray-600 border-gray-500 placeholder-gray-400 rounded-lg border focus:ring-primary focus:border-primary text-white"
                 placeholder="請輸入備註"
-              ></V-field>
+              ></VField>
             </div>
             <div class="mt-8 flex flex-col">
               <div class="flex items-center">
-                <V-field
+                <VField
                   id="agreeCheck"
                   type="checkbox"
                   name="同意"
@@ -211,62 +259,7 @@
             <button type="submit" class="mt-6 w-full primary-button">
               送出預約
             </button>
-          </V-form>
-        </div>
-      </div>
-      <div class="lg:col-span-2 bg-black/50 rounded p-4">
-        <iframe
-          class="w-full h-[240px] sm:h-[360px] md:h-[480px] mx-auto border-0 rounded"
-          :src="branch.src"
-          loading="lazy"
-          allowfullscreen=""
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h2 class="text-xl md:text-2xl my-8 font-semibold">
-              MetaverSpace {{ branch.title }}
-            </h2>
-            <div class="space-y-6">
-              <h5 class="text-lg md:text-xl">
-                <font-awesome-icon
-                  :icon="['fas', 'location-dot']"
-                  class="ml-1"
-                />
-                <span class="ml-4">{{ branch.address }}</span>
-              </h5>
-              <h5 class="text-lg md:text-xl">
-                <font-awesome-icon :icon="['fas', 'phone']" />
-                <span class="ml-4">{{ branch.tel }}</span>
-              </h5>
-              <h5 class="text-lg md:text-xl">
-                <font-awesome-icon :icon="['fas', 'clock']" />
-                <span class="ml-4">{{ branch.open_time }}</span>
-              </h5>
-              <h5 class="text-lg md:text-xl">
-                <font-awesome-icon
-                  :icon="['fas', 'dollar-sign']"
-                  class="ml-1"
-                />
-                <span class="ml-5">{{ branch.price }}</span>
-              </h5>
-              <h5 class="text-lg md:text-xl">
-                <font-awesome-icon :icon="['fab', 'facebook']" />
-                <a
-                  :href="branch.facebook"
-                  target="_blank"
-                  class="ml-4 hover:underline hover:text-primary"
-                  >前往 Facebook</a
-                >
-              </h5>
-            </div>
-          </div>
-          <div>
-            <img
-              :src="branch.image"
-              class="md:mt-8 w-full h-[420px] object-cover object-center"
-            />
-          </div>
+          </VForm>
         </div>
       </div>
     </div>
@@ -279,6 +272,9 @@ import loadingStore from "@/stores/loadingStore.js";
 import { mapState } from "pinia";
 
 import swalMixin from "@/mixins/swal.js";
+
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   mixins: [swalMixin],
   data() {
@@ -295,7 +291,7 @@ export default {
     getBranches() {
       this.loadings.fullLoading = true;
       this.$http
-        .get("https://metarverspace-server.onrender.com/branches")
+        .get(`${VITE_RENDER_API}/branches`)
         .then((res) => {
           // console.log(res.data);
           this.branches = res.data;
@@ -318,7 +314,7 @@ export default {
       // console.log(values);
       this.loadings.fullLoading = true;
       this.$http
-        .post("https://metarverspace-server.onrender.com/reserves", {
+        .post(`${VITE_RENDER_API}/reserves`, {
           title: this.branchTitle,
           reserve_time: Date.parse(this.date),
           num: this.num,

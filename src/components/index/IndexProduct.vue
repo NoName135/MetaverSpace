@@ -1,11 +1,6 @@
 <template>
   <section class="container py-24">
-    <div class="text-center mb-12">
-      <h3 class="text-3xl font-bold mb-6">熱銷商品</h3>
-      <RouterLink to="./products" class="dark-solid-button"
-        >瀏覽所有商品</RouterLink
-      >
-    </div>
+    <h3 class="text-3xl font-bold text-center mb-8">熱銷商品</h3>
     <div ref="products" class="overflow-hidden">
       <div class="m-0 lg:-mx-[25%]">
         <swiper
@@ -36,7 +31,7 @@
                 <img
                   class="h-1/2 md:h-3/5 w-full object-cover bg-white relative"
                   :src="product.imageUrl"
-                  alt=""
+                  :alt="product.title"
                 />
                 <div class="absolute top-2 left-3 sm:top-4 sm:left-6">
                   <div class="flex items-center">
@@ -96,7 +91,7 @@
                       class="text-primary hover:underline"
                     >
                       了解詳情
-                      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                      <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
                     </RouterLink>
                   </div>
                 </div>
@@ -105,6 +100,11 @@
           </template>
         </swiper>
       </div>
+    </div>
+    <div class="text-center mb-20">
+      <RouterLink to="./products" class="dark-solid-button mx-auto">
+        瀏覽所有商品
+      </RouterLink>
     </div>
     <div
       ref="service"
@@ -115,7 +115,7 @@
         class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1"
       >
         <h5 class="text-xl lg:text-3xl font-bold">
-          <font-awesome-icon :icon="['fas', 'truck-fast']" />
+          <FontAwesomeIcon :icon="['fas', 'truck-fast']" />
           <span class="ml-6">快速出貨</span>
         </h5>
         <p class="mt-4">現貨24小時出貨，最晚2天內出貨。</p>
@@ -125,7 +125,7 @@
         class="border rounded p-3 lg:p-5 col-span-2 xs:col-span-1"
       >
         <h5 class="text-xl lg:text-3xl font-bold">
-          <font-awesome-icon :icon="['fas', 'dollar-sign']" />
+          <FontAwesomeIcon :icon="['fas', 'dollar-sign']" />
           <span class="ml-6">滿額免運</span>
         </h5>
         <p class="mt-4">單筆訂單滿2000即享免運宅配服務。</p>
@@ -135,7 +135,7 @@
         class="border rounded p-3 lg:p-5 col-span-2 md:col-span-1"
       >
         <h5 class="text-xl lg:text-3xl font-bold">
-          <font-awesome-icon :icon="['fas', 'screwdriver-wrench']" />
+          <FontAwesomeIcon :icon="['fas', 'screwdriver-wrench']" />
           <span class="ml-6">售後服務</span>
         </h5>
         <p class="mt-4">購買過程或收到商品遇到問題，聯繫我們會盡快回覆您。</p>
@@ -153,11 +153,11 @@
         }"
       >
         <h5 class="text-xl lg:text-3xl font-bold">不清楚商品是否符合需求？</h5>
-        <div class="w-12 border border-b-8 mt-2"></div>
-        <p class="mt-4">
+        <div class="w-12 border border-b-8 mt-4"></div>
+        <p class="mt-4 min-h-[72px]">
           我們提供預約體驗，每小時只要100元，即可體驗各類商品，找出適合您的設備。
         </p>
-        <div class="mt-10 xl:mt-16">
+        <div class="mt-10 xl:mt-6">
           <RouterLink to="./reserve" class="primary-button"
             >前往預約
           </RouterLink>
@@ -171,41 +171,46 @@
         }"
       >
         <h5 class="text-xl lg:text-3xl font-bold">訂閱電子報獲取優惠券</h5>
-        <div class="w-12 border border-b-8 mt-2"></div>
-        <V-form v-slot="{ errors }" @submit="getCoupon">
-          <div class="relative w-full">
-            <div
-              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-            >
-              <font-awesome-icon
-                :icon="['fas', 'envelope']"
-                class="text-black/70"
+        <div class="w-12 border border-b-8 mt-4"></div>
+        <VForm v-slot="{ errors }" @submit="getCoupon">
+          <div class="min-h-[72px]">
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <FontAwesomeIcon
+                  :icon="['fas', 'envelope']"
+                  class="text-black/70"
+                />
+              </div>
+              <VField
+                type="text"
+                name="Email"
+                class="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-primary0 focus:border-primary0 block w-full pl-10 p-2.5"
+                :class="{ 'border-warm': errors['email'] }"
+                rules="required|email"
+                placeholder="Email"
               />
             </div>
-            <V-field
-              type="text"
-              name="Email"
-              class="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-primary0 focus:border-primary0 block w-full pl-10 p-2.5"
-              :class="{ 'border-warm': errors['email'] }"
-              rules="required|email"
-              placeholder="Email"
-            />
+            <div>
+              <ErrorMessage
+                name="Email"
+                class="text-warm text-sm"
+              ></ErrorMessage>
+            </div>
           </div>
-          <div>
-            <ErrorMessage name="Email" class="text-warm text-sm"></ErrorMessage>
-          </div>
-          <button type="submit" class="mt-10 primary-button">
+          <button type="submit" class="mt-6 primary-button">
             <span>訂閱</span>
           </button>
-        </V-form>
+        </VForm>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import reserve from "@/images/reserve.jpg";
-import subscribe from "@/images/subscribe.jpg";
+import reserve from "@/assets/images/reserve.jpg";
+import subscribe from "@/assets/images/subscribe.jpg";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";

@@ -40,15 +40,15 @@
             >
               上架
               <span class="text-xs" v-if="sortBy === 'is_enabled'">
-                <span v-if="ascending"
-                  ><font-awesome-icon :icon="['fas', 'sort-up']"
-                /></span>
-                <span v-else
-                  ><font-awesome-icon :icon="['fas', 'sort-down']"
-                /></span>
+                <span v-if="ascending">
+                  <FontAwesomeIcon :icon="['fas', 'sort-up']" />
+                </span>
+                <span v-else>
+                  <FontAwesomeIcon :icon="['fas', 'sort-down']" />
+                </span>
               </span>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'sort']" />
+                <FontAwesomeIcon :icon="['fas', 'sort']" />
               </span>
             </th>
             <th
@@ -61,15 +61,15 @@
             >
               類別
               <span v-if="sortBy === 'category'">
-                <span v-if="ascending"
-                  ><font-awesome-icon :icon="['fas', 'sort-up']"
-                /></span>
-                <span v-else
-                  ><font-awesome-icon :icon="['fas', 'sort-down']"
-                /></span>
+                <span v-if="ascending">
+                  <FontAwesomeIcon :icon="['fas', 'sort-up']" />
+                </span>
+                <span v-else>
+                  <FontAwesomeIcon :icon="['fas', 'sort-down']" />
+                </span>
               </span>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'sort']" />
+                <FontAwesomeIcon :icon="['fas', 'sort']" />
               </span>
             </th>
             <th
@@ -82,15 +82,15 @@
             >
               品牌
               <span class="text-xs" v-if="sortBy === 'brand'">
-                <span v-if="ascending"
-                  ><font-awesome-icon :icon="['fas', 'sort-up']"
-                /></span>
-                <span v-else
-                  ><font-awesome-icon :icon="['fas', 'sort-down']"
-                /></span>
+                <span v-if="ascending">
+                  <FontAwesomeIcon :icon="['fas', 'sort-up']" />
+                </span>
+                <span v-else>
+                  <FontAwesomeIcon :icon="['fas', 'sort-down']" />
+                </span>
               </span>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'sort']" />
+                <FontAwesomeIcon :icon="['fas', 'sort']" />
               </span>
             </th>
             <th scope="col" class="px-6 py-3 whitespace-nowrap">商品名稱</th>
@@ -105,15 +105,15 @@
             >
               售價
               <span class="text-xs" v-if="sortBy === 'price'">
-                <span v-if="ascending"
-                  ><font-awesome-icon :icon="['fas', 'sort-up']"
-                /></span>
-                <span v-else
-                  ><font-awesome-icon :icon="['fas', 'sort-down']"
-                /></span>
+                <span v-if="ascending">
+                  <FontAwesomeIcon :icon="['fas', 'sort-up']" />
+                </span>
+                <span v-else>
+                  <FontAwesomeIcon :icon="['fas', 'sort-down']" />
+                </span>
               </span>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'sort']" />
+                <FontAwesomeIcon :icon="['fas', 'sort']" />
               </span>
             </th>
             <th scope="col" class="px-6 py-3 whitespace-nowrap">
@@ -266,18 +266,18 @@ export default {
           this.allProducts = Object.values(res.data.products).reverse();
           // 判斷是否顯示配件
           if (!this.showAccessory) {
-            this.allProducts = this.allProducts.filter((item) => {
-              return item.category !== "配件";
-            });
+            this.allProducts = this.allProducts.filter(
+              (item) => item.category !== "配件"
+            );
           }
           // 根據頁碼顯示商品
-          this.products = this.allProducts.filter((item, i) => {
-            return Math.ceil((i + 1) / 10) == page;
-          });
+          this.products = this.allProducts.filter(
+            (item, i) => Math.ceil((i + 1) / 10) == page
+          );
           // 從全部商品找出 category 為配件商品
-          this.accessories = Object.values(res.data.products).filter((item) => {
-            return item.category === "配件";
-          });
+          this.accessories = Object.values(res.data.products).filter(
+            (item) => item.category === "配件"
+          );
           // 頁碼物件處理
           const totalPages = Math.ceil(
             Object.keys(this.allProducts).length / 10
@@ -307,9 +307,9 @@ export default {
         });
     },
     changePages(page = 1) {
-      this.products = Object.values(this.allProducts).filter((item, i) => {
-        return Math.ceil((i + 1) / 10) == page;
-      });
+      this.products = Object.values(this.allProducts).filter(
+        (item, i) => Math.ceil((i + 1) / 10) == page
+      );
 
       this.pagination.current_page = page;
       this.pagination.has_pre = page === 1 ? false : true;

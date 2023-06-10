@@ -37,10 +37,7 @@
       </h3>
     </section>
     <div class="mt-10 flex justify-center">
-      <RouterLink
-        :to="{ name: '商品列表' }"
-        replace
-        class="w-40 primary-button"
+      <RouterLink :to="{ name: '商品列表' }" replace class="w-40 primary-button"
         >繼續購物</RouterLink
       >
     </div>
@@ -93,7 +90,7 @@
               >
                 <img
                   :src="cart.product.imageUrl"
-                  alt=""
+                  :alt="cart.product.title"
                   class="hidden md:flex w-full h-16 xl:h-24 object-cover rounded bg-white"
                 />
                 <div
@@ -238,7 +235,7 @@ export default {
     this.$emit("emit-step", 3);
 
     const detailCollapseOptions = {
-      onToggle: (item) => {
+      onToggle: function (item) {
         if (item._visible) {
           item._triggerEl
             .querySelector("[data-accordion-icon]")

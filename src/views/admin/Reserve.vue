@@ -47,7 +47,7 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap">{{ reserve.num }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <font-awesome-icon
+              <FontAwesomeIcon
                 :icon="['fas', 'check']"
                 class="ml-1"
                 v-if="reserve.message"
@@ -113,6 +113,8 @@ import { mapState } from "pinia";
 
 import swalMixin from "@/mixins/swal.js";
 
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   mixins: [swalMixin],
   data() {
@@ -127,7 +129,7 @@ export default {
     getReserves(page = 1, process) {
       this.loadings.fullLoading = true;
       this.$http
-        .get("https://metarverspace-server.onrender.com/reserves")
+        .get(`${VITE_RENDER_API}/reserves`)
         .then((res) => {
           // console.log(res.data);
           this.allReserves = res.data.sort((a, b) => b.id - a.id);
@@ -150,12 +152,8 @@ export default {
     },
     filterReserves(page = 1) {
       this.reserves = this.allReserves
-        .filter((item) => {
-          return !this.titleBranch || item.title === this.titleBranch;
-        })
-        .filter((item, i) => {
-          return Math.ceil((i + 1) / 10) == page;
-        });
+        .filter((item) => !this.titleBranch || item.title === this.titleBranch)
+        .filter((item, i) => Math.ceil((i + 1) / 10) == page);
       // 頁碼物件處理
       const totalPages = Math.ceil(this.allReserves.length / 10);
       this.pagination = {

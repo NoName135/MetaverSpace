@@ -246,7 +246,7 @@
                       class="absolute w-8 top-0 right-0 px-3 py-2 admin-delete-solid-button rounded-l-none rounded-r-lg border text-sm"
                       @click="tempProduct.spec.splice(i, 1)"
                     >
-                      <font-awesome-icon :icon="['fas', 'xmark']" />
+                      <FontAwesomeIcon :icon="['fas', 'xmark']" />
                     </button>
                   </div>
                 </div>
@@ -268,7 +268,7 @@
             </div>
             <div v-if="tempProduct.category != '配件'">
               <label class="typo__label">選擇配件</label>
-              <multiselect
+              <Multiselect
                 v-model="tempProduct.accessory"
                 label="name"
                 track-by="id"
@@ -277,7 +277,7 @@
                 :options="accessoryOptions"
                 :disabled="accessoryDisable"
                 class="mt-2"
-              ></multiselect>
+              ></Multiselect>
             </div>
             <div>
               <h3 for="message" class="mb-2 font-medium text-gray-900">
@@ -343,6 +343,7 @@
                   <img
                     :src="tempProduct.contentImages[i]"
                     class="mt-4 w-full h-36 object-cover object-center rounded"
+                    :alt="`商品詳細圖片${i}`"
                     v-if="tempProduct.contentImages[i]"
                   />
                   <button
@@ -447,6 +448,7 @@ import { mapState } from "pinia";
 import loadingStore from "@/stores/loadingStore.js";
 
 import swalMixin from "@/mixins/swal.js";
+import Multiselect from "vue-multiselect";
 
 const { VITE_API, VITE_PATH } = import.meta.env;
 
@@ -648,7 +650,8 @@ export default {
   },
   components: {
     UploadImg,
-  },
+    Multiselect
+},
 };
 </script>
 

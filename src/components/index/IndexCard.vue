@@ -11,34 +11,77 @@
       <swiper
         ref="indexCardSwiper"
         :slidesPerView="1.8"
+        :centeredSlides="true"
         :breakpoints="{
+          320: {
+            slidesPerView: 2,
+          },
+          400: {
+            slidesPerView: 2.5,
+          },
           480: {
-            slidesPerView: 2.6,
+            slidesPerView: 3,
+          },
+          640: {
+            slidesPerView: 3.5,
           },
         }"
-        :centeredSlides="true"
         :loop="true"
         :spaceBetween="30"
         :navigation="true"
         :modules="cardModules"
         class="indexCardSwiper text-white mt-6"
       >
-        <swiper-slide v-for="card in cards" :key="card.text">
+        <swiper-slide v-for="(card, index) in cards" :key="card.text">
           <div
-            class="backdrop-blur-[2px] border rounded w-40 h-full mx-auto py-8"
-            style="
-              background: linear-gradient(
-                142.88deg,
-                rgba(255, 255, 255, 0.16) 8.09%,
-                rgba(255, 255, 255, 0.064) 27.24%,
-                rgba(255, 255, 255, 0.064) 34.42%,
-                rgba(255, 255, 255, 0.1088) 48.78%,
-                rgba(255, 255, 255, 0) 100%
-              );
-            "
+            class="h-36 relative"
+            @mouseenter="playCard(index)"
+            @mouseleave="reverseCard(index)"
           >
-            <img class="h-12 mx-auto" :src="card.img" alt="" />
-            <p class="mt-2 font-bold text-2xl">{{ card.text }}</p>
+            <div
+              :ref="`cardFront${index}`"
+              class="card-front backdrop-blur-[2px] border rounded w-40 h-full mx-auto py-8 flex flex-col justify-around absolute backFaceHidden"
+              style="
+                background: linear-gradient(
+                  142.88deg,
+                  rgba(255, 255, 255, 0.16) 8.09%,
+                  rgba(255, 255, 255, 0.064) 27.24%,
+                  rgba(255, 255, 255, 0.064) 34.42%,
+                  rgba(255, 255, 255, 0.1088) 48.78%,
+                  rgba(255, 255, 255, 0) 100%
+                );
+              "
+            >
+              <img class="h-2/5 mx-auto" :src="card.img" :alt="card.text" />
+              <p class="mt-2 font-bold text-2xl">{{ card.text }}</p>
+            </div>
+            <div
+              :ref="`cardBack${index}`"
+              class="card-front backdrop-blur-[2px] border rounded w-40 h-full mx-auto py-8 flex flex-col justify-around absolute backFaceHidden"
+              style="
+                background: linear-gradient(
+                  142.88deg,
+                  rgba(255, 255, 255, 0.16) 8.09%,
+                  rgba(255, 255, 255, 0.064) 27.24%,
+                  rgba(255, 255, 255, 0.064) 34.42%,
+                  rgba(255, 255, 255, 0.1088) 48.78%,
+                  rgba(255, 255, 255, 0) 100%
+                );
+              "
+            >
+              <img
+                class="h-2/5 mx-auto opacity-30"
+                :src="card.img"
+                :alt="card.text"
+              />
+              <div
+                class="flex flex-col justify-around items-start w-full h-full p-4 absolute left-0"
+              >
+                <p class="text-left text-sm leading-loose">
+                  {{ card.description }}
+                </p>
+              </div>
+            </div>
           </div>
         </swiper-slide>
       </swiper>
@@ -75,7 +118,7 @@
           );
         "
       >
-        <img class="h-2/5 mx-auto" :src="card.img" />
+        <img class="h-2/5 mx-auto" :src="card.img" :alt="card.text" />
         <p class="mt-2 font-bold text-2xl">{{ card.text }}</p>
       </div>
       <div
@@ -92,17 +135,19 @@
           );
         "
       >
-        <img class="h-2/5 mx-auto opacity-30" :src="card.img" />
+        <img
+          class="h-2/5 mx-auto opacity-30"
+          :src="card.img"
+          :alt="card.text"
+        />
         <div
           class="flex flex-col justify-around items-start w-full h-full p-4 absolute left-0"
         >
-          <p
-            class="text-left text-md leading-relaxed xl:text-lg xl:leading-loose"
-          >
-            {{ card.description }}
-          </p>
-          <p class="text-xl xl:text-2xl font-bold self-center">
+          <p class="hidden lg:block text-xl xl:text-2xl font-bold self-center">
             {{ card.text }}
+          </p>
+          <p class="text-left text-md xl:text-lg leading-loose">
+            {{ card.description }}
           </p>
         </div>
       </div>
@@ -121,13 +166,13 @@ import { Navigation } from "swiper";
 
 import gsapMixin from "@/mixins/gsap.js";
 
-import game from "@/images/cards/game.png";
-import sport from "@/images/cards/sport.png";
-import movie from "@/images/cards/movie.png";
-import active from "@/images/cards/active.png";
-import social from "@/images/cards/social.png";
-import work from "@/images/cards/work.png";
-import study from "@/images/cards/study.png";
+import game from "@/assets/images/cards/game.png";
+import sport from "@/assets/images/cards/sport.png";
+import movie from "@/assets/images/cards/movie.png";
+import active from "@/assets/images/cards/active.png";
+import social from "@/assets/images/cards/social.png";
+import work from "@/assets/images/cards/work.png";
+import study from "@/assets/images/cards/study.png";
 
 export default {
   mixins: [gsapMixin],
@@ -218,20 +263,20 @@ export default {
         "(min-width: 768px) and (max-width: 975px)": () => {
           moveCard.from(this.$refs.card0, { xPercent: "150" });
           moveCard.from(this.$refs.card1, { xPercent: "250" });
-          moveCard.from(this.$refs.card2, { xPercent: "150" });
+          moveCard.from(this.$refs.card2, { xPercent: "250" }, "<");
           moveCard.from(this.$refs.card3, { xPercent: "250" });
-          moveCard.from(this.$refs.card4, { xPercent: "150" });
+          moveCard.from(this.$refs.card4, { xPercent: "250" }, "<");
           moveCard.from(this.$refs.card5, { xPercent: "250" });
-          moveCard.from(this.$refs.card6, { xPercent: "150" });
+          moveCard.from(this.$refs.card6, { xPercent: "250" }, "<");
         },
         "(min-width: 976px)": () => {
           moveCard.from(this.$refs.card0, { xPercent: "350" });
-          moveCard.from(this.$refs.card1, { xPercent: "250" });
-          moveCard.from(this.$refs.card2, { xPercent: "150" });
+          moveCard.from(this.$refs.card1, { xPercent: "350" }, "<");
+          moveCard.from(this.$refs.card2, { xPercent: "350" }, "<");
           moveCard.from(this.$refs.card3, { xPercent: "450" });
-          moveCard.from(this.$refs.card4, { xPercent: "350" });
-          moveCard.from(this.$refs.card5, { xPercent: "250" });
-          moveCard.from(this.$refs.card6, { xPercent: "150" });
+          moveCard.from(this.$refs.card4, { xPercent: "450" }, "<");
+          moveCard.from(this.$refs.card5, { xPercent: "450" }, "<");
+          moveCard.from(this.$refs.card6, { xPercent: "450" }, "<");
         },
       });
     },

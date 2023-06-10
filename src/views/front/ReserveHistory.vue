@@ -5,7 +5,7 @@
         <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">預約記錄</h1>
         <div class="px-8">
           <div class="py-8 flex justify-center">
-            <V-form
+            <VForm
               class="w-96"
               ref="form"
               v-slot="{ errors }"
@@ -17,7 +17,7 @@
                   class="block mb-2 text-sm font-medium text-white"
                   >姓名</label
                 >
-                <V-field
+                <VField
                   type="text"
                   id="name"
                   name="姓名"
@@ -38,7 +38,7 @@
                   class="block mb-2 text-sm font-medium text-white"
                   >電話或Email</label
                 >
-                <V-field
+                <VField
                   type="text"
                   id="name"
                   name="電話或Email"
@@ -81,7 +81,7 @@
                 </svg>
                 預約查詢
               </button>
-            </V-form>
+            </VForm>
           </div>
         </div>
       </div>
@@ -101,6 +101,8 @@ import ReserveDetail from "@/components/ReserveDetail.vue";
 
 import swalMixin from "@/mixins/swal.js";
 
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   mixins: [swalMixin],
   data() {
@@ -117,7 +119,7 @@ export default {
 
       this.searchLoading = true;
       this.$http
-        .get("https://metarverspace-server.onrender.com/reserves")
+        .get(`${VITE_RENDER_API}/reserves`)
         .then((res) => {
           // console.log(res.data);
           this.reserves = res.data;

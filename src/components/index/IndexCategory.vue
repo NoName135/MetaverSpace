@@ -156,10 +156,10 @@
 <script>
 import gsapMixin from "@/mixins/gsap.js";
 
-import AR from "@/images/AR.jpg";
-import VR from "@/images/VR.jpg";
-import MR from "@/images/MR.jpg";
-import XR from "@/images/XR.jpg";
+import AR from "@/assets/images/AR.jpg";
+import VR from "@/assets/images/VR.jpg";
+import MR from "@/assets/images/MR.jpg";
+import XR from "@/assets/images/XR.jpg";
 
 export default {
   mixins: [gsapMixin],

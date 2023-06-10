@@ -15,14 +15,14 @@
                 : userToast('info', '收藏清單沒有商品')
             "
           >
-            收藏清單
+            從收藏加入
           </button>
         </div>
         <div class="px-8 pb-4">
           <!-- 購物車商品 -->
           <div
             class="mt-10 border-b flex flex-col items-center pb-6"
-            v-if="!Object.keys(cart.carts)?.length"
+            v-if="!cart.carts?.length"
           >
             <p class="text-2xl md:text-3xl">購物車沒有商品</p>
             <RouterLink to="./products" class="primary-button mt-4"
@@ -34,17 +34,14 @@
               <div class="flex justify-between items-center">
                 <button
                   type="button"
-                  class="w-18 focus:outline-none focus:ring-4 font-medium rounded text-sm px-4 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3 disabled:bg-primary2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  class="w-18 focus:outline-none focus:ring-4 font-medium text-dark hover:text-white rounded text-sm px-4 py-2.5 bg-primary hover:bg-primary2 focus:ring-primary3 disabled:bg-primary2 disabled:text-gray-400 disabled:cursor-not-allowed"
                   :disabled="cartLoading.cartId === item.id"
                   @click="moveToFavorite(item.id, item.product)"
                 >
-                  <font-awesome-icon
-                    :icon="['fas', 'heart']"
-                    class="mr-2"
-                  ></font-awesome-icon
-                  ><span>移動至收藏</span>
+                  <FontAwesomeIcon :icon="['fas', 'heart']" class="mr-2" />
+                  <span>移動至收藏</span>
                 </button>
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="cartLoading.cartId !== item.id"
                   :icon="['fas', 'trash-can']"
                   class="text-xl lg:text-2xl hover:text-warm cursor-pointer"
@@ -75,7 +72,7 @@
               <div class="grid grid-cols-12 md:gap-6 mt-6">
                 <img
                   :src="item.product.imageUrl"
-                  alt=""
+                  :alt="item.product.title"
                   class="col-span-3 hidden md:block w-full h-28 lg:h-32 xl:h-40 object-cover rounded bg-white"
                 />
                 <div
@@ -87,13 +84,13 @@
                     </h2>
                     <RouterLink
                       :to="`/product/${item.product.id}`"
-                      class="mt-2 sm:mt-0 dark-solid-button py-2 relative whitespace-nowrap"
+                      class="mt-2 sm:mt-0 dark-solid-button py-2 whitespace-nowrap"
                     >
                       查看商品
-                      <font-awesome-icon
+                      <FontAwesomeIcon
                         :icon="['fas', 'arrow-up-right-from-square']"
-                        class="absolute top-1 right-1 text-sm lg:text-md"
-                      ></font-awesome-icon>
+                        class="ml-1 text-sm lg:text-md"
+                      />
                     </RouterLink>
                   </div>
                   <h3 class="text-xl lg:text-2xl mt-4 lg:mt-6 font-bold">
@@ -143,7 +140,7 @@
                         </button>
                         <input
                           type="number"
-                          class="w-12 bg-dark text-sm text-end focus:border-secondary disabled:text-gray-500"
+                          class="w-12 bg-dark text-sm text-center focus:border-secondary disabled:text-gray-500"
                           min="1"
                           max="99"
                           v-model.lazy="spec.qty"
@@ -167,7 +164,7 @@
                         </button>
                       </div>
                     </div>
-                    <font-awesome-icon
+                    <FontAwesomeIcon
                       :icon="['fas', 'xmark']"
                       size="2xl"
                       class="sm:hidden hover:text-warm"
@@ -209,7 +206,7 @@
                         </button>
                         <input
                           type="number"
-                          class="w-12 bg-dark text-sm text-end focus:border-secondary disabled:text-gray-500"
+                          class="w-12 bg-dark text-sm text-center focus:border-secondary disabled:text-gray-500"
                           min="1"
                           max="99"
                           v-model.lazy="item.qty"

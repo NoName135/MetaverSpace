@@ -45,7 +45,7 @@
           >
             <img
               :src="item.imageUrl"
-              alt=""
+              :alt="item.title"
               class="hidden md:flex self-center w-full h-28 object-cover rounded bg-white"
             />
             <div

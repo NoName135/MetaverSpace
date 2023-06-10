@@ -66,6 +66,8 @@ import loadingStore from "@/stores/loadingStore.js";
 
 import { mapState } from "pinia";
 
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   props: ["reserves"],
   methods: {
@@ -95,9 +97,7 @@ export default {
           if (result.isConfirmed) {
             this.loadings.fullLoading = true;
             this.$http
-              .delete(
-                `https://metarverspace-server.onrender.com/reserves/${item.id}`
-              )
+              .delete(`${VITE_RENDER_API}/reserves/${item.id}`)
               .then(() => {
                 // console.log(res);
                 this.$emit("update-reserves", item.id);

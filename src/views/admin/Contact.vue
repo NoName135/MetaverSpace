@@ -74,6 +74,8 @@ import { mapState } from "pinia";
 
 import swalMixin from "@/mixins/swal.js";
 
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   mixins: [swalMixin],
   data() {
@@ -88,7 +90,7 @@ export default {
     getContacts(page = 1, process) {
       this.loadings.fullLoading = true;
       this.$http
-        .get("https://metarverspace-server.onrender.com/contacts")
+        .get(`${VITE_RENDER_API}/contacts`)
         .then((res) => {
           this.allContacts = res.data.sort((a, b) => b.id - a.id);
           this.filterContacts(page);
@@ -106,9 +108,9 @@ export default {
         });
     },
     filterContacts(page = 1) {
-      this.contacts = this.allContacts.filter((item, i) => {
-        return Math.ceil((i + 1) / 10) == page;
-      });
+      this.contacts = this.allContacts.filter(
+        (item, i) => Math.ceil((i + 1) / 10) == page
+      );
       // 頁碼物件處理
       const totalPages = Math.ceil(this.allContacts.length / 10);
       this.pagination = {

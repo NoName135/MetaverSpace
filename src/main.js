@@ -10,10 +10,6 @@ import ScrollTop from "@/components/ScrollTop.vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-// vue-loading
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
-
 // sweetAlert2
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -63,6 +59,8 @@ import {
   faSortDown,
   faDeleteLeft,
   faCircleXmark,
+  faCaretUp,
+  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUp } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -96,7 +94,9 @@ library.add(
   faSortUp,
   faSortDown,
   faDeleteLeft,
-  faCircleXmark
+  faCircleXmark,
+  faCaretUp,
+  faCaretDown
 );
 
 // vee-validate
@@ -126,7 +126,7 @@ defineRule("agree", (value) => {
 // vee-validate 語系
 configure({
   generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
-  // validateOnInput: true, // 當輸入任何內容直接進行驗證
+  validateOnInput: true, // 當輸入任何內容直接進行驗證
 });
 setLocale("zh_TW"); // 設定預設語系
 
@@ -148,12 +148,11 @@ app.use(VueSweetalert2, swalOptions);
 app.use(CKEditor);
 
 app.component("ScrollTop", ScrollTop);
-app.component("VueLoading", Loading);
 app.component("FontAwesomeIcon", FontAwesomeIcon);
 app.component("VForm", Form);
 app.component("VField", Field);
 app.component("ErrorMessage", ErrorMessage);
-app.component("multiselect", Multiselect);
+app.component("Multiselect", Multiselect);
 app.component("VueDatePicker", VueDatePicker);
 
 app.mount("#app");

@@ -6,12 +6,12 @@
       後台管理系統
     </h1>
 
-    <V-form class="pt-10 w-80 mx-auto" v-slot="{ errors }" @submit="login">
+    <VForm class="pt-10 w-80 mx-auto" v-slot="{ errors }" @submit="login">
       <div class="mb-6">
         <label for="email" class="block mb-2 text-md font-medium text-gray-900"
           >帳號</label
         >
-        <V-field
+        <VField
           type="email"
           id="email"
           name="email"
@@ -22,7 +22,7 @@
           :class="[errors['email'] ? 'bg-rose-100 border-rose-500' : '']"
           rules="required|email"
         >
-        </V-field>
+        </VField>
         <ErrorMessage
           name="email"
           class="mt-2 ml-2 text-sm text-rose-500"
@@ -34,7 +34,7 @@
           class="block mb-2 text-md font-medium text-gray-900"
           >密碼</label
         >
-        <V-field
+        <VField
           type="password"
           id="password"
           name="password"
@@ -44,7 +44,7 @@
           :class="[errors['password'] ? 'bg-rose-100 border-rose-500' : '']"
           rules="required"
         >
-        </V-field>
+        </VField>
         <ErrorMessage
           name="password"
           class="mt-2 ml-2 text-sm text-rose-500"
@@ -57,7 +57,7 @@
       >
         登入
       </button>
-    </V-form>
+    </VForm>
   </div>
 </template>
 

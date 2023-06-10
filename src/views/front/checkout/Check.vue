@@ -77,7 +77,7 @@
                 >
                   <img
                     :src="cart.product.imageUrl"
-                    alt=""
+                    :alt="cart.product.title"
                     class="hidden md:flex w-full h-16 xl:h-24 object-cover rounded bg-white"
                   />
                   <div
@@ -209,7 +209,7 @@ export default {
     this.$emit("emit-step", 2);
 
     const detailCollapseOptions = {
-      onToggle: (item) => {
+      onToggle: function (item) {
         if (item._visible) {
           item._triggerEl
             .querySelector("[data-accordion-icon]")

@@ -145,7 +145,7 @@
                 <button
                   type="button"
                   class="admin-delete-button"
-                  @click="this.reserveModal.hide()"
+                  @click="reserveModal.hide()"
                 >
                   取消
                 </button>
@@ -190,6 +190,8 @@ import { mapState } from "pinia";
 
 import swalMixin from "@/mixins/swal.js";
 
+const { VITE_RENDER_API } = import.meta.env;
+
 export default {
   mixins: [swalMixin],
   data() {
@@ -218,12 +220,9 @@ export default {
     updateReserve() {
       this.loadings.fullLoading = true;
       this.$http
-        .put(
-          `https://metarverspace-server.onrender.com/reserves/${this.tempReserve.id}`,
-          {
-            ...this.tempReserve,
-          }
-        )
+        .put(`${VITE_RENDER_API}/reserves/${this.tempReserve.id}`, {
+          ...this.tempReserve,
+        })
         .then(() => {
           // console.log(res.data);
           this.$emit("updateReserves", this.page, "update");

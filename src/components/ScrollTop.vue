@@ -5,7 +5,7 @@
     class="bottom-24 right-8 md:right-12 lg:right-20 z-20 cursor-pointer fixed"
     @click="gsapScrollTop()"
   >
-    <font-awesome-icon
+    <FontAwesomeIcon
       :icon="['far', 'circle-up']"
       class="text-white text-3xl md:text-4xl lg:text-5xl"
     />

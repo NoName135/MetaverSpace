@@ -92,6 +92,7 @@
             <img
               :src="tempArticle.image"
               class="mt-4 w-full h-80 object-cover object-center"
+              :alt="tempArticle.title"
               v-if="tempArticle.image"
             />
           </div>
@@ -130,7 +131,7 @@
                       class="absolute w-8 top-0 right-0 px-3 py-2 admin-delete-solid-button rounded-l-none rounded-r-lg border text-sm"
                       @click="tempArticle.tag.splice(i, 1)"
                     >
-                      <font-awesome-icon :icon="['fas', 'xmark']" />
+                      <FontAwesomeIcon :icon="['fas', 'xmark']" />
                     </button>
                   </div>
                 </div>

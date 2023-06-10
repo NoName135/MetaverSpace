@@ -192,10 +192,11 @@
                   @click.prevent="payLink(order.id, order.is_paid)"
                 >
                   {{ order.is_paid ? "已付款" : "未付款" }}
-                  <font-awesome-icon
+                  <FontAwesomeIcon
                     :icon="['fas', 'arrow-up-right-from-square']"
                     class="ml-1"
-                /></a>
+                  />
+                </a>
               </td>
             </tr>
           </tbody>
@@ -319,7 +320,7 @@ export default {
         const detailAccordionOptions = {
           activeClasses: "bg-secondary text-white",
           inactiveClasses: "bg-secondary2 text-gray-400",
-          onToggle: (item) => {
+          onToggle: function (item) {
             item._items.forEach((data) => {
               if (data.active) {
                 data.triggerEl

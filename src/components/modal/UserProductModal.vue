@@ -137,7 +137,7 @@
                 </button>
                 <input
                   type="number"
-                  class="w-12 bg-dark text-sm text-end focus:border-secondary"
+                  class="w-12 bg-dark text-sm text-center focus:border-secondary"
                   min="1"
                   max="99"
                   v-model.lazy="qty"

@@ -9,12 +9,12 @@
       <div class="container flex flex-wrap items-center justify-between">
         <RouterLink to="/" class="flex items-center" @click="targetLink = ''">
           <img
-            src="../../src/images/Logo.png"
+            src="@/assets/images/Logo.png"
             class="h-16 mr-3"
             alt="MetaverSpace"
           />
           <span
-            class="self-center text-2xl font-bold whitespace-nowrap text-white"
+            class="hidden sm:block self-center text-2xl font-bold whitespace-nowrap text-white"
             >MetaverSpace</span
           >
         </RouterLink>
@@ -22,13 +22,13 @@
           <!-- favorite button -->
           <div ref="navFavBtn" class="relative" @click.stop="toggleFav">
             <div class="group">
-              <font-awesome-icon
+              <FontAwesomeIcon
                 :icon="['fas', 'heart']"
                 class="text-white text-2xl text-center cursor-pointer group-hover:text-primary"
               />
               <!-- badge -->
               <div
-                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
+                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold bg-warm2 border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
                 v-if="favorites.length > 0"
               >
                 {{ favorites.length }}
@@ -37,7 +37,7 @@
             <!-- favorite menu -->
             <div
               ref="navFav"
-              class="w-[240px] sm:w-[360px] z-10 hidden rounded-md shadow absolute top-14 sm:top-16 lg:top-[72px] -right-36 backdrop-opacity-[2px] border border-white/38 bg-dark"
+              class="w-[240px] sm:w-[360px] z-10 hidden rounded-md shadow absolute top-[68px] sm:top-16 lg:top-[72px] -right-36 backdrop-opacity-[2px] border border-white/38 bg-dark"
               @click.stop="toggleFav"
             >
               <div class="p-2 bg-white/10">
@@ -53,6 +53,7 @@
                         <img
                           :src="item.imageUrl"
                           class="w-14 h-14 object-cover bg-white"
+                          :alt="item.title"
                         />
                       </div>
                       <div
@@ -70,7 +71,7 @@
                       <div
                         class="basis-1/12 flex justify-center items-center mx-1"
                       >
-                        <font-awesome-icon
+                        <FontAwesomeIcon
                           :icon="['fas', 'xmark']"
                           size="2x"
                           class="text-center cursor-pointer hover:text-warm"
@@ -105,13 +106,13 @@
           <!-- cart button -->
           <div ref="navCartBtn" class="ml-8 relative" @click.stop="toggleCart">
             <div class="group">
-              <font-awesome-icon
+              <FontAwesomeIcon
                 :icon="['fas', 'shopping-cart']"
                 class="text-white text-2xl text-center cursor-pointer group-hover:text-primary"
               />
               <!-- badge -->
               <div
-                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-warm border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
+                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold bg-warm2 border-2 border-white rounded-full -top-2 -right-2 cursor-pointer"
                 v-if="cart.carts?.length > 0"
               >
                 {{ cart.carts?.length }}
@@ -120,7 +121,7 @@
             <!-- cart menu -->
             <div
               ref="navCart"
-              class="w-[240px] sm:w-[360px] z-10 hidden rounded-md shadow absolute top-14 sm:top-16 lg:top-[72px] -right-20 backdrop-opacity-[2px] border border-white/38 bg-dark"
+              class="w-[240px] sm:w-[360px] z-10 hidden rounded-md shadow absolute top-[68px] sm:top-16 lg:top-[72px] -right-20 backdrop-opacity-[2px] border border-white/38 bg-dark"
               @click.stop="toggleCart"
             >
               <div class="p-2 bg-white/10">
@@ -136,6 +137,7 @@
                         <img
                           :src="item.product.imageUrl"
                           class="w-14 h-14 object-cover bg-white"
+                          :alt="item.product.title"
                         />
                       </div>
                       <div
@@ -167,22 +169,62 @@
                                 :disabled="cartLoading.cartId === item.id"
                                 v-if="item.cart_spec?.length > 1"
                               >
-                                <font-awesome-icon
+                                <FontAwesomeIcon
                                   :icon="['fas', 'circle-xmark']"
                                 />
                               </button>
                               <span>規格：{{ spec.title }}</span>
                             </div>
-                            <div class="ml-2 whitespace-nowrap">
+                            <div
+                              class="flex items-center ml-2 whitespace-nowrap"
+                            >
                               <span>數量：</span>
                               <input
                                 type="number"
                                 min="1"
-                                class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
+                                class="rounded text-sm text-dark text-center focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
                                 v-model.lazy="spec.qty"
                                 @change="updateCart(item, i)"
                                 :disabled="cartLoading.cartId === item.id"
                               />
+                              <div class="hidden sm:flex flex-col -mt-1">
+                                <button
+                                  type="button"
+                                  class="text-xs h-3 disabled:text-gray-400 disabled:cursor-not-allowed"
+                                  @click="
+                                    () => {
+                                      spec.qty += 1;
+                                      updateCart(item, i);
+                                    }
+                                  "
+                                  :disabled="
+                                    spec.qty === 99 ||
+                                    cartLoading.cartId === item.id
+                                  "
+                                >
+                                  <FontAwesomeIcon
+                                    :icon="['fas', 'fa-caret-up']"
+                                  />
+                                </button>
+                                <button
+                                  type="button"
+                                  class="text-xs h-3 disabled:text-gray-400 disabled:cursor-not-allowed"
+                                  @click="
+                                    () => {
+                                      spec.qty -= 1;
+                                      updateCart(item, i);
+                                    }
+                                  "
+                                  :disabled="
+                                    spec.qty === 1 ||
+                                    cartLoading.cartId === item.id
+                                  "
+                                >
+                                  <FontAwesomeIcon
+                                    :icon="['fas', 'fa-caret-down']"
+                                  />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </template>
@@ -192,15 +234,50 @@
                           <input
                             type="number"
                             min="1"
-                            class="rounded text-sm text-dark text-right focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
+                            class="rounded text-sm text-dark text-center focus:ring-primary0 focus:border-primary0 h-6 w-11 mr-1 disabled:text-gray-400"
                             v-model.lazy="item.qty"
                             @change="updateCart(item)"
                             :disabled="cartLoading.cartId === item.id"
                           />
+                          <div class="hidden sm:flex flex-col -mt-1">
+                            <button
+                              type="button"
+                              class="text-xs h-3 disabled:text-gray-400 disabled:cursor-not-allowed"
+                              @click="
+                                () => {
+                                  item.qty += 1;
+                                  updateCart(item, i);
+                                }
+                              "
+                              :disabled="
+                                item.qty === 99 ||
+                                cartLoading.cartId === item.id
+                              "
+                            >
+                              <FontAwesomeIcon :icon="['fas', 'fa-caret-up']" />
+                            </button>
+                            <button
+                              type="button"
+                              class="text-xs h-3 disabled:text-gray-400 disabled:cursor-not-allowed"
+                              @click="
+                                () => {
+                                  item.qty -= 1;
+                                  updateCart(item, i);
+                                }
+                              "
+                              :disabled="
+                                item.qty === 1 || cartLoading.cartId === item.id
+                              "
+                            >
+                              <FontAwesomeIcon
+                                :icon="['fas', 'fa-caret-down']"
+                              />
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <div class="basis-1/12 flex justify-center mx-1 mt-1">
-                        <font-awesome-icon
+                        <FontAwesomeIcon
                           v-if="cartLoading.cartId !== item.id"
                           :icon="['fas', 'trash-can']"
                           size="lg"
@@ -258,7 +335,7 @@
           <button
             ref="navBtn"
             type="button"
-            class="inline-flex items-center p-2 ml-8 text-sm text-white rounded-lg lg:hidden hover:bg-primary"
+            class="inline-flex items-center p-2 ml-8 text-sm text-white hover:text-dark rounded-lg lg:hidden hover:bg-primary"
             @click.stop="toggleNav"
           >
             <span class="sr-only">Open main menu</span>
@@ -288,11 +365,11 @@
             <li>
               <RouterLink
                 :to="{ name: '預約體驗' }"
-                class="block py-2 pl-3 pr-4 text-white"
+                class="block py-2 pl-3 pr-4 lg:border-b-4 lg:mt-0 lg:p-0"
                 :class="[
                   targetLink === 'reserve'
-                    ? 'bg-primary rounded-lg lg:p-2'
-                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                    ? 'bg-primary text-dark lg:text-white lg:bg-transparent lg:border-primary rounded-lg lg:rounded-none'
+                    : 'hover:text-primary lg:border-transparent',
                 ]"
                 @click="targetLink = 'reserve'"
                 >預約體驗
@@ -301,11 +378,11 @@
             <li>
               <RouterLink
                 :to="{ name: '交易紀錄' }"
-                class="block py-2 pl-3 pr-4 text-white"
+                class="block py-2 pl-3 pr-4 lg:border-b-4 lg:mt-0 lg:p-0"
                 :class="[
                   targetLink === 'order'
-                    ? 'bg-primary rounded-lg lg:p-2'
-                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                    ? 'bg-primary text-dark lg:text-white lg:bg-transparent lg:border-primary rounded-lg lg:rounded-none'
+                    : 'hover:text-primary lg:border-transparent',
                 ]"
                 @click="targetLink = 'order'"
                 >交易記錄
@@ -314,11 +391,11 @@
             <li>
               <RouterLink
                 :to="{ name: '商品列表' }"
-                class="block py-2 pl-3 pr-4 text-white"
+                class="block py-2 pl-3 pr-4 lg:border-b-4 lg:mt-0 lg:p-0"
                 :class="[
                   targetLink === 'products'
-                    ? 'bg-primary rounded-lg lg:p-2'
-                    : 'hover:text-primary lg:mt-0 lg:p-0',
+                    ? 'bg-primary text-dark lg:text-white lg:bg-transparent lg:border-primary rounded-lg lg:rounded-none'
+                    : 'hover:text-primary lg:border-transparent',
                 ]"
                 @click="targetLink = 'products'"
                 >商品列表

@@ -115,7 +115,7 @@
                 {{ order.is_paid ? "已付款" : "未付款" }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <font-awesome-icon
+                <FontAwesomeIcon
                   :icon="['fas', 'check']"
                   class="ml-1"
                   v-if="order.message"
@@ -315,9 +315,7 @@ export default {
           }
         });
       }
-      const titleChartCols = titleChart.filter((item, i) => {
-        return i <= 4;
-      });
+      const titleChartCols = titleChart.filter((item, i) => i <= 4);
       return { chartColumns, titleChartCols };
     },
   },

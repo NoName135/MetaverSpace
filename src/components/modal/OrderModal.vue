@@ -157,7 +157,7 @@
                 >
                   <img
                     :src="cart.product.imageUrl"
-                    alt=""
+                    :alt="cart.product.title"
                     class="flex w-full h-24 object-cover rounded bg-white"
                   />
                   <div
@@ -313,7 +313,7 @@ export default {
   mounted() {
     // collapse options
     const detailCollapseOptions = {
-      onToggle: (item) => {
+      onToggle: function (item) {
         if (item._visible) {
           item._triggerEl
             .querySelector("[data-accordion-icon]")

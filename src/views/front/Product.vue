@@ -9,7 +9,7 @@
         <img
           :src="targetImage"
           class="h-[240px] sm:h-[360px] xl:h-[480px] object-contain mx-auto bg-white rounded"
-          alt=""
+          alt="商品圖片"
         />
         <swiper
           ref="productSwiper"
@@ -46,7 +46,7 @@
               <img
                 class="h-12 xs:h-16 md:h-20 lg:h-16 xl:h-20 object-contain rounded-sm mx-auto bg-white border-2 hover:border-primary"
                 :src="product.imageUrl"
-                alt=""
+                alt="商品主要圖片"
               />
             </div>
           </swiper-slide>
@@ -55,7 +55,7 @@
               <img
                 class="h-12 xs:h-16 md:h-20 lg:h-16 xl:h-20 object-contain mx-auto rounded-sm bg-white border-2 hover:border-primary"
                 :src="image"
-                alt=""
+                :alt="`商品圖片${i}`"
               />
             </div>
           </swiper-slide>
@@ -95,7 +95,7 @@
               class="flex items-center cursor-pointer text-primary2"
               @click="updateFavorite(product)"
             >
-              <font-awesome-icon :icon="['fas', 'heart']" class="text-2xl" />
+              <FontAwesomeIcon :icon="['fas', 'heart']" class="text-2xl" />
               <p class="ml-2 hidden sm:block text-xl">已加入收藏</p>
             </div>
             <div
@@ -103,7 +103,7 @@
               class="flex items-center cursor-pointer hover:text-primary"
               @click="updateFavorite(product)"
             >
-              <font-awesome-icon :icon="['fas', 'heart']" class="text-2xl" />
+              <FontAwesomeIcon :icon="['fas', 'heart']" class="text-2xl" />
               <p class="ml-2 hidden sm:block text-xl">未加入收藏</p>
             </div>
           </div>
@@ -145,7 +145,7 @@
                 </button>
                 <input
                   type="number"
-                  class="w-12 bg-dark text-sm text-end focus:border-secondary"
+                  class="w-12 bg-dark text-sm text-center focus:border-secondary"
                   min="1"
                   max="99"
                   v-model.lazy="qty"
@@ -209,7 +209,7 @@
             <div class="bg-white">
               <img
                 :src="accessory.imageUrl"
-                alt=""
+                :alt="`配件圖片${i}`"
                 class="w-full h-48 object-contain object-center bg-white"
               />
             </div>
@@ -317,7 +317,7 @@
         <template v-for="(image, i) in product.contentImages" :key="i">
           <img
             :src="image"
-            alt=""
+            :alt="`商品詳細圖片${i}`"
             class="mt-4 mx-auto rounded lg:rounded-lg w-full max-w-4xl"
           />
         </template>
@@ -350,14 +350,14 @@
         class="productSwiper mt-6 !px-8 sm:!px-16 xl:!px-24 h-[420px]"
       >
         <swiper-slide
-          v-for="otherProduct in otherProducts"
+          v-for="(otherProduct, i) in otherProducts"
           :key="otherProduct.id"
         >
           <div class="h-full">
             <img
               class="h-1/2 w-full object-cover bg-white rounded-t relative"
               :src="otherProduct.imageUrl"
-              alt=""
+              :alt="`其他商品圖片${i}`"
             />
             <div class="absolute top-4 left-4">
               <div class="bg-dark px-2 py-1 rounded-sm text-white text-xs mr-1">
@@ -405,7 +405,7 @@
                     class="text-primary hover:underline"
                   >
                     了解詳情
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                    <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
                   </RouterLink>
                 </div>
               </div>
@@ -426,7 +426,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 // import Swiper required modules
 import { Navigation } from "swiper";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import loadingStore from "@/stores/loadingStore.js";
 import cartStore from "@/stores/cartStore.js";
@@ -479,16 +478,15 @@ export default {
     async getOtherProducts() {
       this.otherProducts = [];
       if (this.product.category === "配件") {
-        await this.$http
-          .get(`${VITE_API}/api/${VITE_PATH}/products?category=配件`)
-          .then((res) => {
-            // console.log(res.data);
-            this.otherProducts = res.data.products;
-          })
-          .catch((err) => {
-            // Swal
-            this.userToast("error", err.response.data.message);
-          });
+        try {
+          const res = await this.$http.get(
+            `${VITE_API}/api/${VITE_PATH}/products?category=配件`
+          );
+          this.otherProducts = res.data.products;
+        } catch (err) {
+          // Swal
+          this.userToast("error", err.response.data.message);
+        }
       } else {
         const categories = ["AR", "VR", "MR", "XR"];
         try {
@@ -569,7 +567,6 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    FontAwesomeIcon,
   },
 };
 </script>

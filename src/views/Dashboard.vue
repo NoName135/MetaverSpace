@@ -5,7 +5,7 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start text-white">
           <img
-            src="../../src/images/Logo.png"
+            src="@/assets/images/Logo.png"
             class="h-16 mr-3"
             alt="MetaverSpace"
           />
@@ -19,7 +19,7 @@
             >開啟前台</RouterLink
           >
         </div>
-        <button class="primary-button" @click="logout()">登出</button>
+        <button class="primary-button" @click="logout">登出</button>
       </div>
     </div>
   </nav>
@@ -214,7 +214,7 @@
           :class="[sidebarHide ? ' rotate-180 border-l' : 'rotate-0 border-r']"
           @click="sidebarHide = !sidebarHide"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             :icon="['fas', 'arrow-left']"
             class="text-4xl p-3 text-gray-800"
           />
@@ -249,8 +249,8 @@ export default {
       this.$http
         .post(api)
         .then(() => {
-          this.loadings.fullLoading = false;
           document.cookie = `loginToken=;expires=${new Date()}`;
+          this.loadings.fullLoading = false;
           this.$router.push("/login");
           // Swal
           this.adminToast("success", "已登出");

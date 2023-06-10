@@ -63,16 +63,17 @@
                     class="admin-secondary-button w-full py-2 relative"
                   >
                     <a :href="image.src" target="_blank">
-                      <font-awesome-icon
+                      <FontAwesomeIcon
                         :icon="['fas', 'arrow-up-right-from-square']"
                         class="absolute top-1 right-1 text-md"
-                      ></font-awesome-icon>
+                      />
                       查看圖片
                     </a>
                   </button>
                   <img
                     :src="image.src"
                     class="w-full h-28 object-cover rounded-sm mt-2"
+                    :alt="`上傳的圖片${i}`"
                   />
                 </li>
               </ul>

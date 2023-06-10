@@ -5,7 +5,7 @@
         <h1 class="p-4 bg-black/50 text-xl font-bold border-b-2">交易記錄</h1>
         <div class="px-8">
           <div class="py-8 flex justify-center">
-            <V-form
+            <VForm
               class="w-96"
               ref="form"
               v-slot="{ errors }"
@@ -17,7 +17,7 @@
                   class="block mb-2 text-sm font-medium text-white"
                   >姓名</label
                 >
-                <V-field
+                <VField
                   type="text"
                   id="name"
                   name="姓名"
@@ -38,7 +38,7 @@
                   class="block mb-2 text-sm font-medium text-white"
                   >電話或Email</label
                 >
-                <V-field
+                <VField
                   type="text"
                   id="name"
                   name="電話或Email"
@@ -81,7 +81,7 @@
                 </svg>
                 訂單查詢
               </button>
-            </V-form>
+            </VForm>
           </div>
         </div>
       </div>

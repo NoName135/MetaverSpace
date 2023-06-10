@@ -14,7 +14,7 @@
             >
               <img
                 :src="item.product.imageUrl"
-                alt=""
+                :alt="item.product.title"
                 class="hidden md:flex w-full h-24 xl:h-32 object-cover rounded bg-white"
               />
               <div
@@ -88,9 +88,9 @@
               訂單資料
             </h1>
             <div class="px-8 py-8">
-              <V-form ref="form" v-slot="{ errors }" @submit="createOrder">
+              <VForm ref="form" v-slot="{ errors }" @submit="createOrder">
                 <div class="relative z-0 w-full mb-6 group">
-                  <V-field
+                  <VField
                     type="text"
                     name="姓名"
                     id="name"
@@ -111,7 +111,7 @@
                   ></ErrorMessage>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                  <V-field
+                  <VField
                     type="tel"
                     name="電話"
                     id="phone"
@@ -132,7 +132,7 @@
                   ></ErrorMessage>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                  <V-field
+                  <VField
                     type="text"
                     name="地址"
                     id="address"
@@ -153,7 +153,7 @@
                   ></ErrorMessage>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                  <V-field
+                  <VField
                     type="email"
                     name="email"
                     id="email"
@@ -174,7 +174,7 @@
                   ></ErrorMessage>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                  <V-field
+                  <VField
                     id="paySelect"
                     as="select"
                     name="付款方式"
@@ -199,7 +199,7 @@
                     <option class="text-white bg-gray-700" value="行動支付">
                       行動支付
                     </option>
-                  </V-field>
+                  </VField>
                   <label
                     for="paySelect"
                     class="text-primary peer-focus:font-medium absolute text-md duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:text-white peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -215,17 +215,17 @@
                   class="block mb-2 text-sm font-medium text-primary"
                   >備註</label
                 >
-                <V-field
+                <VField
                   id="message"
                   as="textarea"
                   name="留言"
                   rows="4"
                   class="block p-2.5 w-full mb-6 text-md rounded-lg border bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
                   placeholder="請輸入備註內容"
-                ></V-field>
+                ></VField>
                 <div class="mb-4">
                   <div class="flex items-center">
-                    <V-field
+                    <VField
                       id="agreeCheck"
                       type="checkbox"
                       name="同意"
@@ -248,7 +248,7 @@
                 <button type="submit" class="w-full primary-button">
                   送出訂單
                 </button>
-              </V-form>
+              </VForm>
             </div>
           </section>
         </div>

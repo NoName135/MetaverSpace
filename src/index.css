@@ -9,7 +9,7 @@
   }
   /* navbar margin */
   .mt-nav {
-    @apply mt-36 sm:mt-24 lg:mt-28
+    @apply mt-28
   }
   /* navbar top position */
   .top-nav {
@@ -23,7 +23,7 @@
   }
   /* animated button */
   .primary-solid-button {
-    @apply inline-block px-3.5 py-2 text-white border-[3px] border-primary rounded-lg cursor-pointer relative bg-transparent overflow-hidden z-10 before:-translate-x-full after:translate-x-[190%] hover:before:translate-x-0 hover:after:translate-x-[90%]
+    @apply inline-block px-3.5 py-2 text-white border-[3px] border-primary rounded-lg cursor-pointer relative bg-transparent overflow-hidden z-10 before:-translate-x-full after:translate-x-[190%] hover:before:translate-x-0 hover:after:translate-x-[90%] hover:text-dark
   }
   /* animated button before & after */
   .primary-solid-button::before,
