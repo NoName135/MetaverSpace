@@ -650,8 +650,8 @@ export default {
   },
   components: {
     UploadImg,
-    Multiselect
-},
+    Multiselect,
+  },
 };
 </script>
 
