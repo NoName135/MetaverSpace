@@ -9,7 +9,7 @@
         返回商品列表
       </RouterLink>
 
-      <RouterView @emit-id="getPageLink"></RouterView>
+      <RouterView @emit-id="getPageLink" />
 
       <div class="flex justify-end mt-8 mb-6">
         <RouterLink

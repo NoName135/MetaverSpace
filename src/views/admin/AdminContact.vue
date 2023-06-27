@@ -109,7 +109,7 @@ export default {
     },
     filterContacts (page = 1) {
       this.contacts = this.allContacts.filter(
-        (item, i) => Math.ceil((i + 1) / 10) == page
+        (item, i) => Math.ceil((i + 1) / 10) === page
       )
       // 頁碼物件處理
       const totalPages = Math.ceil(this.allContacts.length / 10)

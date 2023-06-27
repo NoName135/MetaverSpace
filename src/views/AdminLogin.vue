@@ -23,10 +23,7 @@
           rules="required|email"
         >
         </VField>
-        <ErrorMessage
-          name="email"
-          class="mt-2 ml-2 text-sm text-rose-500"
-        ></ErrorMessage>
+        <ErrorMessage name="email" class="mt-2 ml-2 text-sm text-rose-500" />
       </div>
       <div class="mb-6">
         <label
@@ -45,10 +42,7 @@
           rules="required"
         >
         </VField>
-        <ErrorMessage
-          name="password"
-          class="mt-2 ml-2 text-sm text-rose-500"
-        ></ErrorMessage>
+        <ErrorMessage name="password" class="mt-2 ml-2 text-sm text-rose-500" />
       </div>
       <button
         type="submit"

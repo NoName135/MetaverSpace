@@ -77,7 +77,7 @@
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
-                ></path>
+                />
               </svg>
             </button>
             <!-- 明細區塊 -->
@@ -123,7 +123,7 @@
                         >數量：{{ cart.qty }}</span
                       >
                     </div>
-                    <div v-else></div>
+                    <div v-else />
                     <h5 class="self-end text-lg lg:text-xl mt-4">
                       總計：<span class="font-bold"
                         >NT$ {{ $filters.currency(cart.final_total) }}</span

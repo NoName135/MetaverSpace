@@ -108,7 +108,7 @@
                   <ErrorMessage
                     name="姓名"
                     class="text-warm text-sm"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
                   <VField
@@ -129,7 +129,7 @@
                   <ErrorMessage
                     name="電話"
                     class="text-warm text-sm"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
                   <VField
@@ -150,7 +150,7 @@
                   <ErrorMessage
                     name="地址"
                     class="text-warm text-sm"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
                   <VField
@@ -171,7 +171,7 @@
                   <ErrorMessage
                     name="email"
                     class="text-warm text-sm"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
                   <VField
@@ -208,7 +208,7 @@
                   <ErrorMessage
                     name="付款方式"
                     class="text-warm text-sm"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <label
                   for="message"
@@ -243,7 +243,7 @@
                   <ErrorMessage
                     name="同意"
                     class="text-warm text-sm ml-6"
-                  ></ErrorMessage>
+                  />
                 </div>
                 <button type="submit" class="w-full primary-button">
                   送出訂單

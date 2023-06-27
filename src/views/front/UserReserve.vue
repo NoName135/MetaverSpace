@@ -64,7 +64,7 @@
           loading="lazy"
           allowfullscreen=""
           referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+        />
       </div>
       <div>
         <h3 class="text-gray-300 py-3 text-lg md:text-xl font-bold border-b-2">
@@ -81,7 +81,7 @@
               id="district"
               class="border text-sm rounded w-full p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary focus:border-ring-primary"
               v-model="branchTitle"
-              @change="getBranch()"
+              @change="getBranch"
             >
               <option value="台北館" class="bg-white/20" selected>
                 台北館
@@ -116,20 +116,38 @@
               <label for="num" class="block mb-2 text-sm font-medium text-white"
                 >人數 (1~10)</label
               >
-              <input
-                type="number"
-                id="num"
-                min="1"
-                class="text-end border text-sm rounded-lg block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
-                v-model.number="num"
-                @blur="
-                  () => {
-                    num < 1 ? (num = 1) : true;
-                    num > 10 ? (num = 10) : true;
-                  }
-                "
-                required
-              />
+              <div class="flex">
+                <button
+                  type="button"
+                  class="bg-primary hover:bg-primary2 px-3 rounded-l text-sm disabled:bg-primary2 text-dark disabled:text-gray-600 disabled:cursor-not-allowed"
+                  @click="num -= 1"
+                  :disabled="num === 1"
+                >
+                  －
+                </button>
+                <input
+                  type="number"
+                  id="num"
+                  min="1"
+                  class="text-center border text-sm block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary focus:border-primary"
+                  v-model.number="num"
+                  @blur="
+                    () => {
+                      num < 1 ? (num = 1) : true;
+                      num > 10 ? (num = 10) : true;
+                    }
+                  "
+                  required
+                />
+                <button
+                  type="button"
+                  class="bg-primary hover:bg-primary2 px-3 rounded-r text-sm disabled:bg-primary2 text-dark disabled:text-gray-600 disabled:cursor-not-allowed"
+                  @click="num += 1"
+                  :disabled="num === 10"
+                >
+                  ＋
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -161,10 +179,7 @@
                 placeholder="請輸入姓名"
                 required
               />
-              <ErrorMessage
-                name="姓名"
-                class="text-warm text-sm"
-              ></ErrorMessage>
+              <ErrorMessage name="姓名" class="text-warm text-sm" />
             </div>
             <div>
               <label
@@ -182,10 +197,7 @@
                 placeholder="請輸入電話"
                 required
               />
-              <ErrorMessage
-                name="電話"
-                class="text-warm text-sm"
-              ></ErrorMessage>
+              <ErrorMessage name="電話" class="text-warm text-sm" />
             </div>
             <div>
               <label
@@ -203,10 +215,7 @@
                 placeholder="請輸入email"
                 required
               />
-              <ErrorMessage
-                name="email"
-                class="text-warm text-sm"
-              ></ErrorMessage>
+              <ErrorMessage name="email" class="text-warm text-sm" />
             </div>
             <div>
               <label
@@ -221,7 +230,7 @@
                 rows="4"
                 class="block p-2.5 w-full text-sm bg-gray-600 border-gray-500 placeholder-gray-400 rounded-lg border focus:ring-primary focus:border-primary text-white"
                 placeholder="請輸入備註"
-              ></VField>
+              />
             </div>
             <div class="mt-8 flex flex-col">
               <div class="flex items-center">
@@ -240,10 +249,7 @@
                   >我已詳閱並同意以下約定條款</label
                 >
               </div>
-              <ErrorMessage
-                name="同意"
-                class="text-warm text-sm ml-6 mt-1"
-              ></ErrorMessage>
+              <ErrorMessage name="同意" class="text-warm text-sm ml-6 mt-1" />
             </div>
             <div>
               <p class="text-sm">

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import VueLoading from '@/components/Loading.vue'
+import VueLoading from '@/components/VueLoading.vue'
 
 export default {
   components: {

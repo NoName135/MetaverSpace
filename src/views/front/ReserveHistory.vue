@@ -27,10 +27,7 @@
                   placeholder="請輸入姓名"
                   required
                 />
-                <ErrorMessage
-                  name="姓名"
-                  class="text-warm text-sm"
-                ></ErrorMessage>
+                <ErrorMessage name="姓名" class="text-warm text-sm" />
               </div>
               <div class="mt-8">
                 <label
@@ -48,10 +45,7 @@
                   placeholder="請輸入電話或Email"
                   required
                 />
-                <ErrorMessage
-                  name="電話或Email"
-                  class="text-warm text-sm"
-                ></ErrorMessage>
+                <ErrorMessage name="電話或Email" class="text-warm text-sm" />
               </div>
               <button
                 type="submit"
@@ -72,12 +66,12 @@
                     r="10"
                     stroke="currentColor"
                     stroke-width="4"
-                  ></circle>
+                  />
                   <path
                     class="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                  />
                 </svg>
                 預約查詢
               </button>
@@ -85,12 +79,12 @@
           </div>
         </div>
       </div>
-      <div class="my-20 border-b border-2" v-if="reserves.length"></div>
+      <div class="my-20 border-b border-2" v-if="reserves.length" />
       <ReserveDetail
         :reserves="filterReserves"
         @update-reserves="updateReserves"
         v-if="reserves.length"
-      ></ReserveDetail>
+      />
     </div>
   </div>
   <ScrollTop />

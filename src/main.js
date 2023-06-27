@@ -14,9 +14,6 @@ import VueAxios from 'vue-axios'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
-// vue-multiselect
-import Multiselect from 'vue-multiselect'
-
 // CKeditor
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
@@ -152,7 +149,6 @@ app.component('FontAwesomeIcon', FontAwesomeIcon)
 app.component('VForm', Form)
 app.component('VField', Field)
 app.component('ErrorMessage', ErrorMessage)
-app.component('Multiselect', Multiselect)
 app.component('VueDatePicker', VueDatePicker)
 
 app.mount('#app')

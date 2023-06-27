@@ -19,7 +19,7 @@
             >開啟前台</RouterLink
           >
         </div>
-        <button class="primary-button" @click="logout">登出</button>
+        <button type="button" class="primary-button" @click="logout">登出</button>
       </div>
     </div>
   </nav>

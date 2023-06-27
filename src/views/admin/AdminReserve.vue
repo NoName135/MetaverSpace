@@ -153,7 +153,7 @@ export default {
     filterReserves (page = 1) {
       this.reserves = this.allReserves
         .filter((item) => !this.titleBranch || item.title === this.titleBranch)
-        .filter((item, i) => Math.ceil((i + 1) / 10) == page)
+        .filter((item, i) => Math.ceil((i + 1) / 10) === page)
       // 頁碼物件處理
       const totalPages = Math.ceil(this.allReserves.length / 10)
       this.pagination = {

@@ -50,12 +50,12 @@
                   r="10"
                   stroke="currentColor"
                   stroke-width="4"
-                ></circle>
+                />
                 <path
                   class="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
+                />
               </svg>
             </div>
             <div class="grid grid-cols-5 gap-6">
@@ -85,7 +85,7 @@
                       <p class="text-sm sm:mr-3" v-if="item.spec">
                         ※ 請先選擇規格
                       </p>
-                      <div v-else></div>
+                      <div v-else />
                       <select
                         :id="`spec${i}`"
                         class="mt-4 sm:mt-0 border text-sm rounded p-2 bg-gray-600 border-gray-500 text-white focus:ring-primary"

@@ -196,7 +196,7 @@
               <ErrorMessage
                 name="Email"
                 class="text-warm text-sm"
-              ></ErrorMessage>
+              />
             </div>
           </div>
           <button type="submit" class="mt-6 primary-button">

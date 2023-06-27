@@ -61,12 +61,12 @@
                     r="10"
                     stroke="currentColor"
                     stroke-width="4"
-                  ></circle>
+                  />
                   <path
                     class="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                  />
                 </svg>
               </div>
               <div class="grid grid-cols-12 md:gap-6 mt-6">
@@ -128,12 +128,16 @@
                           class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
                           @click="
                             () => {
-                              spec.qty -= 1;
-                              updateCart(item, i);
+                              if (spec.qty > 1) {
+                                spec.qty -= 1;
+                                updateCart(item, i);
+                              } else {
+                                deleteAlert(item, i);
+                              }
                             }
                           "
                           :disabled="
-                            spec.qty === 1 || cartLoading.cartId === item.id
+                            cartLoading.cartId === item.id
                           "
                         >
                           －
@@ -194,12 +198,16 @@
                           class="bg-secondary hover:bg-secondary2 px-2 rounded-l text-sm disabled:bg-secondary2 disabled:text-gray-400 disabled:cursor-not-allowed"
                           @click="
                             () => {
-                              item.qty -= 1;
-                              updateCart(item, i);
+                              if (item.qty > 1) {
+                                item.qty -= 1;
+                                updateCart(item, i);
+                              } else {
+                                deleteAlert(item, i);
+                              }
                             }
                           "
                           :disabled="
-                            item.qty === 1 || cartLoading.cartId === item.id
+                            cartLoading.cartId === item.id
                           "
                         >
                           －
@@ -230,7 +238,7 @@
                         </button>
                       </div>
                     </div>
-                    <div v-else></div>
+                    <div v-else />
                     <h5 class="self-end text-lg lg:text-xl mt-6">
                       總計：<span class="font-bold"
                         >NT$ {{ $filters.currency(item.total) }}</span
@@ -289,7 +297,7 @@
         </div>
       </div>
     </div>
-    <user-favorite-modal ref="favoriteModal"></user-favorite-modal>
+    <UserFavoriteModal ref="favoriteModal" />
   </div>
 </template>
 
@@ -315,9 +323,10 @@ export default {
   methods: {
     deleteAlert (item, i) {
       let spec = ''
-      if (i >= 0) {
+      if (i >= 0 && item.cart_spec.length > 1) {
         spec = `(${item.cart_spec[i].title})`
       }
+
       this.$swal
         .fire({
           title: '刪除購物車商品',
@@ -331,7 +340,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            if (i >= 0) {
+            if (i >= 0 && item.cart_spec.length > 1) {
               this.deleteCartSpec(item, i)
             } else {
               this.deleteCart(item.id)

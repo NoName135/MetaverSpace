@@ -196,16 +196,16 @@ export default {
       ])
         .then((res) => {
           // console.log(res);
-          const [a, b] = res
+          const [all, current] = res
 
-          this.allOrders = a.data.orders
+          this.allOrders = all.data.orders
           this.ordersTotal = this.allOrders.reduce((acc, cur) => {
             return acc + cur.total
           }, 0)
           this.updateChart('category')
 
-          this.orders = b.data.orders
-          this.pagination = b.data.pagination
+          this.orders = current.data.orders
+          this.pagination = current.data.pagination
           this.loadings.fullLoading = false
 
           if (process === 'delete') {

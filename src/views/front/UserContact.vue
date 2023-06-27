@@ -26,7 +26,7 @@
             placeholder="請輸入姓名"
             required
           />
-          <ErrorMessage name="姓名" class="text-warm text-sm"></ErrorMessage>
+          <ErrorMessage name="姓名" class="text-warm text-sm" />
           <label
             for="tel"
             class="block mt-6 mb-2 text-sm font-medium text-white"
@@ -42,7 +42,7 @@
             placeholder="請輸入電話"
             required
           />
-          <ErrorMessage name="電話" class="text-warm text-sm"></ErrorMessage>
+          <ErrorMessage name="電話" class="text-warm text-sm" />
           <label
             for="email"
             class="block mt-6 mb-2 text-sm font-medium text-white"
@@ -58,7 +58,7 @@
             placeholder="請輸入Email"
             required
           />
-          <ErrorMessage name="email" class="text-warm text-sm"></ErrorMessage>
+          <ErrorMessage name="email" class="text-warm text-sm" />
           <label
             for="message"
             class="block mt-6 mb-2 text-sm font-medium text-white"
@@ -74,11 +74,11 @@
             rules="required"
             placeholder="請詳述您的問題"
             required
-          ></VField>
+          />
           <ErrorMessage
             name="遇到的問題"
             class="text-warm text-sm"
-          ></ErrorMessage>
+          />
           <div class="mt-6 mb-4 md:mb-6 flex flex-col md:flex-row">
             <div>
               <label

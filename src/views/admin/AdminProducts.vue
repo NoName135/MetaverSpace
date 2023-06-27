@@ -272,7 +272,7 @@ export default {
           }
           // 根據頁碼顯示商品
           this.products = this.allProducts.filter(
-            (item, i) => Math.ceil((i + 1) / 10) == page
+            (item, i) => Math.ceil((i + 1) / 10) === page
           )
           // 從全部商品找出 category 為配件商品
           this.accessories = Object.values(res.data.products).filter(
@@ -308,7 +308,7 @@ export default {
     },
     changePages (page = 1) {
       this.products = Object.values(this.allProducts).filter(
-        (item, i) => Math.ceil((i + 1) / 10) == page
+        (item, i) => Math.ceil((i + 1) / 10) === page
       )
 
       this.pagination.current_page = page

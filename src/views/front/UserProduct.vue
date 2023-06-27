@@ -74,7 +74,7 @@
           <div
             class="prose prose-front prose-styles leading-relaxed"
             v-html="product.description"
-          ></div>
+          />
         </div>
         <div class="flex-auto flex flex-col justify-end">
           <div class="flex justify-between items-center mt-6">
@@ -183,12 +183,12 @@
                   r="10"
                   stroke="currentColor"
                   stroke-width="4"
-                ></circle>
+                />
                 <path
                   class="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
+                />
               </svg>
               加入購物車
             </button>
@@ -215,7 +215,7 @@
             </div>
             <div class="flex flex-col px-2 py-4 h-[calc(100%-192px)]">
               <h4 class="text-lg font-bold">{{ accessory.title }}</h4>
-              <div class="mt-4 text-md" v-html="accessory.description"></div>
+              <div class="mt-4 text-md" v-html="accessory.description" />
               <div class="flex-auto flex flex-col justify-end">
                 <p v-if="accessory.spec" class="text-sm mt-4">※請先選擇規格</p>
                 <div
@@ -286,12 +286,12 @@
                         r="10"
                         stroke="currentColor"
                         stroke-width="4"
-                      ></circle>
+                      />
                       <path
                         class="opacity-75"
                         fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
+                      />
                     </svg>
                     加購
                   </button>
@@ -313,7 +313,7 @@
         <div
           class="prose prose-front prose-styles leading-loose"
           v-html="product.content"
-        ></div>
+        />
         <template v-for="(image, i) in product.contentImages" :key="i">
           <img
             :src="image"
@@ -385,7 +385,7 @@
                   <p
                     class="text-sm ellipse2 prose prose-front prose-styles leading-normal"
                     v-html="otherProduct.description"
-                  ></p>
+                  />
                 </div>
               </div>
               <div class="flex flex-col justify-end">

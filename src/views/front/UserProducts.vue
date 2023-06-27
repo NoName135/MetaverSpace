@@ -33,7 +33,7 @@
               <p
                 class="mt-8 text-lg lg:text-xl prose prose-front prose-styles"
                 v-html="article.description"
-              ></p>
+              />
             </div>
             <RouterLink
               :to="`/article/${article.id}`"
@@ -78,7 +78,7 @@
                   fill-rule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                   clip-rule="evenodd"
-                ></path>
+                />
               </svg>
               <span class="sr-only">Close menu</span>
             </button>
@@ -378,7 +378,7 @@
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
+                    />
                   </svg>
                 </div>
                 <input
@@ -406,7 +406,7 @@
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
+                    />
                   </svg>
                   <span class="sr-only">Search</span>
                 </button>
@@ -531,13 +531,13 @@
             <ProductsPagination
               :page-obj="pagination"
               @emit-page="changePages"
-            ></ProductsPagination>
+            />
           </div>
         </div>
         <UserProductModal
           ref="productModal"
           :page="pagination.current_page"
-        ></UserProductModal>
+        />
       </div>
     </section>
   </div>
@@ -672,7 +672,7 @@ export default {
         )
       })
       this.products = this.filterProducts.filter(
-        (item, i) => Math.ceil((i + 1) / 12) == page
+        (item, i) => Math.ceil((i + 1) / 12) === page
       )
       this.productImages = []
       this.products.forEach((item) => {
@@ -696,7 +696,7 @@ export default {
     // 切換頁碼
     changePages (page = 1) {
       this.products = Object.values(this.filterProducts).filter(
-        (item, i) => Math.ceil((i + 1) / 12) == page
+        (item, i) => Math.ceil((i + 1) / 12) === page
       )
 
       this.productImages = []
@@ -724,14 +724,14 @@ export default {
     filters: {
       handler () {
         if (this.filters.minPrice) {
-          this.filters.minPrice < 1
-            ? (this.filters.minPrice = 1)
-            : this.filters.minPrice
+          if (this.filters.minPrice < 1) {
+            this.filters.minPrice = 1
+          }
         }
         if (this.filters.maxPrice) {
-          this.filters.maxPrice < this.filters.minPrice
-            ? (this.filters.maxPrice = this.filters.minPrice)
-            : this.filters.maxPrice
+          if (this.filters.maxPrice < this.filters.minPrice) {
+            this.filters.maxPrice = this.filters.minPrice
+          }
         }
       },
       deep: true

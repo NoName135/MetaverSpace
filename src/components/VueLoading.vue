@@ -1,5 +1,5 @@
 <template>
-  <Loading
+  <VueLoading
     :active="loadings.fullLoading"
     :background-color="'#000'"
     :opacity="loadings.opacity"
@@ -46,12 +46,12 @@
         :style="`width: ${loadings.progress}%`"
       ></div>
     </div>
-  </Loading>
+  </VueLoading>
 </template>
 
 <script>
 // vue-loading
-import Loading from 'vue-loading-overlay'
+import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
 import { mapState } from 'pinia'
@@ -62,7 +62,7 @@ export default {
     ...mapState(loadingStore, ['loadings'])
   },
   components: {
-    Loading
+    VueLoading
   }
 }
 </script>

@@ -11,7 +11,7 @@
       v-if="!loadings.fullLoading && loadings.opacity !== 1"
     >
       <section class="py-20 px-2 lg:px-40">
-        <div class="container grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="container grid grid-cols-1 sm:grid-cols-3 gap-14">
           <div>
             <h3 class="text-2xl font-bold">商品專區</h3>
             <div class="grid grid-cols-1 gap-2 mt-6">
@@ -74,7 +74,7 @@
               </div>
               <div class="whitespace-nowrap">
                 <FontAwesomeIcon :icon="['fas', 'phone']" class="mr-2" />
-                <span>(01) 2345 6789</span>
+                <a href="tel:+0123456789">(01) 2345 6789</a>
               </div>
               <div class="mr-6 md:mr-0">
                 <FontAwesomeIcon
@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
+import Navbar from '../components/UserNavbar.vue'
 
 import { mapState } from 'pinia'
 import loadingStore from '@/stores/loadingStore.js'

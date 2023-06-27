@@ -65,13 +65,14 @@ export default defineStore('cart', {
       if (spec) {
         // 判斷是否有加入過此商品到購物車
         if (cartIndex >= 0) {
-          cartSpec = [...carts[cartIndex].cartSpec]
-          const specIndex = carts[cartIndex].cartSpec.findIndex((obj) => {
+          console.log(carts[cartIndex])
+          cartSpec = [...carts[cartIndex].cart_spec]
+          const specIndex = carts[cartIndex].cart_spec.findIndex((obj) => {
             return obj.title === spec
           })
           // 判斷物件是否已存在 cartSpec
           if (specIndex >= 0) {
-            carts[cartIndex].cartSpec[specIndex].qty += qty
+            carts[cartIndex].cart_spec[specIndex].qty += qty
           } else {
             cartSpec.push({ title: spec, qty })
           }
@@ -79,14 +80,14 @@ export default defineStore('cart', {
           cartSpec.push({ title: spec, qty })
         }
       }
-
+      console.log(cartSpec)
       this.cartLoading.productModal = true
       axios
         .post(`${VITE_API}/api/${VITE_PATH}/cart`, {
           data: {
             product_id: product.id,
             qty,
-            cartSpec
+            cart_spec: cartSpec
           }
         })
         .then((res) => {
