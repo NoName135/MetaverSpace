@@ -240,7 +240,7 @@ export default {
           scrub: true,
           pin: true,
           start: 'top 64px',
-          end: 'bottom 20%'
+          end: 'bottom -50%'
           // markers: true,
         }
       })
